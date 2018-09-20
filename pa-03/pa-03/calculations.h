@@ -11,7 +11,7 @@
 * Preconditions:                                      *
 * Postconditions:                                     *
 ******************************************************/
-double calculateSums(FILE *infile);
+double calculateSums(double nums[]);
 
 /******************************************************
 * Function:                                           *
@@ -47,7 +47,7 @@ double calculateDev(double num, double mean);
 * Preconditions:                                      *
 * Postconditions:                                     *
 ******************************************************/
-double calculateVariance(double dev1, double dev2, double dev3, double dev4, double dev5, int num);
+double calculateVariance(double numbers[]);
 
 /******************************************************
 * Function:                                           *
