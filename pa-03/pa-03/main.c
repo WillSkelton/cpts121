@@ -2,7 +2,7 @@
 Author: Will Skelton
 Date: 9/20/18
 
-Discription: Opens data.txt, parses it and then outputs calculations of the contents to results.dat and results.md
+Discription: Opens data.sat, parses it and then outputs calculations of the contents to results.dat and results.md
 */
 #include "functions.h"
 
@@ -31,11 +31,11 @@ int main(void)
 	// ===================== Start Program =====================
 
 	// Get Files
-	infile = fopen("data.txt", "r");
-	outfile = fopen("results.dat", "w");
+	infile = fopen("input.dat", "r");
+	outfile = fopen("output.dat", "w");
 
 	// Optional Markdown file (open in a markdown editor or see on github)
-	markdown = fopen("results.md", "w");
+	markdown = fopen("output.md", "w");
 
 
 	// Traverse the data file and get records

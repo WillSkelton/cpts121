@@ -17,10 +17,9 @@ double calculateMean(double sum, int num)
 {
 	double mean = 0.0;
 
-	if (num == 0) {
+	if (num == 0.0) {
 		mean = -1.0;
-	}
-	else {
+	} else {
 		mean = sum / num;
 	}
 
