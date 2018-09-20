@@ -21,7 +21,7 @@ int main(void)
 	FILE *infile = NULL, *outfile = NULL;
 
 	// student record arrays
-	double SIDs[5], GPAs[5], classStandings[5], ages[5];
+	double SIDs[5], GPAs[5], classStandings[5], ages[5], deviations[5];
 
 	// forloop variable
 	double temp = 0.0;
@@ -40,7 +40,7 @@ int main(void)
 
 	// Get Files
 	infile = fopen("data.txt", "r");
-	outfile = fopen("results.txt", "w");
+	outfile = fopen("results.dat", "w");
 
 	// Traverse the data file and get records
 	for (int i = 0; i < 5; i += 1)
@@ -64,9 +64,18 @@ int main(void)
 	classStandingMean = calculateMean(classStandingSum, 5);
 	ageMean = calculateMean(ageSum, 5);
 
-	printf("gpaSum: %lf \nclassStandingSum: %lf\nageSum: %lf\ngpaMean: %lf\nclassStandingMean: %lf\nageMean: %lf\n", gpaSum, classStandingSum, ageSum, gpaMean, classStandingMean, ageMean);
+	// Outputs Means to results.dat
+	printDouble(outfile, gpaMean);
+	printDouble(outfile, classStandingMean);
+	printDouble(outfile, ageMean);
 	
-	
+	// Deviations
+	for (int i = 0; i < 5; i += 1) {
+		deviations[i] = calculateDev(GPAs[i], gpaMean);
+	}
+
+	// Variance
+
 
 	fclose(outfile);
 	fclose(infile);
