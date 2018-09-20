@@ -142,6 +142,16 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="calculations.c" />
+    <ClCompile Include="main.c" />
+    <ClCompile Include="read.c" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="calculations.h" />
+    <ClInclude Include="read.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="data.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
