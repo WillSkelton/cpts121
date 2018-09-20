@@ -11,7 +11,7 @@
 * Preconditions:                                      *
 * Postconditions:                                     *
 ******************************************************/
-double calculateSum(double num1, double num2, double num3, double num4, double num5);
+double calculateSums(FILE *infile);
 
 /******************************************************
 * Function:                                           *
