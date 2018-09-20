@@ -76,6 +76,9 @@ int main(void)
 	// Variance
 	variance = calculateVariance(deviations, 5);
 
+	// Standard Deviation
+	gpaStandardDev = calculateStandardDev(variance);
+
 	
 
 	fclose(outfile);

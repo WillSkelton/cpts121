@@ -59,7 +59,7 @@ double calculateVariance(double deviations[], int num);
 * Preconditions:                                      *
 * Postconditions:                                     *
 ******************************************************/
-double calculateStandarddev(double variance);
+double calculateStandardDev(double variance);
 
 /******************************************************
 * Function:                                           *

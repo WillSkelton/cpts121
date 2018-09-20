@@ -50,9 +50,9 @@ double calculateVariance(double deviations[], int num)
 	return variance;
 }
 
-double calculateStandarddev(double variance)
+double calculateStandardDev(double variance)
 {
-	return 0.0;
+	return sqrt(variance);
 }
 
 double findMax(double num1, double num2, double num3, double num4, double num5)
