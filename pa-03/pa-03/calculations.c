@@ -1,11 +1,16 @@
 #include "calculations.h"
 
+double calculateSum(double num1, double num2, double num3, double num4, double num5)
+{
+	return 0.0;
+}
+
 double calculateMean(double sum, int num)
 {
 	return 0.0;
 }
 
-double calculatedev(double num, double mean)
+double calculateDev(double num, double mean)
 {
 	return 0.0;
 }

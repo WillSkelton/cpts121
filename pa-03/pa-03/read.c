@@ -20,5 +20,5 @@ int readInteger(FILE *infile)
 void printDouble(FILE *outfile, double num)
 {
 	printf("Printed %.2f\n", num);
-	fprintf(outfile, "%.2f", num);
+	fprintf(outfile, "%.2f\n", num);
 }

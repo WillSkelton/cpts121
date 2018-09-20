@@ -35,7 +35,7 @@ double calculateMean(double sum, int num);
 * Preconditions:                                      *
 * Postconditions:                                     *
 ******************************************************/
-double calculatedev(double num, double mean);
+double calculateDev(double num, double mean);
 
 /******************************************************
 * Function:                                           *
