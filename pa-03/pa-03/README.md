@@ -26,12 +26,12 @@ Before starting this programming assignment, participants should be able to:
 
 ## III. Overview & Requirements:
 Write a program that processes numbers, corresponding to student records read in from a file, and writes the required results to an output file (see main ( )). Your program should define the following functions:
-- [ ] **(5 pts)** double read_double (FILE *infile) — Reads one double precision number from the input file. Note: You may assume that the file only contains real numbers.
-- [ ] **(5 pts)** int read_integer (FILE *infile) - Reads one integer number from the input file.
-- [ ] **(5 pts)** double calculate_sum (double number1, double number2, double number3, double number4, double number5) - Finds the sum of number1, number2, number3, number4, and number5 and returns the result.
-- [ ] **(5 pts)** double calculate_mean (double sum, int number) - Determines the mean through the calculation sum / number and returns the result. You need to check to make sure that number is not 0. If it is 0 the function returns -1.0 (we will assume that we are calculating the mean of positive numbers), otherwise it returns the mean.
+- [x] **(5 pts)** double read_double (FILE *infile) — Reads one double precision number from the input file. Note: You may assume that the file only contains real numbers.
+- [x] **(5 pts)** int read_integer (FILE *infile) - Reads one integer number from the input file.
+- [x] **(5 pts)** double calculate_sum (double number1, double number2, double number3, double number4, double number5) - Finds the sum of number1, number2, number3, number4, and number5 and returns the result.
+- [x] **(5 pts)** double calculate_mean (double sum, int number) - Determines the mean through the calculation sum / number and returns the result. You need to check to make sure that number is not 0. If it is 0 the function returns -1.0 (we will assume that we are calculating the mean of positive numbers), otherwise it returns the mean.
 - [ ] **(5 pts)** double calculate_deviation (double number, double mean) - Determines the deviation of number from the mean and returns the result. The deviation may be calculated as number - mean.
-- [ ] 10 pts)** double calculate_variance (double deviation1, double deviation2, double deviation3, double deviation4, double deviation5, int number) - Determines the variance through the calculation:
+- [ ] **(10 pts)** double calculate_variance (double deviation1, double deviation2, double deviation3, double deviation4, double deviation5, int number) - Determines the variance through the calculation:
       
   $((deviation1)^2 + (deviation2)^2 + (deviation3)^2 + (deviation4)^2 + (deviation5)^2) / number$
 
@@ -40,15 +40,15 @@ Write a program that processes numbers, corresponding to student records read in
 - [ ] **(5 pts)** double calculate_standard_deviation (double variance) - Calculates the standard deviation as sqrt (variance) and returns the result. Recall that you may use the sqrt ( ) function that is found in math.h.
 - [ ] **(10 pts)** double find_max (double number1, double number2, double number3, double number4, double number5) — Determines the maximum number out of the five input parameters passed into the function, returning the max.
 - [ ] **(10 pts)** double find_min (double number1, double number2, double number3, double number4, double number5) — Determines the minimum number out of the five input parameters passed into the function, returning the min.
-- [ ] **(5 pts)** void print_double (FILE *outfile, double number) — Prints a double precision number (to the hundredths place) to an output file.
+- [x] **(5 pts)** void print_double (FILE *outfile, double number) — Prints a double precision number (to the hundredths place) to an output file.
 - [ ] **(20 pts)** A main ( ) function that does the following (this is what the program does!!!):
   - [x] Opens an input file "input.dat" for reading;
   - [x] Opens an output file "output.dat" for writing;
-  - [ ] Reads five records from the input file (input.dat); You will need to use a combination of read_double ( ) and read_integer ( ) function calls here!
-  - [ ] Calculates the sum of the GPAs;
-  - [ ] Calculates the sum of the class standings;
-  - [ ] Calculates the sum of the ages;
-  - [ ] Calculates the mean of the GPAs, writing the result to the output file (output.dat);
+  - [x] Reads five records from the input file (input.dat); You will need to use a combination of read_double ( ) and read_integer ( ) function calls here!
+  - [x] Calculates the sum of the GPAs;
+  - [x] Calculates the sum of the class standings;
+  - [x] Calculates the sum of the ages;
+  - [x] Calculates the mean of the GPAs, writing the result to the output file (output.dat);
   - [ ] Calculates the mean of the class standings, writing the result to the output file (output.dat);
   - [ ] Calculates the mean of the ages, writing the result to the output file (output.dat);
   - [ ] Calculates the deviation of each GPA from the mean (Hint: need to call calculate_deviation ( ) 5 times)

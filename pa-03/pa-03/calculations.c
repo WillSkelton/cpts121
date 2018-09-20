@@ -18,14 +18,23 @@ double calculateMean(double sum, int num)
 {
 	double mean = 0.0;
 
-	mean = sum / num;
+	if (num == 0) {
+		mean = -1.0;
+	}
+	else {
+		mean = sum / num;
+	}
 
 	return mean;
 }
 
 double calculateDev(double num, double mean)
 {
-	return 0.0;
+	double deviation = 0.0;
+
+	deviation = num - mean;
+
+	return deviation;
 }
 
 double calculateVariance(double numbers[])
