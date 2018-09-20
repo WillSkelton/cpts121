@@ -16,7 +16,11 @@ double calculateSums(double nums[])
 
 double calculateMean(double sum, int num)
 {
-	return 0.0;
+	double mean = 0.0;
+
+	mean = sum / num;
+
+	return mean;
 }
 
 double calculateDev(double num, double mean)

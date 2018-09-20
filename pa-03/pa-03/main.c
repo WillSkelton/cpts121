@@ -38,9 +38,9 @@ int main(void)
 
 	// ===================== Start Program =====================
 
+	// Get Files
 	infile = fopen("data.txt", "r");
 	outfile = fopen("results.txt", "w");
-
 
 	// Traverse the data file and get records
 	for (int i = 0; i < 5; i += 1)
@@ -54,14 +54,19 @@ int main(void)
 		ages[i] = readDouble(infile);
 	}
 
+	// Send Arrays to get summed
 	gpaSum = calculateSums(GPAs);
 	classStandingSum = calculateSums(classStandings);
 	ageSum = calculateSums(ages);
-
 	
-	calculateSums(infile);
+	// Send Sums to get averaged
+	gpaMean = calculateMean(gpaSum, 5);
+	classStandingMean = calculateMean(classStandingSum, 5);
+	ageMean = calculateMean(ageSum, 5);
 
-
+	printf("gpaSum: %lf \nclassStandingSum: %lf\nageSum: %lf\ngpaMean: %lf\nclassStandingMean: %lf\nageMean: %lf\n", gpaSum, classStandingSum, ageSum, gpaMean, classStandingMean, ageMean);
+	
+	
 
 	fclose(outfile);
 	fclose(infile);
