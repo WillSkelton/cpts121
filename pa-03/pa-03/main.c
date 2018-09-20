@@ -2,7 +2,7 @@
 Author: Will Skelton
 Date: 9/20/18
 
-Discription: Opens data.sat, parses it and then outputs calculations of the contents to results.dat and results.md
+Discription: Opens data.dat, parses it and then outputs calculations of the contents to results.dat and results.md
 */
 #include "functions.h"
 
