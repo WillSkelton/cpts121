@@ -37,9 +37,17 @@ double calculateDev(double num, double mean)
 	return deviation;
 }
 
-double calculateVariance(double numbers[])
+double calculateVariance(double deviations[], int num)
 {
-	return 0.0;
+	double variance = 0.0;
+
+	for (int i = 0; i < 5; i += 1) {
+		variance += pow(deviations[i], 2);
+	}
+
+	variance /= num;
+
+	return variance;
 }
 
 double calculateStandarddev(double variance)

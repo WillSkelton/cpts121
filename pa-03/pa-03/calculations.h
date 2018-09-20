@@ -47,7 +47,7 @@ double calculateDev(double num, double mean);
 * Preconditions:                                      *
 * Postconditions:                                     *
 ******************************************************/
-double calculateVariance(double numbers[]);
+double calculateVariance(double deviations[], int num);
 
 /******************************************************
 * Function:                                           *

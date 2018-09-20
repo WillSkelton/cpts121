@@ -33,7 +33,7 @@ int main(void)
 	double gpaMean = 0.0, classStandingMean = 0.0, ageMean = 0.0;
 
 	// Other
-	double gpaStandardDev = 0.0, gpaMax = 0.0, gpaMin = 0.0;
+	double variance = 0.0, gpaStandardDev = 0.0, gpaMax = 0.0, gpaMin = 0.0;
 
 
 	// ===================== Start Program =====================
@@ -43,8 +43,7 @@ int main(void)
 	outfile = fopen("results.dat", "w");
 
 	// Traverse the data file and get records
-	for (int i = 0; i < 5; i += 1)
-	{
+	for (int i = 0; i < 5; i += 1) {
 		SIDs[i] = readDouble(infile);
 
 		GPAs[i] = readDouble(infile);
@@ -75,7 +74,9 @@ int main(void)
 	}
 
 	// Variance
+	variance = calculateVariance(deviations, 5);
 
+	
 
 	fclose(outfile);
 	fclose(infile);
