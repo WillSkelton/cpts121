@@ -142,13 +142,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="calculations.c" />
+    <ClCompile Include="functions.c" />
     <ClCompile Include="main.c" />
-    <ClCompile Include="read.c" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="calculations.h" />
-    <ClInclude Include="read.h" />
+    <ClInclude Include="functions.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="data.txt" />

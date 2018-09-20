@@ -1,31 +1,23 @@
 /*
 Author: Will Skelton
-Date: 9/13/18
+Date: 9/20/18
 
-Discription: Given User input, program calculates the following values:
-* Newton's Second Law of Motion
-* Volume of a cylinder
-* Character encoding
-* Distance between two points
-* Tangent
-* Equivalent parallel resistance
-* General equation
+Discription: Opens data.txt, parses it and then outputs calculations of the contents to results.dat and results.md
 */
-#include "read.h"
-#include "calculations.h"
+#include "functions.h"
 
 int main(void)
 {
 	// ===================== Variables =====================
 	// files
-	FILE *infile = NULL, *outfile = NULL;
+	FILE *infile = NULL, *outfile = NULL, *markdown = NULL;
 
 	// student record arrays
 	double SIDs[5], GPAs[5], classStandings[5], ages[5], deviations[5];
 
 	// forloop variable
 	double temp = 0.0;
-	
+
 	// sums
 	double gpaSum = 0.0, classStandingSum = 0.0, ageSum = 0.0;
 
@@ -42,6 +34,10 @@ int main(void)
 	infile = fopen("data.txt", "r");
 	outfile = fopen("results.dat", "w");
 
+	// Optional Markdown file (open in a markdown editor or see on github)
+	markdown = fopen("results.md", "w");
+
+
 	// Traverse the data file and get records
 	for (int i = 0; i < 5; i += 1) {
 		SIDs[i] = readDouble(infile);
@@ -57,7 +53,7 @@ int main(void)
 	gpaSum = calculateSums(GPAs);
 	classStandingSum = calculateSums(classStandings);
 	ageSum = calculateSums(ages);
-	
+
 	// Send Sums to get averaged
 	gpaMean = calculateMean(gpaSum, 5);
 	classStandingMean = calculateMean(classStandingSum, 5);
@@ -67,7 +63,7 @@ int main(void)
 	printDouble(outfile, gpaMean);
 	printDouble(outfile, classStandingMean);
 	printDouble(outfile, ageMean);
-	
+
 	// Deviations
 	for (int i = 0; i < 5; i += 1) {
 		deviations[i] = calculateDev(GPAs[i], gpaMean);
@@ -78,7 +74,7 @@ int main(void)
 
 	// Standard Deviation
 	gpaStandardDev = calculateStandardDev(variance);
-	
+
 
 	// max gpa
 	gpaMax = findMax(GPAs);
@@ -91,6 +87,11 @@ int main(void)
 	printDouble(outfile, gpaMin);
 	printDouble(outfile, gpaMax);
 
+	// Prints all data to results.md
+	double scores[6] = {gpaMean, classStandingMean, ageMean, gpaStandardDev, gpaMin, gpaMax};
+	printMD(markdown, scores);
+
+	fclose(markdown);
 	fclose(outfile);
 	fclose(infile);
 

@@ -335,3 +335,5 @@ ASALocalRun/
 # Will's Stuff
 **/*.txt
 **/*.dat
+**/results.md
+sandbox
