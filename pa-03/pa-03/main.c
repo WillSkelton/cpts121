@@ -78,8 +78,18 @@ int main(void)
 
 	// Standard Deviation
 	gpaStandardDev = calculateStandardDev(variance);
-
 	
+
+	// max gpa
+	gpaMax = findMax(GPAs);
+
+	// min gpa
+	gpaMin = findMin(GPAs);
+
+	// Prints last 3 results
+	printDouble(outfile, gpaStandardDev);
+	printDouble(outfile, gpaMin);
+	printDouble(outfile, gpaMax);
 
 	fclose(outfile);
 	fclose(infile);

@@ -71,7 +71,7 @@ double calculateStandardDev(double variance);
 * Preconditions:                                      *
 * Postconditions:                                     *
 ******************************************************/
-double findMax(double num1, double num2, double num3, double num4, double num5);
+double findMax(double nums[]);
 
 /******************************************************
 * Function:                                           *
@@ -83,5 +83,5 @@ double findMax(double num1, double num2, double num3, double num4, double num5);
 * Preconditions:                                      *
 * Postconditions:                                     *
 ******************************************************/
-double findMin(double num1, double num2, double num3, double num4, double num5);
+double findMin(double nums[]);
 

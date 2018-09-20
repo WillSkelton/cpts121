@@ -55,13 +55,25 @@ double calculateStandardDev(double variance)
 	return sqrt(variance);
 }
 
-double findMax(double num1, double num2, double num3, double num4, double num5)
+double findMax(double nums[])
 {
-	return 0.0;
+	double max = 0.0;
+	for (int i = 0; i < 5; i += 1) {
+		if (max < nums[i]) {
+			max = nums[i];
+		}
+	}
+	return max;
 }
 
-double findMin(double num1, double num2, double num3, double num4, double num5)
+double findMin(double nums[])
 {
-	return 0.0;
+	double min = nums[0];
+	for (int i = 0; i < 5; i += 1) {
+		if (min > nums[i]) {
+			min = nums[i];
+		}
+	}
+	return min;
 }
 
