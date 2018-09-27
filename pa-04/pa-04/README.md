@@ -54,7 +54,9 @@ int firstRollVerdict (int sum_dice)
 ```
 
 - ### successiveRollVerdict
-
+```c
+successiveRollVerdict(int sum_dice, int point_value)
+```
 
 - ### adjustBankBalance
 ```c
