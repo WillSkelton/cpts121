@@ -2,7 +2,7 @@
 
   - [Description](#description)
   - [Functions](#functions)
-    - [printGameRules](#printgamerules)
+    - [showRules](#showrules)
     - [getBankBalance](#getbankbalance)
     - [getWagerAmount](#getwageramount)
     - [checkWagerAmount](#checkwageramount)
@@ -18,11 +18,23 @@
 This program simulates the game of "craps".
 
 ## Functions
-- ### printGameRules
+- ### showRules
 ```c
-void printGameRules (void)
+void showRules(void)
 ```
-  
+  showRules() takes no parameters and returns nothing. All it does is prints out the game rules to the console like this:
+
+  ```
+========================= Rules =========================
+1.) Pick a number
+2.) Roll Dice
+  i.) If the sum of the dice is 7 or 11, then you win.
+  ii.) If the sum is 2, 3, or 12, you lose.
+  iii.) If the sum is 4, 5, 6,8, 9, or 10, add that sum to your score until you hit your mark. Skip to step 3.
+    * Note: if you roll a 7 or 11 after the first roll, you lose
+3.) If you made it this far, keep rolling until you either hit your mark and you win or you roll a 7 or 11 and you lose.
+=========================================================
+  ```
 - ### getBankBalance
 ```c
 double getBankBalance (void)
