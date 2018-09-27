@@ -1,56 +1,69 @@
 # Programming Assignment 4: "Craps"
 
-[[toc]]
+  - [Description](#description)
+  - [Functions](#functions)
+    - [printGameRules](#printgamerules)
+    - [getBankBalance](#getbankbalance)
+    - [getWagerAmount](#getwageramount)
+    - [checkWagerAmount](#checkwageramount)
+    - [rollDie](#rolldie)
+    - [calculateDiceSum](#calculatedicesum)
+    - [firstRollVerdict](#firstrollverdict)
+    - [successiveRollVerdict](#successiverollverdict)
+    - [adjustBankBalance](#adjustbankbalance)
+    - [chatterMessages](#chattermessages)
+  - [Changes](#changes)
+
 ## Description
+This program simulates the game of "craps".
+
 ## Functions
-
-### Print Game Rules
-  ```c
-  void print_game_rules (void)
-  ```
-
-### Get Bank Balance
-  ```c
-  double get_bank_balance (void)
-  ```
-
-### Get Wager Amouunt
-  ```c
-  double get_wager_amount (void) 
-  ```
-  
-### Check Wager Amount
+- ### printGameRules
 ```c
-  int check_wager_amount (double wager, double balance)
+void printGameRules (void)
+```
+  
+- ### getBankBalance
+```c
+double getBankBalance (void)
 ```
 
-### Roll Die
-  ```c
-  int roll_die (void)
+- ### getWagerAmount
+```c
+double getWagerAmouunt (void)
+```
+
+- ### checkWagerAmount
+```c
+int checkWagerAmount (double wager, double balance)
+```
+
+- ### rollDie
+```c
+int rollDie (void)
   ```
+
+- ### calculateDiceSum
+```c
+int calculateDiceSum (int die1_value, int die2_value)
+```
+
+- ### firstRollVerdict
+```c
+int firstRollVerdict (int sum_dice)
+```
+
+- ### successiveRollVerdict
+
+
+- ### adjustBankBalance
+```c
+adjustBankBalance (double bankBalance, double wagerAmount, int addOrSubtract)
+```
+
+- ### chatterMessages
+```c
+void chatterMessages (int numRolls, int verdict, double initialBalance, double currentBalance)
+```
   
-### Calculate Sum of Dice
-  ```c
-  int calculateDiceSum (int die1_value, int die2_value) 
-  ```
-
-### 1st Roll Verdict
-  ```c
-  int firstRollVerdict (int sum_dice)
-  ```
-
-### Successive Roll Verdict
-  ```c
-  int successiveRollVerdict(int sum_dice, int point_value)
-  ```
-
-### Adjust Bank Balance
-  ```c
-  adjust_bank_balance (double bank_balance, double wager_amount, int add_or_subtract)
-  ```
-
-### Chatter Message
-  ```c
-  void chatter_messages (int numRolls, int verdict, double initialBalance, double currentBalance)
-  ```
- ## Changes made to starting functions
+## Changes
