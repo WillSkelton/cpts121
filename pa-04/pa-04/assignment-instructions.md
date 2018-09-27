@@ -13,7 +13,7 @@ At the conclusion of this programming assignment, participants should be able to
   - [ ] Apply repetition structures within an algorithm
   - [ ] Construct while (), for (), or do-while () loops in C
   - [ ] Compose C programs consisting of sequential, conditional, and iterative statements
-  - Eliminate redundancy within a program by applying loops and functions
+  - [ ] Eliminate redundancy within a program by applying loops and functions
   - [ ] Create structure charts for a given problem
   - [ ] Determine an appropriate functional decomposition or top-down design from a structure chart
   - [ ] Generate random numbers for use within a C program
