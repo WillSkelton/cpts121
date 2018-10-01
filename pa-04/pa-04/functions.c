@@ -2,26 +2,46 @@
 
 int gameLoop(void) {
 
-	int choice = 0;
+	srand((unsigned int)time(NULL));
 
-	while (choice >= 0) {
+	int choice = 0;
+	do {
+		
 		printf("Press 1 to show the menu: \n");
+		printf("Press 2 to start the game: \n");
+		printf("Press 3 to quit: \n");
 		printf(">>> ");
 		scanf("%d", &choice);
 
-		if (choice == 1) {
-			showRules();
-		}
-		else if (choice < 0) {
-			printf("Goodbye!\n");
-		}
 
-	}
+
+
+		switch (choice) {
+
+		case 1:
+			showRules();
+			break;
+
+		case 2:
+			printf("die 1: %d\n", rollDice());
+			printf("die 2: %d\n", rollDice());
+			break;
+
+		case 3:
+			printf("Goodbye!\n");
+			break;
+
+		default:
+			printf("Invalid input, try again.\n");
+			break;
+
+		}
+	}	while (choice != 3);
 
 }
 
 void showRules(void) {
-	printf("========================================================= Rules ========================================================\n");
+	printf("========================================================= Rules ========================================================");
 	printf("1.) Pick a number\n");
 	printf("2.) Roll Dice\n");
 	printf("  i.) If the sum of the dice is 7 or 11, then you win.\n");
@@ -33,3 +53,10 @@ void showRules(void) {
 
 }
 
+int rollDice(void) {
+	int value = 0;
+
+	value = rand() % 6 + 1;
+
+	return value;
+}
