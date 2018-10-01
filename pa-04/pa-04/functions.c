@@ -4,6 +4,8 @@ int gameLoop(void) {
 
 	srand((unsigned int)time(NULL));
 
+	double accountBalance = 0.0;
+
 	int choice = 0;
 	do {
 		
@@ -13,9 +15,6 @@ int gameLoop(void) {
 		printf(">>> ");
 		scanf("%d", &choice);
 
-
-
-
 		switch (choice) {
 
 		case 1:
@@ -23,8 +22,8 @@ int gameLoop(void) {
 			break;
 
 		case 2:
-			printf("die 1: %d\n", rollDice());
-			printf("die 2: %d\n", rollDice());
+			accountBalance = getAccountBalance();
+			playGame(accountBalance);
 			break;
 
 		case 3:
@@ -59,4 +58,23 @@ int rollDice(void) {
 	value = rand() % 6 + 1;
 
 	return value;
+}
+
+int playGame(double accountBalance) {
+
+	printf("Alright! Lets do this!\n");
+
+	printf("So as far as we can tell, you have $%.2lf in your bank account.\n", accountBalance);
+
+	printf("die 1: %d\n", rollDice());
+	printf("die 2: %d\n", rollDice());
+}
+
+double getAccountBalance(void) {
+	double accountBalance = 0.0;
+	printf("We need to know how much you have in your bank account: ");
+
+	scanf(" %lf", &accountBalance);
+
+	return accountBalance;
 }
