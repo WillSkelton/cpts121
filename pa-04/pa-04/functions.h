@@ -8,7 +8,9 @@ void showRules(void);
 
 int rollDice(void);
 
-int playGame(double accountBalance);
+double playGame(double accountBalance);
 // int sanitizeInput(int);
 
 double getAccountBalance(void);
+
+double getWager(double accountBalance);
