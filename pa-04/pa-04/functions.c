@@ -48,7 +48,8 @@ int gameLoop(void) {
 
 		}
 	}	while (choice != 4);
-
+	
+	return 0;
 }
 
 void showRules(void) {
@@ -63,23 +64,75 @@ void showRules(void) {
 }
 
 int rollDice(void) {
-	int value = 0;
+	int d1 = 0, d2 = 0, sum = 0;
 
-	value = rand() % 12 + 1;
+	d1 = rand() % 6 + 1;
+	d2 = rand() % 6 + 1;
 
-	return value;
+	printf("> You rolled a %d and a %d.\n", d1, d2);
+
+	sum = d1 + d2;
+
+	return sum;
 }
 
 double playGame(double accountBalance) {
-	double winnings = 0.0;
+	double winnings = 0.0, wager = 0.0;
 	
-	int diceSum = 0;
+	int diceSum = 0, mark = 0.0;
 
 	int lost = 0, won = 0;
 
 	printf("================================================ Time's up! Lets do this! ==============================================\n");
 
-	getWager(accountBalance);
+	wager = getWager(accountBalance);
+
+	diceSum = rollDice();
+
+	if (diceSum == 7 || diceSum == 11) {
+		printf("> NICE! You win.\n");
+		winnings += wager;
+		printf("> You won $%.2lf.\n", winnings);
+
+	}
+
+	else if (diceSum == 2 || diceSum == 3 || diceSum == 12) {
+		printf("> Sorry, you lose!\n");
+		winnings -= wager;
+		printf("> You lost $%.2lf.\n", winnings);
+	}
+
+	else {
+		mark = diceSum;
+		
+		printf("> Alright, Your mark is %d.\n", mark);
+		printf("> Now, you'll keep rolling until you roll a %d and you win or a 7 or 11 and you lose.\n", mark);
+
+		do {
+			diceSum = rollDice();
+
+			if (diceSum == mark) {
+				printf("> NICE! You win.\n");
+				winnings += wager;
+				printf("> You won $%.2lf.\n", winnings);
+				break;
+			} 
+			else if (diceSum == 7 || diceSum == 11) {
+				printf("> Sorry, you lose!\n");
+				winnings -= wager;
+				printf("> You lost $%.2lf.\n", winnings);
+				break;
+
+			}
+			else {
+				printf("> Rolling again...\n");
+			}
+
+		} while (diceSum != 7 || diceSum != 11 || diceSum != mark);
+	}
+
+
+	
 
 	printf("========================================================================================================================\n");
 
@@ -109,11 +162,11 @@ double getWager(double accountBalance) {
 		printf("How much money do you want to wager?: ");
 		scanf(" %lf", &wager);
 
-		if (wager >= accountBalance) {
+		if (wager > accountBalance) {
 			printf("You don't have enough money to wager that much. Try again. \n");
 		}
 
-	} while (wager >= accountBalance);
+	} while (wager > accountBalance);
 
-
+	return wager;
 }
