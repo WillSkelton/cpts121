@@ -16,6 +16,12 @@ int gameLoop(void) {
 	int choice = 0;
 
 	do {
+
+		if (accountBalance <= 0.0) {
+			printf(">>> You've run out of money and must leave. Goodbye!\n");
+			break;
+		}
+
 		showMenu();
 		printf(">>> ");
 		scanf("%d", &choice);
@@ -55,7 +61,6 @@ void showMenu(void) {
 	printf("Press 4 to cash out: \n");
 }
 
-
 void showRules(void) {
 	printf("========================================================= Rules ========================================================\n");
 	printf("1.) Roll Dice\n");
@@ -84,8 +89,6 @@ double playGame(double accountBalance) {
 	double winnings = 0.0, wager = 0.0;
 	
 	int diceSum = 0, mark = 0.0;
-
-	int lost = 0, won = 0;
 
 	printf("================================================ Time's up! Lets do this! ==============================================\n");
 
