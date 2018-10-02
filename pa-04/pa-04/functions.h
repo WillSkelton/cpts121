@@ -4,6 +4,8 @@
 
 int gameLoop(void);
 
+void showMenu(void);
+
 void showRules(void);
 
 int rollDice(void);

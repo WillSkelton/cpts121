@@ -16,11 +16,7 @@ int gameLoop(void) {
 	int choice = 0;
 
 	do {
-		
-		printf("Press 1 to show the menu: \n");
-		printf("Press 2 to start the game: \n");
-		printf("Press 3 to show your account balance: \n");
-		printf("Press 4 to cash out: \n");
+		showMenu();
 		printf(">>> ");
 		scanf("%d", &choice);
 
@@ -51,6 +47,14 @@ int gameLoop(void) {
 	
 	return 0;
 }
+
+void showMenu(void) {
+	printf("Press 1 to show the menu: \n");
+	printf("Press 2 to start the game: \n");
+	printf("Press 3 to show your account balance: \n");
+	printf("Press 4 to cash out: \n");
+}
+
 
 void showRules(void) {
 	printf("========================================================= Rules ========================================================\n");
