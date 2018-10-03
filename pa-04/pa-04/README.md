@@ -77,10 +77,12 @@ This function plays one round of the game. The steps are as follows:
   - Calls [rollDice()](#rolldice)
     - ***If the sum is 7 or 11***, the the player wins and is notified of their success and new balance.
     - ***If the sum is 2, 3, or 12***, the the player loses and is notified of their loss and new balance.
-    - ***If the sum is 4, 5, 6, 8, 9, or 10***, that becomes the player's **mark**. The program keeps rolling the dice until the player's mark is rolled and they win or either a 7 or 11 is rolled and they lose. Either way, the player is notified. This part is handled in [successiveRoll()](#successiveroll)
+    - that becomes the player's **mark**. The program keeps rolling the dice until the player's mark is rolled and they win or either a 7 or 11 is rolled and they lose. Either way, the player is notified. This part is handled in [successiveRoll()](#successiveroll)
   - Returns the winnings ($\pm wager$ depending on if they win or lose) to the [gameLoop()](#gameloop)
  
 ### successiveRoll()
+This function handles what heppens if the player makes it through the first roll. If the player rolls a ***4, 5, 6, 8, 9, or 10***, the program will continue rolling until the player rolls a 7 or 11 and they lose or the player hits their mark and wins.
+
 
 ### setAccountBalance
 ```c
