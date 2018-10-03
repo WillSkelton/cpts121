@@ -39,10 +39,10 @@ void showMenu(void);
 ```
 This Function prints the following:
 ```
-	Press 1 to show the menu:
-	Press 2 to start the game:
-	Press 3 to show your account balance:
-	Press 4 to cash out:
+Press 1 to show the menu:
+Press 2 to start the game:
+Press 3 to show your account balance:
+Press 4 to cash out:
 ```
 
 ### showRules

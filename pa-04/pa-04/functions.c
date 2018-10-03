@@ -1,4 +1,4 @@
-#include "functions.h"
+﻿#include "functions.h"
 
 int gameLoop(void) {
 
@@ -34,34 +34,46 @@ int gameLoop(void) {
 
 		case 2:
 			accountBalance += playGame(accountBalance);
+			system("cls");
 			break;
 
 		case 3:
+			system("cls");
+			printf("----------------------------------------------\n");
 			printf("You have $%.2f left in your account.\n", accountBalance);
+			printf("----------------------------------------------\n");
 			break;
 
 		case 4:
+			system("cls");
+			break;
+
+		case 5:
 			printf("Goodbye!\n");
 			break;
+
 
 		default:
 			printf("Invalid input, try again.\n");
 			break;
 
 		}
-	}	while (choice != 4);
+	}	while (choice != 5);
 	
 	return 0;
 }
 
 void showMenu(void) {
-	printf("Press 1 to show the menu: \n");
+
+	printf("Press 1 to show the rules: \n");
 	printf("Press 2 to start the game: \n");
 	printf("Press 3 to show your account balance: \n");
-	printf("Press 4 to cash out: \n");
+	printf("Press 4 to clear the screen: \n");
+	printf("Press 5 to cash out: \n");
 }
 
 void showRules(void) {
+	system("cls");
 	printf("========================================================= Rules ========================================================\n");
 	printf("1.) Roll Dice\n");
 	printf("2.) If the sum of the dice is 7 or 11, then you win.\n");
@@ -78,17 +90,25 @@ int rollDice(void) {
 	d1 = rand() % 6 + 1;
 	d2 = rand() % 6 + 1;
 
-	printf("> You rolled a %d and a %d.\n", d1, d2);
+	printDice(d1);
+	printDice(d2);
+
 
 	sum = d1 + d2;
+
+	printf("-------------------------------------------\n");
+	printf("> You rolled a %d and a %d for a sum of %d.\n", d1, d2, sum);
 
 	return sum;
 }
 
 double playGame(double accountBalance) {
+
+	system("cls");
+
 	double winnings = 0.0, wager = 0.0;
 	
-	int diceSum = 0, mark = 0.0;
+	int diceSum = 0, mark = 0, rollCount = 1;
 
 	printf("================================================ Time's up! Lets do this! ==============================================\n");
 
@@ -100,46 +120,61 @@ double playGame(double accountBalance) {
 		printf("> NICE! You win.\n");
 		winnings += wager;
 		printf("> You won $%.2lf.\n", winnings);
-
+		system("pause");
+		printf("==========================================\n");
 	}
 
 	else if (diceSum == 2 || diceSum == 3 || diceSum == 12) {
 		printf("> Sorry, you lose!\n");
 		winnings -= wager;
 		printf("> You lost $%.2lf.\n", winnings);
+		system("pause");
+		printf("==========================================\n");
 	}
 
 	else {
 		mark = diceSum;
 		
+		printf("------------------------------------------\n");
 		printf("> Alright, Your mark is %d.\n", mark);
 		printf("> Now, you'll keep rolling until you roll a %d and you win or a 7 or 11 and you lose.\n", mark);
+		printf("==========================================\n");
 
 		do {
+
+			Sleep(2000);
+
+			printf("Roll Number %d:\n\n", ++rollCount);
+			printf("> Rolling...\n");
+
 			diceSum = rollDice();
 
 			if (diceSum == mark) {
 				printf("> NICE! You win.\n");
 				winnings += wager;
 				printf("> You won $%.2lf.\n", winnings);
+				system("pause");
+				printf("==========================================\n");
 				break;
 			} 
 			else if (diceSum == 7 || diceSum == 11) {
 				printf("> Sorry, you lose!\n");
 				winnings -= wager;
 				printf("> You lost $%.2lf.\n", winnings);
+				system("pause");
+				printf("==========================================\n");
 				break;
 
 			}
 			else {
-				printf("> Rolling again...\n");
+				
+				printf("==========================================\n");
 			}
+			
+			//printf("------------------------\n");
 
 		} while (diceSum != 7 || diceSum != 11 || diceSum != mark);
 	}
-
-
-	
 
 	printf("========================================================================================================================\n");
 
@@ -176,4 +211,60 @@ double getWager(double accountBalance) {
 	} while (wager > accountBalance);
 
 	return wager;
+}
+
+void printDice(int num) {
+
+	switch (num) {
+
+	case 1:
+		printf(" _________\n");
+		printf("|         |\n");
+		printf("|    O    |\n");
+		printf("|         |\n");
+		printf("|_________|\n");
+		break;
+
+	case 2:
+		printf(" _________\n");
+		printf("| O       |\n");
+		printf("|         |\n");
+		printf("|       O |\n");
+		printf("|_________|\n");
+		break;
+
+	case 3:
+		printf(" _________\n");
+		printf("| O       |\n");
+		printf("|    O    |\n");
+		printf("|       O |\n");
+		printf("|_________|\n");
+		break;
+
+	case 4:
+		printf(" _________\n");
+		printf("| O     O |\n");
+		printf("|    O    |\n");
+		printf("| O     O |\n");
+		printf("|_________|\n");
+		break;
+
+	case 5:
+		printf(" _________\n");
+		printf("| O     O |\n");
+		printf("|         |\n");
+		printf("| O     O |\n");
+		printf("|_________|\n");
+		break;
+
+	case 6:
+		printf(" _________\n");
+		printf("| O     O |\n");
+		printf("| O     O |\n");
+		printf("| O     O |\n");
+		printf("|_________|\n");
+		break;
+
+
+	}
 }

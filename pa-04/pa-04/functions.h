@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#include <windows.h>
 
 int gameLoop(void);
 
@@ -16,3 +17,5 @@ double playGame(double accountBalance);
 double getAccountBalance(void);
 
 double getWager(double accountBalance);
+
+void printDice(int num);
