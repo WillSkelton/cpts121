@@ -14,7 +14,9 @@ int rollDice(void);
 double playGame(double accountBalance);
 // int sanitizeInput(int);
 
-double getAccountBalance(void);
+double setAccountBalance(void);
+
+double getAccountBalance(double accountBalance);
 
 double getWager(double accountBalance);
 

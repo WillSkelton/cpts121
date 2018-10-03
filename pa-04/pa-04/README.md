@@ -7,8 +7,9 @@
     - [showRules()](#showrules)
     - [rollDice()](#rolldice)
     - [playGame()](#playgame)
-    - [getAccountBalance()](#getaccountbalance)
+    - [setAccountBalance()](#setaccountbalance)
     - [getWager()](#getwager)
+    - [printDice()](#printdice)
 
 ## Description
 This program simulates the game of "craps".
@@ -78,7 +79,7 @@ This function plays one round of the game. The steps are as follows:
     - ***If the sum is 4, 5, 6, 8, 9, or 10***, that becomes the player's **mark**. The program keeps rolling the dice until the player's mark is rolled and they win or either a 7 or 11 is rolled and they lose. Either way, the player is notified.
   - Returns the winnings ($\pm wager$ depending on if they win or lose) to the [gameLoop()](#gameloop)
 
-### getAccountBalance
+### setAccountBalance
 ```c
 double getAccountBalance(void);
 ```
@@ -89,3 +90,23 @@ This function asks the user for their bank account balance. It must be greater t
 double getWager(double accountBalance);
 ```
 This function asks the user to input a value to wager for the next game. The program then checks to make sure the player isn't betting more money than they have and will continue to ask the user for a valid number until they enter one.
+
+### printDice()
+
+This function takes an integer (1-6) and prints an ascii die for that number. They look much better in the game window. See below:
+```
+     1            2            3 
+ _________    _________    _________
+|         |  | O       |  | O       |
+|    O    |  |         |  |    O    |
+|         |  |       O |  |       O |
+|_________|  |_________|  |_________|
+
+     4            5            6
+ _________    _________    _________
+| O     O |  | O     O |  | O     O |
+|         |  |    O    |  | O     O |
+| O     O |  | O     O |  | O     O |
+|_________|  |_________|  |_________|
+
+```
