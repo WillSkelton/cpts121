@@ -178,6 +178,7 @@ double playGame(double accountBalance) {
 	return winnings;
 }
 
+// Handles successive rolls after the first one.
 double successiveRoll(int diceSum, double wager) {
 	
 	double winnings = 0.0;

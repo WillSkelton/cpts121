@@ -41,10 +41,11 @@ void showMenu(void);
 ```
 This Function prints the following:
 ```
-Press 1 to show the menu:
+Press 1 to show the rules:
 Press 2 to start the game:
 Press 3 to show your account balance:
-Press 4 to cash out:
+Press 4 to clear the screen:
+Press 5 to cash out:
 ```
 
 ### showRules
@@ -53,13 +54,11 @@ void showRules(void);
 ```
 This function prints the game rules like this:
 ```
-========================================================= Rules ========================================================
 1.) Roll Dice
-2.) If the sum of the dice is 7 or 11, then you win.
+2.) If the sum of the dice is 7 or 11, then you win 2x what you bet.
 3.) If the sum is 2, 3, or 12, you lose.
 4.) If the sum is 4, 5, 6,8, 9, or 10, that's your new goal. You have to keep rolling until you get that.
   * Note: if you roll a 7 or 11 after the first roll, you lose
-"========================================================================================================================
 ```
 
 ### rollDice
@@ -82,7 +81,6 @@ This function plays one round of the game. The steps are as follows:
  
 ### successiveRoll()
 This function handles what heppens if the player makes it through the first roll. If the player rolls a ***4, 5, 6, 8, 9, or 10***, the program will continue rolling until the player rolls a 7 or 11 and they lose or the player hits their mark and wins.
-
 
 ### setAccountBalance
 ```c
