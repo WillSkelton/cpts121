@@ -13,11 +13,14 @@ int gameLoop(void) {
 
 	} while (accountBalance <= 0.0);
 
+	system("cls");
+
 	int choice = 0;
 
 	do {
 
 		if (accountBalance <= 0.0) {
+			system("cls");
 			printf(">>> You've run out of money and must leave. Goodbye!\n");
 			break;
 		}
@@ -49,6 +52,7 @@ int gameLoop(void) {
 			break;
 
 		case 5:
+			system("cls");
 			printf("Goodbye!\n");
 			break;
 
@@ -90,14 +94,16 @@ int rollDice(void) {
 	d1 = rand() % 6 + 1;
 	d2 = rand() % 6 + 1;
 
+	sum = d1 + d2;
+
+	printf("> Sum: %d\n\n", sum);
+	printf("> Rolling...\n");
+
 	printDice(d1);
 	printDice(d2);
 
-
-	sum = d1 + d2;
-
 	printf("-------------------------------------------\n");
-	printf("> You rolled a %d and a %d for a sum of %d.\n", d1, d2, sum);
+	printf("> You rolled a %d and a %d.\n", d1, d2);
 
 	return sum;
 }
@@ -108,28 +114,30 @@ double playGame(double accountBalance) {
 
 	double winnings = 0.0, wager = 0.0;
 	
-	int diceSum = 0, mark = 0, rollCount = 1;
+	int diceSum = 0, mark = 0, rollCount = 0;
 
 	printf("================================================ Time's up! Lets do this! ==============================================\n");
 
 	wager = getWager(accountBalance);
 
+	system("cls");
+	printf("> Roll Number: %d\n", ++rollCount);
+
 	diceSum = rollDice();
+
 
 	if (diceSum == 7 || diceSum == 11) {
 		printf("> NICE! You win.\n");
 		winnings += wager;
-		printf("> You won $%.2lf.\n", winnings);
+		printf("> You won $%.2lf.\n\n", winnings);
 		system("pause");
-		printf("==========================================\n");
 	}
 
 	else if (diceSum == 2 || diceSum == 3 || diceSum == 12) {
 		printf("> Sorry, you lose!\n");
 		winnings -= wager;
-		printf("> You lost $%.2lf.\n", winnings);
+		printf("> You lost $%.2lf.\n\n", winnings);
 		system("pause");
-		printf("==========================================\n");
 	}
 
 	else {
@@ -138,40 +146,36 @@ double playGame(double accountBalance) {
 		printf("------------------------------------------\n");
 		printf("> Alright, Your mark is %d.\n", mark);
 		printf("> Now, you'll keep rolling until you roll a %d and you win or a 7 or 11 and you lose.\n", mark);
-		printf("==========================================\n");
 
 		do {
 
 			Sleep(2000);
 
-			printf("Roll Number %d:\n\n", ++rollCount);
-			printf("> Rolling...\n");
+			system("cls");
+			printf("> Roll Number %d:\n", ++rollCount);
+			printf("> Mark: %d\n", mark);
 
 			diceSum = rollDice();
+
 
 			if (diceSum == mark) {
 				printf("> NICE! You win.\n");
 				winnings += wager;
-				printf("> You won $%.2lf.\n", winnings);
+				printf("> You won $%.2lf.\n\n", winnings);
 				system("pause");
-				printf("==========================================\n");
 				break;
 			} 
 			else if (diceSum == 7 || diceSum == 11) {
 				printf("> Sorry, you lose!\n");
 				winnings -= wager;
-				printf("> You lost $%.2lf.\n", winnings);
+				printf("> You lost $%.2lf.\n\n", winnings);
 				system("pause");
-				printf("==========================================\n");
 				break;
 
 			}
 			else {
-				
-				printf("==========================================\n");
+				continue;
 			}
-			
-			//printf("------------------------\n");
 
 		} while (diceSum != 7 || diceSum != 11 || diceSum != mark);
 	}
@@ -244,7 +248,7 @@ void printDice(int num) {
 	case 4:
 		printf(" _________\n");
 		printf("| O     O |\n");
-		printf("|    O    |\n");
+		printf("|         |\n");
 		printf("| O     O |\n");
 		printf("|_________|\n");
 		break;
@@ -252,7 +256,7 @@ void printDice(int num) {
 	case 5:
 		printf(" _________\n");
 		printf("| O     O |\n");
-		printf("|         |\n");
+		printf("|    O    |\n");
 		printf("| O     O |\n");
 		printf("|_________|\n");
 		break;
