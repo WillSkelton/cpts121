@@ -85,7 +85,6 @@ int gameLoop(void) {
 	return 0;
 }
 
-
 // Prints main menu
 void showMenu(void) {
 
@@ -109,7 +108,6 @@ void showRules(void) {
 
 }
 
-
 // Randomly generates 2 dice
 int rollDice(void) {
 	int d1 = 0, d2 = 0, sum = 0;
@@ -132,7 +130,6 @@ int rollDice(void) {
 
 	return sum;
 }
-
 
 // Plays one round of the game
 double playGame(double accountBalance) {
@@ -172,60 +169,70 @@ double playGame(double accountBalance) {
 
 	// If the user makes it past the first roll, continue rolling
 	else {
-		mark = diceSum;
-		
-		printf("------------------------------------------\n");
-		printf("> Alright, Your mark is %d.\n", mark);
-		printf("> Now, you'll keep rolling until you roll a %d and you win or a 7 or 11 and you lose.\n", mark);
-
-
-		do {
-
-			/*
-			* Sleeps for 2 seconds to let the user see the results of the roll
-			* Clears the screen for the next roll
-			* Prints the current roll with:
-			*  - Roll Number
-			*  - Mark
-			*  - Sum of roll
-			*  - Ascii representation of both dice
-			*  - Winnings
-			*  - Success of roll
-			* Pauses to make sure the user sees the outcome
-			*/
-			Sleep(2000);
-
-			system("cls");
-			printf("> Roll Number %d:\n", ++rollCount);
-			printf("> Mark: %d\n", mark);
-
-			diceSum = rollDice();
-
-
-			if (diceSum == mark) {
-				printf("> NICE! You win.\n");
-				winnings += wager;
-				printf("> You won $%.2lf.\n\n", winnings);
-				system("pause");
-				break;
-			} 
-			else if (diceSum == 7 || diceSum == 11) {
-				printf("> Sorry, you lose!\n");
-				winnings -= wager;
-				printf("> You lost $%.2lf.\n\n", winnings);
-				system("pause");
-				break;
-
-			}
-			else {
-				continue;
-			}
-
-		} while (diceSum != 7 || diceSum != 11 || diceSum != mark);
+		winnings = successiveRoll(diceSum, wager);
 	}
 
 	
 	printf("========================================================================================================================\n");
+
+	return winnings;
+}
+
+double successiveRoll(int diceSum, double wager) {
+	
+	double winnings = 0.0;
+	int mark = 0, rollCount = 1;
+
+	mark = diceSum;
+
+	printf("------------------------------------------\n");
+	printf("> Alright, Your mark is %d.\n", mark);
+	printf("> Now, you'll keep rolling until you roll a %d and you win or a 7 or 11 and you lose.\n", mark);
+
+
+	do {
+
+		/*
+		* Sleeps for 2 seconds to let the user see the results of the roll
+		* Clears the screen for the next roll
+		* Prints the current roll with:
+		*  - Roll Number
+		*  - Mark
+		*  - Sum of roll
+		*  - Ascii representation of both dice
+		*  - Winnings
+		*  - Success of roll
+		* Pauses to make sure the user sees the outcome
+		*/
+		Sleep(2000);
+
+		system("cls");
+		printf("> Roll Number %d:\n", ++rollCount);
+		printf("> Mark: %d\n", mark);
+
+		diceSum = rollDice();
+
+
+		if (diceSum == mark) {
+			printf("> NICE! You win.\n");
+			winnings += wager;
+			printf("> You won $%.2lf.\n\n", winnings);
+			system("pause");
+			break;
+		}
+		else if (diceSum == 7 || diceSum == 11) {
+			printf("> Sorry, you lose!\n");
+			winnings -= wager;
+			printf("> You lost $%.2lf.\n\n", winnings);
+			system("pause");
+			break;
+
+		}
+		else {
+			continue;
+		}
+
+	} while (diceSum != 7 || diceSum != 11 || diceSum != mark);
 
 	return winnings;
 }

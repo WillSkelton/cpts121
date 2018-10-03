@@ -12,7 +12,8 @@ void showRules(void);
 int rollDice(void);
 
 double playGame(double accountBalance);
-// int sanitizeInput(int);
+
+double successiveRoll(int diceSum, double wager);
 
 double setAccountBalance(void);
 
