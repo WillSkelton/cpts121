@@ -13,7 +13,10 @@
     - [printDice()](#printdice)
 
 ## Description
-This program simulates the game of "craps".
+***NOTE:***   If you're reading the plaintext version of this README, go to https://github.com/WillSkelton/cpts121/tree/master/pa-04/pa-04 to see the styled page. It's much easier to read.
+
+This program simulates the game of "craps". 
+
 
 ## Functions
 
