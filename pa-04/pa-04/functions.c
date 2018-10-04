@@ -66,6 +66,10 @@ int gameLoop(void) {
 
 		case 5:
 			system("cls");
+			printf("----------------------------------------------\n");
+			printf("Your total balance comes out to: $%.2lf\n", accountBalance);
+			printf("----------------------------------------------\n");
+
 			printf("Goodbye!\n");
 			break;
 
@@ -277,7 +281,14 @@ double getWager(double accountBalance) {
 			printf("-----------------------------------------------------------\n");
 		}
 
-	} while (wager > accountBalance);
+		if (wager < 1.0) {
+			system("cls");
+			printf("------------------------------------------------------\n");
+			printf("Nice try. Your bet must be at least $1.00. Try again. \n");
+			printf("------------------------------------------------------\n");
+		}
+
+	} while (wager > accountBalance || wager < 1.0);
 
 	return wager;
 }
