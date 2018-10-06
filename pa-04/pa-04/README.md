@@ -11,6 +11,7 @@
     - [setAccountBalance()](#setaccountbalance)
     - [getWager()](#getwager)
     - [printDice()](#printdice)
+    - [gameChatter()](#gamechatter)
 
 ## Description
 ***NOTE:***   If you're reading the plaintext version of this README, go to https://github.com/WillSkelton/cpts121/tree/master/pa-04/pa-04 to see the styled page. It's much easier to read.
@@ -98,6 +99,9 @@ double getWager(double accountBalance);
 This function asks the user to input a value to wager for the next game. The program then checks to make sure the player isn't betting more money than they have and will continue to ask the user for a valid number until they enter one.
 
 ### printDice()
+```c
+void printDice(int num);
+```
 
 This function takes an integer (1-6) and prints an ascii die for that number. They look much better in the game window. See below:
 ```
@@ -116,3 +120,9 @@ This function takes an integer (1-6) and prints an ascii die for that number. Th
 |_________|  |_________|  |_________|
 
 ```
+
+### gameChatter
+```c
+void gameChatter(int num);
+```
+This function takes a number from 0-2 with 0 representing losing, 1 representing still playing, and 2 being winning. It takes that number and uses it to print a relevant but random statement to the screen during gameplay.

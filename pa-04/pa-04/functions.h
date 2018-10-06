@@ -84,4 +84,10 @@ double getWager(double accountBalance);
 **********************************************************/
 void printDice(int num);
 
+/*********************************************************************************
+* return type: n/a
+* parameters: int from 0-2 rating success with - being losing and 2 being winning
+* last modified: 10/5/18
+* desctiption: prints game chatter
+*********************************************************************************/
 void gameChatter(int num);

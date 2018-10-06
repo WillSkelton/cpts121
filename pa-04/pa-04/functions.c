@@ -161,14 +161,16 @@ double playGame(double accountBalance) {
 
 	// Checks first roll
 	if (diceSum == 7 || diceSum == 11) {
-		printf("> NICE! You win.\n");
+		gameChatter(2);
+		// printf("> NICE! You win.\n");
 		winnings += (2 * wager);
 		printf("> You won $%.2lf.\n\n", winnings);
 		system("pause");
 	}
 
 	else if (diceSum == 2 || diceSum == 3 || diceSum == 12) {
-		printf("> Sorry, you lose!\n");
+		gameChatter(0);
+		// printf("> Sorry, you lose!\n");
 		winnings -= wager;
 		printf("> You lost $%.2lf.\n\n", winnings);
 		system("pause");
@@ -176,6 +178,7 @@ double playGame(double accountBalance) {
 
 	// If the user makes it past the first roll, continue rolling
 	else {
+		gameChatter(1);
 		winnings = successiveRoll(diceSum, wager);
 	}
 
@@ -222,14 +225,16 @@ double successiveRoll(int diceSum, double wager) {
 
 
 		if (diceSum == mark) {
-			printf("> NICE! You win.\n");
+			gameChatter(2);
+			// printf("> NICE! You win.\n");
 			winnings += wager;
 			printf("> You won $%.2lf.\n\n", winnings);
 			system("pause");
 			break;
 		}
 		else if (diceSum == 7 || diceSum == 11) {
-			printf("> Sorry, you lose!\n");
+			gameChatter(0);
+			// printf("> Sorry, you lose!\n");
 			winnings -= wager;
 			printf("> You lost $%.2lf.\n\n", winnings);
 			system("pause");
@@ -237,6 +242,8 @@ double successiveRoll(int diceSum, double wager) {
 
 		}
 		else {
+
+			gameChatter(1);
 			continue;
 		}
 
@@ -353,10 +360,58 @@ void printDice(int num) {
 	}
 }
 
-void gameChatter(int num) {
+void gameChatter(int success) {
+	int phrase = rand() % 4;
 
-	switch (num) {
-		
+	switch (success) {
+	case 0:
+		switch (phrase) {
+		case 0:
+			printf("> Wah wah wah...\n");
+			break;
+		case 1:
+			printf("> Oh man, you're really bad at this.\n");
+			break;
+		case 2:
+			printf("> I know this game is just random chance but come on.\n");
+			break;
+		case 3:
+			printf("> Thanks for the money\n");
+			break;
+		}
+		break;
+	case 1:
+		switch (phrase) {
+		case 0:
+			printf("> You're still in this. Let's roll again...\n");
+			break;
+		case 1:
+			printf("> Alright. Nice roll...\n");
+			break;
+		case 2:
+			printf("> Don't worry. I'll get you next roll.\n");
+			break;
+		case 3:
+			printf("> HmMMM...Acceptable...\n");
+			break;
+		}
+		break;
+	case 2:
+		switch (phrase) {
+		case 0:
+			printf("> Nice Roll.\n");
+			break;
+		case 1:
+			printf("> Alright! There you go.\n");
+			break;
+		case 2:
+			printf("> LEEEEEERROOY!\n");
+			break;
+		case 3:
+			printf("> MMMMMMJJEEENNNNKKINS!\n");
+			break;
+		}
+		break;
 	}
 
 }
