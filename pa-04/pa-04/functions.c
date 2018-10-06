@@ -6,13 +6,16 @@ int gameLoop(void) {
 	// Seed random
 	srand((unsigned int)time(NULL));
 
-	double accountBalance = 0.0;
+	double accountBalance = 0.0, initialBalance = 0.0;
+
 	
 	int choice = 0;
 
 	// Makes sure you have at least $1 before playing
 	do {
 		accountBalance = setAccountBalance();
+
+		initialBalance = accountBalance;
 
 		if (accountBalance < 1.0) {
 			system("cls");
@@ -67,9 +70,9 @@ int gameLoop(void) {
 		case 5:
 			system("cls");
 			printf("----------------------------------------------\n");
-			printf("Your total balance comes out to: $%.2lf\n", accountBalance);
+			printf("> Your total balance comes out to: $%.2lf\n", accountBalance);
+			printf("> Your net gain is $%.2lf\n", accountBalance - initialBalance);
 			printf("----------------------------------------------\n");
-
 			printf("Goodbye!\n");
 			break;
 
@@ -348,4 +351,12 @@ void printDice(int num) {
 
 
 	}
+}
+
+void gameChatter(int num) {
+
+	switch (num) {
+		
+	}
+
 }
