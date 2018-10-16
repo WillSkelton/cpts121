@@ -142,10 +142,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="ascii.c" />
     <ClCompile Include="functions.c" />
     <ClCompile Include="main.c" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ascii.h" />
     <ClInclude Include="functions.h" />
   </ItemGroup>
   <ItemGroup>
