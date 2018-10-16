@@ -63,10 +63,13 @@ void printRoll(int *dice) {
 
 	int die = 0;
 
+	printBorder(1, 15);
 	for (int i = 0; i < 5; ++i) {
 		die = dice[i];
 		printf("Die number %d\n", i + 1);
 		printDice(die);
+		printBorder(1, 15);
+		printf("\n");
 	}
 }
 
@@ -76,8 +79,8 @@ void printBorder(int size, int length) {
 	case 1:
 		for (int i = 0; i < length; ++i) {
 			printf("-");
-			printf("\n");
 		}
+		printf("\n");
 		break;
 	case 2:
 		for (int i = 0; i < length; ++i) {
