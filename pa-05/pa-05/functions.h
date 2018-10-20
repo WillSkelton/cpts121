@@ -30,7 +30,7 @@ int arrayContains(int search, int *array, int arrLen);
 
 void printCombinationOptions(void);
 
-void printScores(int *playerOne, int *playerTwo);
+void printScores(int *playerOne, int p1Total, int *playerTwo, int p2Total);
 
 int inputCheck(int lowerBound, int upperBound, void(*printMenu)());
 

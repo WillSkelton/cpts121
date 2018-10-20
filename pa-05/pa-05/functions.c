@@ -9,6 +9,8 @@ int gameLoop(void) {
 	
 	resetScorecard(playerOne);
 	resetScorecard(playerTwo);
+
+	int playerOneTotal = 0, playerTwoTotal = 0;
 	
 
 	int choice = 0;
@@ -31,7 +33,9 @@ int gameLoop(void) {
 		case 3:
 			system("cls");
 			printf("============================== Score ==============================\n");
-			printScores(playerOne, playerTwo);
+			playerOneTotal = getScoreTotal(playerOne);
+			playerTwoTotal = getScoreTotal(playerTwo);
+			printScores(playerOne, playerOneTotal, playerTwo, playerTwoTotal);
 			printBorder(2, 67);
 
 			break;
@@ -77,7 +81,7 @@ int playGame(int *playerOne, int *playerTwo) {
 	printf("=============== Time's up. Let's do this! ===============\n");
 
 	
-
+	
 	playerRoll(playerOne);
 
 	int round = 0;
@@ -170,11 +174,11 @@ void printRollOptions(void) {
 void parseRoll(int *scorecard, int *dice) {
 	int j = 0;
 
-	for (int i = 0; i < 5; ++i) {
+	/*for (int i = 0; i < 5; ++i) {
 		printf(">>> ");
 		scanf("%d", &j);
 		dice[i] = j;
-	}
+	}*/
 
 	int results[NUMDICE + 2] = { 0 };
 
@@ -332,18 +336,21 @@ void printCombinationOptions(void) {
 	printf(">>> ");
 }
 
-void printScores(int *playerOne, int *playerTwo) {
+void printScores(int *playerOne, int p1Total, int *playerTwo, int p2Total) {
 
 	printf("Player 1:");
 	for (int i = 0; i < MAXLENGTH; ++i) {
 		printf(" | %d", playerOne[i]);
 	}
-
+	printf(" | Total: %d |", p1Total);
 	printf("\n");
+
 	printf("Player 2:");
 	for (int i = 0; i < MAXLENGTH; ++i) {
 		printf(" | %d", playerTwo[i]);
 	}
+	printf(" | Total: %d |", p2Total);
+
 	printf("\n");
 
 }
@@ -386,4 +393,16 @@ void resetScorecard(int *scorecard) {
 	for (int i = 0; i < 13; ++i) {
 		scorecard[i] = -1;
 	}
+}
+
+int getScoreTotal(int *scorecard) {
+	int sum = 0;
+	for (int i = 0; i < 13; ++i) {
+		if (scorecard[i] == -1) {
+			scorecard[i] = 0;
+		}
+		sum += scorecard[i];
+	}
+
+	return sum;
 }
