@@ -81,15 +81,12 @@ int playGame(int *playerOne, int *playerTwo) {
 	printf("=============== Time's up. Let's do this! ===============\n");
 
 	
-	
-	playerRoll(playerOne);
+	for (int i = 0; i < 1; ++i) {
 
+		playerRoll(playerOne);
+		playerRoll(playerTwo);
+	}
 	int round = 0;
-	//do
-	//{
-
-	//	++round;
-	//} while (round < 13);
 
 	system("pause");
 	return 0;
