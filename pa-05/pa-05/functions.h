@@ -24,5 +24,16 @@ void printRollOptions(void);
 
 void parseRoll(int *scorecard, int *dice);
 
+void verifyResults(int *dice, int *results, int *scorecard);
 
-void printScores(int *playerOne, int *playerTwo);
+int arrayContains(int search, int *array, int arrLen);
+
+void printCombinationOptions(void);
+
+void printScores(int *playerOne, int p1Total, int *playerTwo, int p2Total);
+
+int inputCheck(int lowerBound, int upperBound, void(*printMenu)());
+
+int arraySum(int *array, int len);
+
+void resetScorecard(int *scorecard);

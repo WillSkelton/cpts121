@@ -6,5 +6,9 @@ int main(void) {
 	
 	gameLoop();
 
+	//int scorecard[13] = { 0 };
+	//int dice[5] = { 5, 4, 3, 2, 1};
+	// parseRoll(scorecard, dice);
+
 	return 0;
 }
