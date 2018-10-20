@@ -36,3 +36,4 @@ int inputCheck(int lowerBound, int upperBound, void(*printMenu)());
 
 int arraySum(int *array, int len);
 
+void resetScorecard(int *scorecard);

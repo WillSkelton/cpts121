@@ -6,6 +6,10 @@ int gameLoop(void) {
 
 	int playerOne[MAXLENGTH] = { 0 };
 	int playerTwo[MAXLENGTH] = { 0 };
+	
+	resetScorecard(playerOne);
+	resetScorecard(playerTwo);
+	
 
 	int choice = 0;
 
@@ -29,7 +33,6 @@ int gameLoop(void) {
 			printf("============================== Score ==============================\n");
 			printScores(playerOne, playerTwo);
 			printBorder(2, 67);
-
 
 			break;
 
@@ -189,8 +192,18 @@ void verifyResults(int *dice, int *results, int *scorecard) {
 
 	int choice = inputCheck(1, 13, printCombinationOptions);
 	
-	//printf("%d", choice);
+	//("%d", scorecard[12])
 
+	while (scorecard[choice-1] != -1) {
+		system("cls");
+		printBorder(2, 57);
+		printf("Please pick a different option.\n");
+		printBorder(2, 57);
+		choice = inputCheck(1, 13, printCombinationOptions);
+		continue;
+		
+	}
+	
 	switch (choice) {
 	case 1: // Sum of 1s
 		scorecard[choice - 1] = (1 * results[choice]);
@@ -220,20 +233,29 @@ void verifyResults(int *dice, int *results, int *scorecard) {
 		if (arrayContains(3, results, NUMDICE + 2) == 1) {
 			scorecard[choice - 1] = faceSum;
 		}
+		else {
+			scorecard[choice - 1] = 0;
+		}
 		break;
 
 	case 8: // 4 of a kind
 		if (arrayContains(4, results, NUMDICE + 2) == 1) {
 			scorecard[choice - 1] = faceSum;
 		}
+		else {
+			scorecard[choice - 1] = 0;
+		}
 		break;
-	
+
 	case 9: // Full House
 		if (arrayContains(2, results, NUMDICE + 2) == 1 && arrayContains(3, results, NUMDICE + 2) == 1) {
 			scorecard[choice - 1] = 25;
 		}
+		else {
+			scorecard[choice - 1] = 0;
+		}
 		break;
-	
+
 	case 10: // small straight
 		if (results[1] == 0 && results[2] == 0) {
 			scorecard[choice - 1] = 30;
@@ -248,30 +270,35 @@ void verifyResults(int *dice, int *results, int *scorecard) {
 			scorecard[choice - 1] = 0;
 		}
 		break;
-	
+
 	case 11: // large straight
 		if (results[1] == 0) {
-			scorecard[choice - 1] = 30;
+			scorecard[choice - 1] = 40;
 		}
 		else if (results[6] == 0) {
-			scorecard[choice - 1] = 30;
+			scorecard[choice - 1] = 40;
 		}
 		else {
 			scorecard[choice - 1] = 0;
 		}
 		break;
-	
+
 	case 12: // Yahtzee
-		
-		if (arrayContains(6, results, NUMDICE + 2) == 1) {
+
+		if (arrayContains(5, results, NUMDICE + 2) == 1) {
 			scorecard[choice - 1] = 50;
 		}
+		else {
+			scorecard[choice - 1] = 0;
+		}
 		break;
-	
+
 	case 13: // Chance
 		scorecard[choice - 1] = faceSum;
 		break;
 	}
+
+	
 
 }
 
@@ -353,4 +380,10 @@ int arraySum(int *array, int len) {
 	}
 
 	return sum;
+}
+
+void resetScorecard(int *scorecard) {
+	for (int i = 0; i < 13; ++i) {
+		scorecard[i] = -1;
+	}
 }
