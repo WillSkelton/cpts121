@@ -1,6 +1,7 @@
 #include "functions.h"
 #define MAXLENGTH 13
 #define NUMDICE 5
+#define NUMROUNDS 13
 
 int gameLoop(void) {
 
@@ -13,7 +14,7 @@ int gameLoop(void) {
 	int playerOneTotal = 0, playerTwoTotal = 0;
 	
 
-	int choice = 0;
+	int choice = 0, round = 0;
 
 	do {
 		choice = inputCheck(1, 5, printMenu);
@@ -27,16 +28,28 @@ int gameLoop(void) {
 
 		case 2:
 			system("cls");
+			printf("=============== Time's up. Let's do this! ===============\n");
+
+			++round;
+
 			playGame(playerOne, playerTwo);
+
 			break;
 
 		case 3:
 			system("cls");
-			printf("============================== Score ==============================\n");
+			printf("================================================= Score =================================================\n");
+
 			playerOneTotal = getScoreTotal(playerOne);
 			playerTwoTotal = getScoreTotal(playerTwo);
-			printScores(playerOne, playerOneTotal, playerTwo, playerTwoTotal);
-			printBorder(2, 67);
+			printf("Player    | 1s | 2s | 3s | 4s | 5s | 6s | 3x | 4x | FH | SS | LS | YZ | CH | Total:\n");
+			printf("Player 1:");
+			printScores(playerOne, playerOneTotal);
+			
+			printf("Player 2:");
+			printScores(playerTwo, playerTwoTotal);
+
+			printBorder(2, 105);
 
 			break;
 
@@ -56,7 +69,21 @@ int gameLoop(void) {
 
 		}
 
-	} while (choice != 5);
+	} while (choice != 5 && round < NUMROUNDS);
+
+	playerOneTotal = getScoreTotal(playerOne);
+	playerTwoTotal = getScoreTotal(playerTwo);
+
+	printf("Player 1:");
+	printScores(playerOne, playerOneTotal);
+
+	printf("Player 2:");
+	printScores(playerTwo, playerTwoTotal);
+
+	printBorder(2, 105);
+
+	printf("Goodbye!\n");
+
 
 	return 0;
 }
@@ -78,17 +105,21 @@ void printRules(void) {
 }
 
 int playGame(int *playerOne, int *playerTwo) {
-	printf("=============== Time's up. Let's do this! ===============\n");
 
-	
-	for (int i = 0; i < 1; ++i) {
-
-		playerRoll(playerOne);
-		playerRoll(playerTwo);
-	}
-	int round = 0;
+	printf("============================== Player 1 ==============================\n");
+	playerRoll(playerOne);
+	printBorder(2, 70);
 
 	system("pause");
+	system("cls");
+
+	printf("============================== Player 2 ==============================\n");
+	playerRoll(playerTwo);
+	printBorder(2, 70);
+
+	system("pause");
+	system("cls");
+
 	return 0;
 }
 
@@ -115,20 +146,33 @@ void playerRoll(int *scorecard) {
 
 void reRollLoop(int *choice, int *numberOfReRolls, int *dice, int *reRoll) {
 	switch (*choice) {
+		int stopReRolling = 0;
 
 	case 1:
 		break;
 
 	case 2:
+		
 		do {
 			++*numberOfReRolls;
+
 			printf("Select which dice re-roll by entering 1 for a re-roll or 0 to keep.\n");
-			printf("(EG: 1 0 1 1 0 keeps dice 2 and 5 and rerolls 1, 3, and 4)\n>>> ");
-			scanf("%d%d%d%d%d", &reRoll[0], &reRoll[1], &reRoll[2], &reRoll[3], &reRoll[4]);
+			
+			for (int i = 0; i < 5; ++i) {
+				printf("die #%d: ", i + 1);
+				scanf("%d", &reRoll[i]);
+			}
 
 			system("cls");
 			reRollDice(dice, reRoll);
 			printRoll(dice);
+
+			if (*numberOfReRolls < 3) {
+				stopReRolling = inputCheck(1, 2, printRollOptions);
+
+				if (stopReRolling == 1) break;
+			}
+
 		} while (*numberOfReRolls < 3);
 
 		break;
@@ -200,6 +244,7 @@ void verifyResults(int *dice, int *results, int *scorecard) {
 		printBorder(2, 57);
 		printf("Please pick a different option.\n");
 		printBorder(2, 57);
+		printRoll(dice);
 		choice = inputCheck(1, 13, printCombinationOptions);
 		continue;
 		
@@ -333,23 +378,19 @@ void printCombinationOptions(void) {
 	printf(">>> ");
 }
 
-void printScores(int *playerOne, int p1Total, int *playerTwo, int p2Total) {
+void printScores(int *player, int total) {
 
-	printf("Player 1:");
 	for (int i = 0; i < MAXLENGTH; ++i) {
-		printf(" | %d", playerOne[i]);
+		if (player[i] == -1) {
+			printf(" | 00", player[i]);
+
+		}
+		else {
+			printf(" | %d", player[i]);
+		}
 	}
-	printf(" | Total: %d |", p1Total);
+	printf(" | Total: %d ", total);
 	printf("\n");
-
-	printf("Player 2:");
-	for (int i = 0; i < MAXLENGTH; ++i) {
-		printf(" | %d", playerTwo[i]);
-	}
-	printf(" | Total: %d |", p2Total);
-
-	printf("\n");
-
 }
 
 int inputCheck(int lowerBound, int upperBound, void(*printMenu)()) {
@@ -396,9 +437,15 @@ int getScoreTotal(int *scorecard) {
 	int sum = 0;
 	for (int i = 0; i < 13; ++i) {
 		if (scorecard[i] == -1) {
-			scorecard[i] = 0;
+			sum += 0;
 		}
-		sum += scorecard[i];
+		else {
+			sum += scorecard[i];
+		}
+	}
+
+	if (sum > 63) {
+		sum += 35;
 	}
 
 	return sum;
