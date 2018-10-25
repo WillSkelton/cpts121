@@ -257,12 +257,6 @@ void printRollOptions(void) {
 void parseRoll(int *scorecard, int *dice) {
 	int j = 0;
 
-	/*for (int i = 0; i < 5; ++i) {
-		printf(">>> ");
-		scanf("%d", &j);
-		dice[i] = j;
-	}*/
-
 	int results[NUMDICE + 2] = { 0 };
 
 	for (int i = 0; i < NUMDICE; ++i) {
@@ -278,8 +272,6 @@ void verifyResults(int *dice, int *results, int *scorecard) {
 	int faceSum = arraySum(dice, NUMDICE);
 
 	int choice = inputCheck(1, 13, printCombinationOptions);
-	
-	//("%d", scorecard[12])
 
 	while (scorecard[choice-1] != -1) {
 		system("cls");
@@ -385,9 +377,6 @@ void verifyResults(int *dice, int *results, int *scorecard) {
 		scorecard[choice - 1] = faceSum;
 		break;
 	}
-
-	
-
 }
 
 int arrayContains(int search, int *array, int arrLen) {
@@ -440,7 +429,6 @@ int inputCheck(int lowerBound, int upperBound, void(*printMenu)()) {
 	do {
 		choice = 0;
 
-		// TODO: system("cls");
 		printMenu();
 		scanf("%d", &choice);
 
