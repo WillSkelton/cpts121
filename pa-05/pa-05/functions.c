@@ -58,7 +58,6 @@ int gameLoop(void) {
 			break;
 
 		case 5:
-			printf("Goodbye!\n");
 			break;
 
 		default:
@@ -99,9 +98,48 @@ void printMenu(void) {
 
 void printRules(void) {
 	printf("========================= Rules =========================\n");
-	printf("1. \n");
-	printf("");
-	printBorder(2, 57);
+	printf("Here's how this works. You and your friend will take turns rolling dice. The Oldest will be player one\n");
+	printf("and the youngest will be player two. You will each roll 13 times. Each roll, you may choose to reroll\n");
+	printf("any of the dice up to three times. Once you're happy with your dice or you've rolled 3 times, you will\n");
+	printf("pick one of the combinations in the table below. If you have the dice, you get the number of points listed.\n");
+	printf("Otherwise, you will get a zero. Either way, you won't be able to use that combination any more, so choose wisely\n");
+	printf("At the end of the 13th round, the totals will be calculated and if you're score is above 64, you get an additional 35 points/\n");
+	printf("==================================================\n");
+	printf("|    Name    |   Combination   |      Score      |\n");
+	printf("| ---------- | --------------- | --------------- |\n");
+	printf("|   1s       | At least one 1  | Sum of all 1s   |\n");
+	printf("| ---------- | --------------- | --------------- |\n");
+	printf("|   2s       | At least one 2  | Sum of all 2s   |\n");
+	printf("| ---------- | --------------- | --------------- |\n");
+	printf("|   3s       | At least one 3  | Sum of all 3s   |\n");
+	printf("| ---------- | --------------- | --------------- |\n");
+	printf("|   4s       | At least one 4  | Sum of all 4s   |\n");
+	printf("| ---------- | --------------- | --------------- |\n");
+	printf("|   5s       | At least one 5  | Sum of all 5s   |\n");
+	printf("| ---------- | --------------- | --------------- |\n");
+	printf("|   6s       | At least one 6  | Sum of all 6s   |\n");
+	printf("| ---------- | --------------- | --------------- |\n");
+	printf("|  Three of  | 3 dice of the   | Sum of all dice |\n");
+	printf("|  a kind    | same face       |                 |\n");
+	printf("| ---------- | --------------- | --------------- |\n");
+	printf("|  Four of   | 4 dice of the   | Sum of all dice |\n");
+	printf("|  a kind    | same face       |                 |\n");
+	printf("| ---------- | --------------- | --------------- |\n");
+	printf("| Full House | One pair and 3  |       25        |\n");
+	printf("|            | of a kind       |                 |\n");
+	printf("| ---------- | --------------- | --------------- |\n");
+	printf("|   Small    | A consecutive   |       30        |\n");
+	printf("|  Straight  | set of 4 dice   | EG: 1, 2, 3, 4  |\n");
+	printf("| ---------- | --------------- | --------------- |\n");
+	printf("|   Large    | A set of 5 dice |       40        |\n");
+	printf("|  Straight  |                 |                 |\n");
+	printf("| ---------- | --------------- | --------------- |\n");
+	printf("|  Yahtzee   | 5 of a kind     |       50        |\n");
+	printf("| ---------- | --------------- | --------------- |\n");
+	printf("|  Chance    | Whatever. Dude, | Sum of all dice |\n");
+	printf("|            | I don't care    |                 |\n");
+	printf("| ---------- | --------------- | --------------- |\n");
+	printBorder(2, 50); 
 }
 
 int playGame(int *playerOne, int *playerTwo) {
@@ -137,6 +175,7 @@ void playerRoll(int *scorecard) {
 		choice = inputCheck(1, 2, printRollOptions);
 
 		reRollLoop(&choice, &numberOfReRolls, dice, reRoll);
+
 
 	} while (choice != 1 && choice != 2);
 
@@ -182,6 +221,9 @@ void reRollLoop(int *choice, int *numberOfReRolls, int *dice, int *reRoll) {
 		printBorder(2, 45);
 		printf("%d? That's not a valid option. Try again.\n", *choice);
 		printBorder(2, 45);
+
+		printRoll(dice);
+
 	}
 
 }
