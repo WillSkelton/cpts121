@@ -47,3 +47,39 @@ void resetGameBoard(char board[10][10]) {
 		}
 	}
 }
+
+void printBoardWithShip(int len, int rowStart, int colStart, char orientation, char shipType) {
+	int row = rowStart, col = colStart;
+
+	if(orientation == 'v'){
+		for (int i = 0; i < 10; ++i) {
+			for (int j = 0; j < 10; ++j) {
+				if (i == row && j == col && row < len) {
+					printf(" %c ", shipType);
+					++row;
+				}
+				else {
+					printf(" ~ ");
+				}
+			}
+			printf("\n");
+		}
+	}
+	else if (orientation == 'h') {
+		for (int i = 0; i < 10; ++i) {
+			for (int j = 0; j < 10; ++j) {
+				if (i == row && j == col && col < len) {
+					printf(" %c ", shipType);
+					++col;
+				}
+				else {
+					printf(" ~ ");
+				}
+			}
+			printf("\n");
+		}
+	}
+	else {
+		printf("you can't do that.\n");
+	}
+}

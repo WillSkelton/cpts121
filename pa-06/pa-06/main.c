@@ -6,9 +6,9 @@ int main(void) {
 
 	resetGameBoard(board);
 
-	printGameBoard(board);
+	//printGameBoard(board);
 
-	printBattleship();
+	gameLoop();
 
 	return 0;
 }

@@ -5,3 +5,6 @@
 
 
 
+int gameLoop(void);
+
+void placeShip(void);
