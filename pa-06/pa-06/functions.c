@@ -15,19 +15,38 @@ void placeShip(void) {
 		scanf(" %c", &choice);
 
 		switch (choice) {
-			case 'w':
-				if (row != 0) {
-					++row;
-					printBoardWithShip(carrierLength, row, col, 'h', 'C');
-				}
-				break;
+		case 'n':
+			if (row != 0) {
+				--row;
+				system("cls");
+
+				//(carrierLength, row, col, 'h', 'C');
+			}
+			break;
 			
-			case 's':
-				if (row != 0) {
-					--row;
-					printBoardWithShip(carrierLength, row, col, 'h', 'C');
-				}
-				break;
+		case 's':
+			if (row != 10) {
+				++row;
+				system("cls");
+				//(carrierLength, row, col, 'h', 'C');
+			}
+			break;
+
+		case 'e':
+			if (col != 10) {
+				++col;
+				system("cls");
+				//(carrierLength, row, col, 'h', 'C');
+			}
+			break;
+
+		case 'w':
+			if (col != 0) {
+				--col;
+				system("cls");
+				//(carrierLength, row, col, 'h', 'C');
+			}
+			break;
 		}
 
 
