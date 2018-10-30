@@ -138,7 +138,8 @@ void printBoardWithShip(int startRow, int startCol, int shipLength, int directio
 					for (c = col; c < col + shipLength; ++c) {
 						printf(" %c ", shipSymbol);
 					}
-					printf(" ~ ");
+					--c;
+					// printf(" ~ ");
 
 				}
 				else{
