@@ -2,12 +2,8 @@
 
 int main(void) {
 
-	char board[10][10];
-
-	resetGameBoard(board);
-
-	//printGameBoard(board);
-
+	//printTitle();
+	
 	gameLoop();
 
 	return 0;

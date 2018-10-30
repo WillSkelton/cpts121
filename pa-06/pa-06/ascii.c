@@ -1,24 +1,13 @@
 #include "ascii.h"
 
-void printBattleship(void) {
-	printf("");
-	
-	/*printf("                                               |__\n");
-	printf("                                               |\\/\n");
-	printf("                                               ---\n");
-	printf("                                               / | [\n");
-	printf("                                   !           | |||\n");
-	printf("             	                _/ |       _ / | -++'\n");
-	printf("              	            +  +-- | | -- | -- | _ | -\n");
-	printf("                         { /|__|  |\\/\\__|  |--- |||__/\n");
-	printf("	                    +---------------___[}-_===_.'____                 /\\\n");
-	printf("	                ____`-'||___-{]_|_[}-|         |_[___\\==--            \\/   _\n");
-	printf("	 __..._____--==/___]_|__|_____________________________[___\\==--____,------' .7\n");
-	printf("	|                                                                  BB - 61 /\n");
-	printf("	\\_________________________________________________________________________ |\n");*/
-}
-
 void printTitle(void) {
+
+	printf("Welcome to...");
+
+	Sleep(2000);
+
+	system("cls");
+
 	printf("88                                        88                        88           88               \n");
 	printf("88                        ,d      ,d      88                        88           \"\"  8b, dPPYba,   \n");
 	printf("88                        88      88      88                        88               88P'    \"8a   \n");
@@ -27,59 +16,11 @@ void printTitle(void) {
 	printf("88       d8  ,adPPPPP88   88      88      88 8PP\"\"\"\"\"\"\"  `\"Y8ba,    88       88  88  88`YbbdP\"'    \n");
 	printf("88b,   ,a8\"  88,    ,88   88,     88,     88 \"8b,   ,aa  aa    ]8I  88       88  88  88            \n");
 	printf("8Y\"Ybbd8\"'   `\"8bbdP\"Y8   \"Y888   \"Y888   88  `\"Ybbd8\"'  `\"YbbdP\"'  88       88  88  88            \n");
-	printf("");
+	
+	Sleep(2500);
+	system("cls");
 
 }
 
-void printGameBoard(char board[10][10]) {
-	for (int i = 0; i < 10; ++i) {
-		for (int j = 0; j < 10; ++j) {
-			printf(" %c ", board[i][j]);
-		}
-		printf("\n");
-	}
-}
 
-void resetGameBoard(char board[10][10]) {
-	for (int i = 0; i < 10; ++i) {
-		for (int j = 0; j < 10; ++j) {
-			board[i][j] = '~';
-		}
-	}
-}
 
-void printBoardWithShip(int len, int rowStart, int colStart, char orientation, char shipType) {
-	int row = rowStart, col = colStart;
-
-	if(orientation == 'v'){
-		for (int i = 0; i < 10; ++i) {
-			for (int j = 0; j < 10; ++j) {
-				if (i == row && j == col && row < len) {
-					printf(" %c ", shipType);
-					++row;
-				}
-				else {
-					printf(" ~ ");
-				}
-			}
-			printf("\n");
-		}
-	}
-	else if (orientation == 'h') {
-		for (int i = 0; i < 10; ++i) {
-			for (int j = 0; j < 10; ++j) {
-				if (i == row && j == col && col < len) {
-					printf(" %c ", shipType);
-					++col;
-				}
-				else {
-					printf(" ~ ");
-				}
-			}
-			printf("\n");
-		}
-	}
-	else {
-		printf("you can't do that.\n");
-	}
-}
