@@ -22,5 +22,23 @@ void printTitle(void) {
 
 }
 
+void printBorder(int size, int length) {
+
+	switch (size) {
+	case 1:
+		for (int i = 0; i < length; ++i) {
+			printf("-");
+		}
+		printf("\n");
+		break;
+	case 2:
+		for (int i = 0; i < length; ++i) {
+			printf("=");
+		}
+		printf("\n");
+		break;
+	}
+
+}
 
 

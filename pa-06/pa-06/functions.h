@@ -23,3 +23,7 @@ void manuallyMoveShips(char board[][10]);
 void printBoardWithShip(int startRow, int startCol, int shipLength, int direction, char shipSymbol, char board[][10]);
 
 int isOccupied(int startRow, int startCol, int length, int direction, char board[][10]);
+
+int inputCheck(int lowerBound, int upperBound, void(*printMenu)());
+
+void printPreGameSetup(void);

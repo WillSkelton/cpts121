@@ -4,3 +4,5 @@
 #include <windows.h>
 
 void printTitle(void);
+
+void printBorder(int size, int length);

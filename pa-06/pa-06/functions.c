@@ -6,18 +6,30 @@
 
 int gameLoop(void) {
 	
-	char p1Board[10][10] = { { '~', '~' }, { '~' } };
+	char playerBoard[10][10] = { { '~', '~' },{ '~' } };
+	char computerBoard[10][10] = { { '~', '~' }, { '~' } };
 	char shipSymbols[5] = { 'C', 'B', 'S', 'R', 'D' };
 	int shipLengths[5] = { 5, 4, 3, 3, 2 };
 	int count = 0, dir = 0;
+	int choice = 0;
 
-	resetGameBoard(p1Board);
-	// printBoard(p1Board);
+	resetGameBoardAlt(playerBoard);
+	resetGameBoardAlt(computerBoard);
 
-	randomlyPlaceShips(shipLengths, shipSymbols, p1Board);
-	printBoard(p1Board);
+	choice = inputCheck(1, 2, printPreGameSetup);
 
-	// manuallyMoveShips(p1Board);
+	switch (choice) {
+	case 1:
+		randomlyPlaceShips(shipLengths, shipSymbols, playerBoard);
+		randomlyPlaceShips(shipLengths, shipSymbols, computerBoard);
+		break;
+
+	case 2:
+		manuallyMoveShips(playerBoard);
+		randomlyPlaceShips(shipLengths, shipSymbols, computerBoard);
+		break;
+	}
+
 
 	return 0;
 }
@@ -206,7 +218,7 @@ int isOccupied(int startRow, int startCol, int length, int direction, char board
 	
 	if (direction == 1) {
 		for (int i = 0; i < length; ++i) {
-			if (board[startRow][startCol + i] != '~') {
+			if ((board[startRow][startCol + i] != ' ') && (board[startRow + i][startCol] != '~')) {
 				occupied = 1;
 				break;
 			}
@@ -214,11 +226,40 @@ int isOccupied(int startRow, int startCol, int length, int direction, char board
 	}
 	else if (direction == 0) {
 		for (int i = 0; i < length; ++i) {
-			if (board[startRow + i][startCol] != '~') {
+			if ((board[startRow][startCol + i] != ' ') && (board[startRow + i][startCol] != '~')) {
 				occupied = 1;
 				break;
 			}
 		}
 	}
 	return occupied;
+}
+
+int inputCheck(int lowerBound, int upperBound, void(*printMenu)()) {
+	int choice = 0;
+	do {
+		choice = 0;
+
+		printMenu();
+		scanf("%d", &choice);
+
+		if (choice < lowerBound || choice > upperBound) {
+			system("cls");
+			printBorder(2, 45);
+			printf("%d? That's not a valid option. Try again.\n", choice);
+			printBorder(2, 45);
+		}
+		else {
+			break;
+		}
+
+	} while (choice != upperBound);
+
+	return choice;
+}
+
+void printPreGameSetup(void) {
+	printf("Please choose an option:\n");
+	printf("1: Randomize your ship locations\n");
+	printf("2: Manually enter your ship locations\n");
 }
