@@ -5,8 +5,13 @@
 #include <string.h>
 
 typedef struct player {
-	char board[10][10];
+	char *board[10][10];
+	char *map[10][10];
 	char *name;
+	int shipHealth[5];
+	int deadShips[5];
+	int scorePoints;
+
 }Player;
 
 
@@ -46,3 +51,5 @@ void errorMessage(char *message);
 void placeShip(int startRow, int startCol, int length, int direction, char symbol, char board[][10]);
 
 int newError(Error *err);
+
+void initializePlayer(Player p, int *shipLengths);
