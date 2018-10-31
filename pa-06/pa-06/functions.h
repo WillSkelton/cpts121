@@ -8,6 +8,16 @@ typedef struct player {
 	char *name;
 }Player;
 
+
+typedef void(*PrintError)(char *message);
+
+typedef struct error {
+
+	//int  result; // to sotre the resut
+	PrintError  print; // funtion pointer 
+
+} Error;
+
 int gameLoop(void);
 
 void resetGameBoard(char board[][10]);
@@ -27,3 +37,5 @@ int isOccupied(int startRow, int startCol, int length, int direction, char board
 int inputCheck(int lowerBound, int upperBound, void(*printMenu)());
 
 void printPreGameSetup(void);
+
+void errorMessage(char *message);

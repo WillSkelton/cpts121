@@ -30,6 +30,8 @@ int gameLoop(void) {
 		break;
 	}
 
+	printBoard(playerBoard);
+	printBoard(computerBoard);
 
 	return 0;
 }
@@ -262,4 +264,8 @@ void printPreGameSetup(void) {
 	printf("Please choose an option:\n");
 	printf("1: Randomize your ship locations\n");
 	printf("2: Manually enter your ship locations\n");
+}
+
+void errorMessage(char *message) {
+	printf("%s\n", message);
 }

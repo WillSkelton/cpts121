@@ -4,9 +4,15 @@ int main(void) {
 
 	srand((unsigned int)time(NULL));
 
-	//printTitle();
+	// printTitle();
 	
-	gameLoop();
+	Error err;
+		
+	err.print = errorMessage;
+
+	err.print("Hey");
+
+	// gameLoop();
 
 	return 0;
 }
