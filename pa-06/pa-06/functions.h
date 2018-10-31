@@ -36,7 +36,7 @@ void printBoard(char board[][10]);
 
 void randomlyPlaceShips(int *lengths, char *symbols, char board[][10]);
 
-void manuallyMoveShips(int *lengths, char *symbols, char board[][10]);
+void manuallyMoveShips(int *lengths, char *symbols, char board[][10], Error *err);
 
 void printBoardWithShip(int startRow, int startCol, int shipLength, int direction, char shipSymbol, char board[][10]);
 
@@ -52,4 +52,4 @@ void placeShip(int startRow, int startCol, int length, int direction, char symbo
 
 int newError(Error *err);
 
-void initializePlayer(Player p, int *shipLengths);
+void initializePlayer(Player *p, int *shipLengths);
