@@ -6,13 +6,7 @@ int main(void) {
 
 	// printTitle();
 	
-	Error err;
-		
-	err.print = errorMessage;
-
-	err.print("Hey");
-
-	// gameLoop();
+	gameLoop();
 
 	return 0;
 }

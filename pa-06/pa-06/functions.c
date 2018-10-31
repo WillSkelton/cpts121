@@ -25,7 +25,7 @@ int gameLoop(void) {
 		break;
 
 	case 2:
-		manuallyMoveShips(playerBoard);
+		manuallyMoveShips(shipLengths, shipSymbols, playerBoard);
 		randomlyPlaceShips(shipLengths, shipSymbols, computerBoard);
 		break;
 	}
@@ -67,80 +67,100 @@ void printBoard(char board[][10]) {
 	}
 }
 
-void manuallyMoveShips(char board[][10]) {
+void manuallyMoveShips(int *lengths, char *symbols, char board[][10]) {
 	system("cls");
+
+	Error err;
+	err.print = errorMessage;
+
 
 	char choice = ' ';
 
-	int row = 0, col = 0;
+	int row = 0, col = 0, direction = 1;
 
-	int shipLengths[] = { 5 };
 
-	do {
-		//system("cls");
-		printBoardWithShip(row, col, 5, 1, 'C', board);
-		printf("Where do you want to move your ship? (Use N/E/S/W): ");
-		scanf(" %c", &choice);
+	for (int ship = 0; ship < NUMSHIPS; ++ship) {
+		row = 0;
+		col = 0;
+		direction = 1;
 
-		//printf("%c\n", choice);
+		do {
 
-		switch (choice){ 
+			printBoardWithShip(row, col, lengths[ship], 1, symbols[ship], board);
+			printf("Where do you want to move your ship? (Use w/d/s/a for north/eeast/south/west: ");
+			printf("You can also rotate with r and confirm with x. \n");
+			scanf(" %c", &choice);
 
-		case 'n':
-			if (row > 0) {
-				--row;
-				system("cls");
+			switch (choice) {
+
+			case 'w':
+				if (row > 0) {
+					--row;
+					system("cls");
+				}
+
+				else {
+					system("cls");
+					err.print("You can't go that way.");
+				}
+
+				break;
+
+			case 'd':
+				if (col < (NUMCOLS - lengths[ship])) {
+					++col;
+					system("cls");
+				}
+
+				else {
+					system("cls");
+					err.print("You can't go that way.");
+				}
+
+				break;
+
+			case 's':
+				if (row < NUMROWS - 1) {
+					++row;
+					system("cls");
+				}
+
+				else {
+					system("cls");
+					err.print("You can't go that way.");
+				}
+
+				break;
+
+			case 'a':
+				if (col > 0) {
+					--col;
+					system("cls");
+				}
+
+				else {
+					system("cls");
+					err.print("You can't go that way.");
+				}
+				break;
+
+			case 'x':
+				if (isOccupied(row, col, lengths[ship], direction, board) == 0) {
+					placeShip(row, col, lengths[ship], direction, symbols[ship], board);
+					system("cls");
+				}
+				else {
+					system("cls");
+					--ship;
+					err.print("You can't place that ship there.");
+				}
 			}
 
-			else {
-				system("cls");
-				printf("Nope!\n");
-			}
+		} while (choice != 'x');
 
-			break;
 
-		case 'e':
-			// printf("col: %d\n", col + 1);
-			// printf("max col: %d\n", (NUMCOLS - shipLengths[0]));
-			if (col < (NUMCOLS - shipLengths[0])) {
-				++col;
-				system("cls");
-			}
-			
-			else {
-				system("cls");
-				printf("Nope!\n");
-			}
+	}
 
-			break;
-
-		case 's':
-			if (row < NUMROWS) {
-				++row;
-				system("cls");
-			}
-
-			else {
-				system("cls");
-				printf("Nope!\n");
-			}
-		
-			break;
-		
-		case 'w':
-			if (col > 0) {
-				--col;
-				system("cls");
-			}
-
-			else {
-				system("cls");
-				printf("Nope!\n");
-			}
-			break;
-		}
-
-	} while (1);
 }
 
 void printBoardWithShip(int startRow, int startCol, int shipLength, int direction, char shipSymbol, char board[][10]) {
@@ -266,6 +286,29 @@ void printPreGameSetup(void) {
 	printf("2: Manually enter your ship locations\n");
 }
 
+void placeShip(int startRow, int startCol, int length, int direction, char symbol, char board[][10]) {
+	int occupied = 0;
+
+	if (direction == 1) {
+		for (int i = 0; i < length; ++i) {
+			board[startRow][startCol + i] = symbol;
+		}
+	}
+	else if (direction == 0) {
+		for (int i = 0; i < length; ++i) {
+			for (int i = 0; i < length; ++i) {
+				board[startRow + i][startCol] = symbol;
+			}
+		}
+	}
+	return occupied;
+}
+
 void errorMessage(char *message) {
-	printf("%s\n", message);
+
+	int length = strlen(message) + 6;
+
+	printBorder(2, length);
+	printf("|| %s ||\n", message);
+	printBorder(2, length);
 }
