@@ -91,7 +91,7 @@ void manuallyMoveShips(int *lengths, char *symbols, char board[][10], Error *err
 			printBoardWithShip(row, col, lengths[ship], direction, symbols[ship], board);
 			printf("Where do you want to move your ship? (Use w/d/s/a for north/eeast/south/west:\n");
 			printf("You can also rotate with r and confirm with x. \n");
-			printf(">>>");
+			printf(">>> ");
 			scanf(" %c", &choice);
 
 			switch (choice) {
@@ -103,7 +103,7 @@ void manuallyMoveShips(int *lengths, char *symbols, char board[][10], Error *err
 				}
 				else {
 					system("cls");
-					err->print("You can't go that way.");
+					err->log("You can't go that way.");
 				}
 				break;
 
@@ -115,7 +115,7 @@ void manuallyMoveShips(int *lengths, char *symbols, char board[][10], Error *err
 					}
 					else {
 						system("cls");
-						err->print("You can't go that way.");
+						err->log("You can't go that way.");
 					}
 				}
 				else if (direction == 0) {
@@ -125,12 +125,12 @@ void manuallyMoveShips(int *lengths, char *symbols, char board[][10], Error *err
 					}
 					else {
 						system("cls");
-						err->print("You can't go that way.");
+						err->log("You can't go that way.");
 
 					}
 				} 
 				else {
-					err->print("IDK how you got here.");
+					err->log("IDK how you got here.");
 				}
 				break;
 
@@ -142,7 +142,7 @@ void manuallyMoveShips(int *lengths, char *symbols, char board[][10], Error *err
 					}
 					else {
 						system("cls");
-						err->print("You can't go that way.");
+						err->log("You can't go that way.");
 					}
 				}
 				else if (direction == 1) {
@@ -152,12 +152,12 @@ void manuallyMoveShips(int *lengths, char *symbols, char board[][10], Error *err
 					}
 					else {
 						system("cls");
-						err->print("You can't go that way.");
+						err->log("You can't go that way.");
 
 					}
 				} 
 				else {
-					err->print("IDK how you got here.");
+					err->log("IDK how you got here.");
 				}
 				break;
 
@@ -168,7 +168,7 @@ void manuallyMoveShips(int *lengths, char *symbols, char board[][10], Error *err
 				}
 				else {
 					system("cls");
-					err->print("You can't go that way.");
+					err->log("You can't go that way.");
 				}
 				break;
 
@@ -185,7 +185,7 @@ void manuallyMoveShips(int *lengths, char *symbols, char board[][10], Error *err
 				else {
 					system("cls");
 					--ship;
-					err->print("You can't place that ship there.");
+					err->log("You can't place that ship there.");
 				}
 			}
 		} while (choice != 'x');
@@ -360,7 +360,7 @@ void errorMessage(char *message) {
 }
 
 int newError(Error *err) {
-	err->print = errorMessage;
+	err->log = errorMessage;
 }
 
 void initializePlayer(Player *p, int *shipLengths) {

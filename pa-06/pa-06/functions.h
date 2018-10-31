@@ -4,27 +4,40 @@
 #include <windows.h>
 #include <string.h>
 
+#include "player.h"
+
+// Player Definition
 typedef struct player {
+	// Bahavior
+	CalculateKDR calculateKDR;
+
+	// State
 	char *board[10][10];
 	char *map[10][10];
 	char *name;
 	int shipHealth[5];
 	int deadShips[5];
 	int scorePoints;
+	int kdr;
+
 
 }Player;
 
+// Player Methods
+typedef void(*CalculateKDR)(int kills, int deaths, int *kdr);
 
-typedef void(*PrintError)(char *message);
-
+// Error Definition
 typedef struct error {
 
-	//int  result; // to sotre the resut
-	PrintError  print; // funtion pointer 
-
-	int test;
+	PrintError  log; // funtion pointer 
 
 } Error;
+
+// Error Methods
+typedef void(*PrintError)(char *message);
+
+
+// Regular functions
 
 int gameLoop(void);
 
