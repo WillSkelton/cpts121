@@ -5,8 +5,13 @@
 #include <string.h>
 
 typedef struct player {
-	char board[10][10];
+	char *board[10][10];
+	char *map[10][10];
 	char *name;
+	int kills;
+	int deadShips;
+	int scorePoints;
+
 }Player;
 
 
@@ -15,7 +20,7 @@ typedef void(*PrintError)(char *message);
 typedef struct error {
 
 	//int  result; // to sotre the resut
-	PrintError  print; // funtion pointer 
+	PrintError  log; // funtion pointer 
 
 	int test;
 
@@ -46,3 +51,5 @@ void errorMessage(char *message);
 void placeShip(int startRow, int startCol, int length, int direction, char symbol, char board[][10]);
 
 int newError(Error *err);
+
+void initializePlayer(Player *p);

@@ -6,32 +6,34 @@
 
 int gameLoop(void) {
 	
-	char playerBoard[10][10] = { { '~', '~' },{ '~' } };
-	char computerBoard[10][10] = { { '~', '~' }, { '~' } };
+
 	char shipSymbols[5] = { 'C', 'B', 'S', 'R', 'D' };
 	int shipLengths[5] = { 5, 4, 3, 3, 2 };
 	int count = 0, dir = 0;
 	int choice = 0;
 
-	resetGameBoardAlt(playerBoard);
-	resetGameBoardAlt(computerBoard);
+	Player player;
+	initializePlayer(&player);
+
+	Player computer;
+	initializePlayer(&computer);
 
 	choice = inputCheck(1, 2, printPreGameSetup);
 
 	switch (choice) {
 	case 1:
-		randomlyPlaceShips(shipLengths, shipSymbols, playerBoard);
-		randomlyPlaceShips(shipLengths, shipSymbols, computerBoard);
+		randomlyPlaceShips(shipLengths, shipSymbols, player.board);
+		randomlyPlaceShips(shipLengths, shipSymbols, computer.board);
 		break;
 
 	case 2:
-		manuallyMoveShips(shipLengths, shipSymbols, playerBoard);
-		randomlyPlaceShips(shipLengths, shipSymbols, computerBoard);
+		manuallyMoveShips(shipLengths, shipSymbols, player.board);
+		randomlyPlaceShips(shipLengths, shipSymbols, computer.board);
 		break;
 	}
 
-	printBoard(playerBoard);
-	printBoard(computerBoard);
+	printBoard(player.board);
+	printBoard(computer.board);
 
 	return 0;
 }
@@ -71,7 +73,7 @@ void manuallyMoveShips(int *lengths, char *symbols, char board[][10]) {
 	system("cls");
 
 	Error err;
-	err.print = errorMessage;
+	err.log = errorMessage;
 
 
 	char choice = ' ';
@@ -101,7 +103,7 @@ void manuallyMoveShips(int *lengths, char *symbols, char board[][10]) {
 
 				else {
 					system("cls");
-					err.print("You can't go that way.");
+					err.log("You can't go that way.");
 				}
 
 				break;
@@ -114,7 +116,7 @@ void manuallyMoveShips(int *lengths, char *symbols, char board[][10]) {
 
 				else {
 					system("cls");
-					err.print("You can't go that way.");
+					err.log("You can't go that way.");
 				}
 
 				break;
@@ -127,7 +129,7 @@ void manuallyMoveShips(int *lengths, char *symbols, char board[][10]) {
 
 				else {
 					system("cls");
-					err.print("You can't go that way.");
+					err.log("You can't go that way.");
 				}
 
 				break;
@@ -140,7 +142,7 @@ void manuallyMoveShips(int *lengths, char *symbols, char board[][10]) {
 
 				else {
 					system("cls");
-					err.print("You can't go that way.");
+					err.log("You can't go that way.");
 				}
 				break;
 
@@ -152,7 +154,7 @@ void manuallyMoveShips(int *lengths, char *symbols, char board[][10]) {
 				else {
 					system("cls");
 					--ship;
-					err.print("You can't place that ship there.");
+					err.log("You can't place that ship there.");
 				}
 			}
 
@@ -311,4 +313,19 @@ void errorMessage(char *message) {
 	printBorder(2, length);
 	printf("|| %s ||\n", message);
 	printBorder(2, length);
+}
+
+int newError(Error *err) {
+
+	err->log = errorMessage;
+}
+
+void initializePlayer(Player *p) {
+	resetGameBoardAlt(p->board);
+	resetGameBoardAlt(p->map);
+	
+	p->name;
+	p->kills = 0;
+	p->deadShips = 0;
+	p->scorePoints = 0;
 }
