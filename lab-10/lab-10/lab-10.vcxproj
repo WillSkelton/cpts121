@@ -19,9 +19,9 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{AA84865E-B245-4D59-A3FA-D6000708833C}</ProjectGuid>
+    <ProjectGuid>{F349E118-88A6-4BD7-B644-D07869AE0A47}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
-    <RootNamespace>pa06</RootNamespace>
+    <RootNamespace>lab10</RootNamespace>
     <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -142,14 +142,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="ascii.c" />
-    <ClCompile Include="functions.c" />
     <ClCompile Include="main.c" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="ascii.h" />
-    <ClInclude Include="functions.h" />
-    <ClInclude Include="player.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
