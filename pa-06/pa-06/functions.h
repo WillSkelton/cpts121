@@ -68,4 +68,6 @@ void playGame(Player *player, Player *computer);
 
 void playerTurn(Player *player, Player *computer, Error *err);
 
-void ptrTest(Player *p);
+void computerTurn(Player *player, Player *computer, Error *err);
+
+char shotResult(char c, Error *err);

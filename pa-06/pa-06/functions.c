@@ -28,12 +28,8 @@ int gameLoop(void) {
 	}
 
 
-	//printBoard(&player);
-	//printBoard(computer.board);
 
 	playGame(&player, &computer);
-
-	ptrTest(&player);
 
 	return 0;
 }
@@ -401,6 +397,7 @@ void playGame(Player *player, Player *computer) {
 
 	while ((player->deadShips != NUMSHIPS ) || (computer->deadShips != NUMSHIPS)) {
 		playerTurn(player, computer, &err);
+		computerTurn(player, computer, &err);
 	}
 }
 
@@ -411,6 +408,8 @@ void playerTurn(Player *player, Player *computer, Error *err) {
 	printBoard(player->board);
 
 	int row = 0, col = 0, hitOrMiss = 0;
+
+	char target = ' ', result = ' ';
 
 	do {
 		hitOrMiss = 0;
@@ -438,49 +437,62 @@ void playerTurn(Player *player, Player *computer, Error *err) {
 		row -= 1;
 		col -= 1;
 
-		char target = computer->board[row][col];
+		target = computer->board[row][col];
+		result = shotResult(target, err, &hitOrMiss);
 
 		printf("Target: '%c'\n", target);
 
+		computer->board[row][col] = result;
+		player->map[row][col] = result;
 
-		if (target == 'x' || target == 'o') {
-			err->log("You already shot there.");
-			continue;
-		}
-		else if (target != ' ' && target != '~') {
-			hitOrMiss = 1;
-			computer->board[row][col] = 'x';
-			player->map[row][col] = 'x';
+		system("cls");
 
-			system("cls");
+		printBoard(player->map);
+		printBoard(player->board);
 
-			printMessage("HIT!");
-			printBoard(player->map);
-			printBoard(player->board);
+		
 
-			system("pause");
-
-		}
-		else if (target != ' ' || target != '~') {
-			hitOrMiss = 0;
-			computer->board[row][col] = 'o';
-			player->map[row][col] = 'o';
-
-			system("cls");
-
-			printMessage("MISS!\n");
-			printBoard(player->map);
-			printBoard(player->board);
-
-			system("pause");
-
-		}
-
-	} while (hitOrMiss == 0);
+	} while (hitOrMiss != 0 && hitOrMiss != 1);
 }
 
-void ptrTest(Player *p) {
+void computerTurn(Player *player, Player *computer, Error *err) {
+	int row = 0, col = 0, hitOrMiss = 0;;
+	char target = ' ', result = ' ';
 
-	printf("Choice: '%c'\n", p->board[0][0]);
+	row = rand() % NUMROWS - 1;
+	col = rand() % NUMCOLS - 1;
 
+	target = player->board[row][col];
+	result = shotResult(target, err, &hitOrMiss);
+
+	player->board[row][col] = result;
+	computer->map[row][col] = result;
+
+	system("cls");
+
+	printBoard(player->map);
+	printBoard(player->board);
+
+}
+
+char shotResult(char c, Error *err, int *hitOrMiss) {
+
+	char result = ' ';
+
+	if (c == 'x' || c == 'o') {
+		result = c;
+		err->log("You already shot there.");
+	}
+	else if (c != ' ' && c != '~') {
+		*hitOrMiss = 1;
+		result = 'x';
+		printMessage("HIT!");
+	}
+	else if (c != ' ' || c != '~') {
+		*hitOrMiss = 0;
+		result = 'o';
+		printMessage("MISS!");
+	}
+
+	return result;
 }
