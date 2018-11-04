@@ -40,7 +40,7 @@ void resetGameBoard(char board[NUMROWS][NUMCOLS]);
 
 void resetGameBoardAlt(char board[NUMROWS][NUMCOLS]);
 
-void printBoard(char board[10][10]);
+void printBoard(char board[NUMROWS][NUMCOLS]);
 
 void randomlyPlaceShips(int *lengths, char *symbols, char board[NUMROWS][NUMCOLS]);
 

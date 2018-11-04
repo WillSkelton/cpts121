@@ -1,7 +1,7 @@
 #include "functions.h"
 
 int gameLoop(void) {
-	
+
 
 	char shipSymbols[5] = { 'C', 'B', 'S', 'R', 'D' };
 	int shipLengths[5] = { 5, 4, 3, 3, 2 };
@@ -32,7 +32,7 @@ int gameLoop(void) {
 	//printBoard(computer.board);
 
 	playGame(&player, &computer);
-	
+
 	ptrTest(&player);
 
 	return 0;
@@ -57,15 +57,15 @@ void resetGameBoardAlt(char board[NUMROWS][NUMCOLS]) {
 void printBoard(char board[NUMROWS][NUMCOLS]) {
 
 	char rowLetters[] = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'};
-	
+
 	printf("    1  2  3  4  5  6  7  8  9  10  \n");
 	for (int r = 0; r < NUMROWS; ++r) {
 		printf(" %d ", r + 1);
-		
+
 		for (int c = 0; c < NUMCOLS; ++c) {
 			printf(" %c ", board[r][c]);
 		}
-		
+
 		printf("\n");
 	}
 
@@ -285,7 +285,7 @@ void randomlyPlaceShips(int *lengths, char *symbols, char board[NUMROWS][NUMCOLS
 
 int isOccupied(int startRow, int startCol, int length, int direction, char board[NUMROWS][NUMCOLS]) {
 	int occupied = 0;
-	
+
 	if (direction == 1) {
 		for (int i = 0; i < length; ++i) {
 			if ((board[startRow][startCol + i] != ' ') && (board[startRow + i][startCol] != '~')) {
@@ -367,10 +367,10 @@ int newError(Error *err) {
 }
 
 void initializePlayer(Player *p) {
-	
+
 	resetGameBoardAlt(p->board);
 	resetGameBoardAlt(p->map);
-	
+
 	p->name;
 	p->kills = 0;
 	p->deadShips = 0;
@@ -385,7 +385,7 @@ void initializePlayer(Player *p) {
 int calculateKDR(int k, int d) {
 	int kills = k;
 	int deaths = d;
-	
+
 	if (d <= 0) {
 		deaths = 1;
 	}
@@ -395,7 +395,7 @@ int calculateKDR(int k, int d) {
 }
 
 void playGame(Player *player, Player *computer) {
-	
+
 	Error err;
 	err.log = printMessage;
 
@@ -407,7 +407,7 @@ void playGame(Player *player, Player *computer) {
 void playerTurn(Player *player, Player *computer, Error *err) {
 
 	(player->board);
-	
+
 	printBoard(player->board);
 
 	int row = 0, col = 0, hitOrMiss = 0;
@@ -451,9 +451,9 @@ void playerTurn(Player *player, Player *computer, Error *err) {
 			hitOrMiss = 1;
 			computer->board[row][col] = 'x';
 			player->map[row][col] = 'x';
-			
+
 			system("cls");
-			
+
 			printMessage("HIT!");
 			printBoard(player->map);
 			printBoard(player->board);
@@ -480,7 +480,7 @@ void playerTurn(Player *player, Player *computer, Error *err) {
 }
 
 void ptrTest(Player *p) {
-	
+
 	printf("Choice: '%c'\n", p->board[0][0]);
 
 }
