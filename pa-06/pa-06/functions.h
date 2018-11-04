@@ -54,7 +54,7 @@ int inputCheck(int lowerBound, int upperBound, void(*printMenu)());
 
 void printPreGameSetup(void);
 
-void errorMessage(char *message);
+void printMessage(char *message);
 
 void placeShip(int startRow, int startCol, int length, int direction, char symbol, char board[NUMROWS][NUMCOLS]);
 

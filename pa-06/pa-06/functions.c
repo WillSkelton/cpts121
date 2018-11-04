@@ -54,15 +54,13 @@ void resetGameBoardAlt(char board[NUMROWS][NUMCOLS]) {
 	}
 }
 
-void printBoard(char board[10][10]) {
-
-	printf("'%c'\n", board[0][0]);
+void printBoard(char board[NUMROWS][NUMCOLS]) {
 
 	char rowLetters[] = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'};
 	
 	printf("    1  2  3  4  5  6  7  8  9  10  \n");
 	for (int r = 0; r < NUMROWS; ++r) {
-		printf(" %c ", rowLetters[r]);
+		printf(" %d ", r + 1);
 		
 		for (int c = 0; c < NUMCOLS; ++c) {
 			printf(" %c ", board[r][c]);
@@ -77,7 +75,7 @@ void manuallyMoveShips(int *lengths, char *symbols, char board[NUMROWS][NUMCOLS]
 	system("cls");
 
 	Error err;
-	err.log = errorMessage;
+	err.log = printMessage;
 
 	char choice = ' ';
 
@@ -354,7 +352,7 @@ void placeShip(int startRow, int startCol, int length, int direction, char symbo
 	return occupied;
 }
 
-void errorMessage(char *message) {
+void printMessage(char *message) {
 
 	int length = strlen(message) + 6;
 
@@ -365,7 +363,7 @@ void errorMessage(char *message) {
 
 int newError(Error *err) {
 
-	err->log = errorMessage;
+	err->log = printMessage;
 }
 
 void initializePlayer(Player *p) {
@@ -399,7 +397,7 @@ int calculateKDR(int k, int d) {
 void playGame(Player *player, Player *computer) {
 	
 	Error err;
-	err.log = errorMessage;
+	err.log = printMessage;
 
 	while ((player->deadShips != NUMSHIPS ) || (computer->deadShips != NUMSHIPS)) {
 		playerTurn(player, computer, &err);
@@ -407,6 +405,8 @@ void playGame(Player *player, Player *computer) {
 }
 
 void playerTurn(Player *player, Player *computer, Error *err) {
+
+	(player->board);
 	
 	printBoard(player->board);
 
@@ -418,9 +418,11 @@ void playerTurn(Player *player, Player *computer, Error *err) {
 		system("cls");
 
 		printf("Map:\n");
+		// printBoard(player->map);
 		// ================================= Change this!==============================
 		printBoard(computer->board);
 		// ================================= Change this!==============================
+
 
 
 		printBorder(2, 30);
@@ -449,10 +451,29 @@ void playerTurn(Player *player, Player *computer, Error *err) {
 			hitOrMiss = 1;
 			computer->board[row][col] = 'x';
 			player->map[row][col] = 'x';
+			
+			system("cls");
+			
+			printMessage("HIT!");
+			printBoard(player->map);
+			printBoard(player->board);
+
+			system("pause");
+
 		}
 		else if (target != ' ' || target != '~') {
 			hitOrMiss = 0;
-			computer->board[row][col] = 'x';
+			computer->board[row][col] = 'o';
+			player->map[row][col] = 'o';
+
+			system("cls");
+
+			printMessage("MISS!\n");
+			printBoard(player->map);
+			printBoard(player->board);
+
+			system("pause");
+
 		}
 
 	} while (hitOrMiss == 0);
