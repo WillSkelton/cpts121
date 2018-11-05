@@ -2,6 +2,13 @@
 
 int gameLoop(void) {
 
+	FILE *markdown = NULL, *outfile = NULL;
+
+	markdown = fopen("battleship.md", "w");
+	outfile = fopen("battleship.log", "w");
+
+	updateLog(outfile, "# Log:\n");
+	updateMD(markdown, "# Log:\n");
 
 	char shipSymbols[5] = { 'C', 'B', 'S', 'R', 'D' };
 	int shipLengths[5] = { 5, 4, 3, 3, 2 };
@@ -15,6 +22,7 @@ int gameLoop(void) {
 	initializePlayer(&computer);
 
 	choice = inputCheck(1, 2, printPreGameSetup);
+
 	switch (choice) {
 	case 1:
 		randomlyPlaceShips(shipLengths, shipSymbols, &player);
@@ -28,12 +36,13 @@ int gameLoop(void) {
 	}
 	
 
-	playGame(&player, &computer);
+	playGame(&player, &computer, markdown, outfile);
 
-	outputResults(&player, &computer);
+	outputResults(&player, &computer, outfile);
+	outputResultsMD(&player, &computer, markdown);
 
-	outputResultsMD(&player, &computer);
-	
+	fclose(markdown);
+	fclose(outfile);
 
 	return 0;
 }
@@ -120,7 +129,7 @@ void manuallyMoveShips(int *lengths, char *symbols, Player *p) {
 		do {
 
 			printBoardWithShip(row, col, lengths[ship], direction, symbols[ship], p->board);
-			printf("Where do you want to move your ship? (Use w/d/s/a for north/eeast/south/west:\n");
+			printf("Where do you want to move your ship? (Use w/d/s/a for north/east/south/west:\n");
 			printf("You can also rotate with r and confirm with x. \n");
 			printf(">>> ");
 			scanf(" %c", &choice);
@@ -210,7 +219,7 @@ void manuallyMoveShips(int *lengths, char *symbols, Player *p) {
 
 			case 'x':
 				if (isOccupied(row, col, lengths[ship], direction, p) == 0) {
-					placeShip(row, col, lengths[ship], direction, symbols[ship], p->board);
+					placeShip(row, col, lengths[ship], direction, symbols[ship], p);
 					system("cls");
 				}
 				else {
@@ -373,18 +382,18 @@ void printPreGameSetup(void) {
 	printf("2: Manually enter your ship locations\n");
 }
 
-void placeShip(int startRow, int startCol, int length, int direction, char symbol, char board[NUMROWS][NUMCOLS]) {
+void placeShip(int startRow, int startCol, int length, int direction, char symbol, Player *p) {
 	int occupied = 0;
 
 	if (direction == 1) {
 		for (int i = 0; i < length; ++i) {
-			board[startRow][startCol + i] = symbol;
+			p->board[startRow][startCol + i] = symbol;
 		}
 	}
 	else if (direction == 0) {
 		for (int i = 0; i < length; ++i) {
 			for (int i = 0; i < length; ++i) {
-				board[startRow + i][startCol] = symbol;
+				p->board[startRow + i][startCol] = symbol;
 			}
 		}
 	}
@@ -458,27 +467,31 @@ double calculateAccuracy(int h, int m) {
 	return (double)(hits / misses);
 }
 
-void playGame(Player *player, Player *computer) {
+void playGame(Player *player, Player *computer, FILE *md, FILE *out) {
 
 	player->whoSankIt = "You sunk their";
 	computer->whoSankIt = "They sunk your";
+
+	//fprintf(outfile, "Test: %d/n", 10);
+	//fclose(outfile);
 
 
 	Error err;
 	err.log = printMessage;
 
 	while ((player->deadShips != NUMSHIPS) && (computer->deadShips != NUMSHIPS)) {
-		playerTurn(player, computer, &err);
-		computerTurn(player, computer, &err);
+		playerTurn(player, computer, &err, md, out);
+		computerTurn(player, computer, &err, md, out);
 	}
 	
 }
 
-void playerTurn(Player *player, Player *computer, Error *err) {
+void playerTurn(Player *player, Player *computer, Error *err, FILE *md, FILE *out) {
 
 	int row = 0, col = 0, hitOrMiss = 0;
 
 	char target = ' ', result = ' ';
+	char message;
 
 	do {
 		hitOrMiss = 0;
@@ -487,7 +500,26 @@ void playerTurn(Player *player, Player *computer, Error *err) {
 		
 		printMessage("Your Turn");
 
+		printf("     1  2  3  4  5  6  7  8  9  10  \n");
+		for (int r = 0; r < NUMROWS; ++r) {
+			if (r == 9) {
+				printf(" %d ", r + 1);
+			}
+			else {
+				printf("  %d ", r + 1);
+
+			}
+
+			for (int c = 0; c < NUMCOLS; ++c) {
+				printf(" %c ", computer->board[r][c]);
+			}
+
+			printf("\n");
+		}
+
 		printBoard(player);
+
+		
 		
 		printf("Enter a row number for your shot: ");
 		scanf("%d", &row);
@@ -506,10 +538,6 @@ void playerTurn(Player *player, Player *computer, Error *err) {
 		computer->board[row][col] = result;
 		player->map[row][col] = result;
 		
-
-
-
-
 		printBoard(player);
 		Sleep(1000);
 
@@ -517,9 +545,23 @@ void playerTurn(Player *player, Player *computer, Error *err) {
 
 	} while (hitOrMiss != 0 && hitOrMiss != 1);
 
+	
+
+	switch (hitOrMiss) {
+	case 0:
+		updateLog(out, "  - Player Missed\n");
+		updateMD(md, "  - Player Missed\n");
+		break;
+
+	case 1:
+		updateLog(out, "  - Player Landed a hit\n");
+		updateMD(md, "  - Player Landed a hit\n");
+		break;
+	}
+
 }
 
-void computerTurn(Player *player, Player *computer, Error *err) {
+void computerTurn(Player *player, Player *computer, Error *err, FILE *md, FILE *out) {
 
 	
 	int row = 0, col = 0, hitOrMiss = 0;;
@@ -536,6 +578,18 @@ void computerTurn(Player *player, Player *computer, Error *err) {
 	player->board[row][col] = result;
 	computer->map[row][col] = result;
 
+	switch (hitOrMiss) {
+	case 0:
+		updateLog(out, "  - Computer Missed\n");
+		updateMD(md, "  - Computer Missed\n");
+		break;
+
+	case 1:
+		updateLog(out, "  - Computer Landed a hit\n");
+		updateMD(md, "  - Computer Landed a hit\n");
+		break;
+	}
+
 	printBoard(player);
 	Sleep(1000);
 
@@ -548,8 +602,10 @@ char shotResult(char c, Player *attack, Player *defense, Error *err, int *hitOrM
 	char result = ' ';
 
 	if (c == 'x' || c == 'o') {
+		*hitOrMiss = 0;
 		result = c;
 		err->log("You already shot there.");
+
 	}
 	else if (c != WATERSYMBOL) {
 
@@ -644,25 +700,25 @@ void updateShipHealth(Player *attack, Player *defence, char shipSymbol) {
 	}
 }
 
-void outputResults(Player *p, Player *c) {
+void outputResults(Player *p, Player *c, FILE *outfile) {
 
 	char *winner;
-	FILE *outfile = NULL, *markdown = NULL;
 
-	if (p->deadShips) {
+	//printf("%d\n:", p->deadShips);
+
+	if (p->deadShips != 5) {
 		winner = "The Player";
 	}
 	else {
 		winner = "The Computer";
 	}
 
-	
+	fprintf(outfile, "=============== Results ===============\n");
+
+
 	printf("The winner was: %s\n", winner);
 
-	outfile = fopen("battleship.log", "w");
-
-
-	fprintf(outfile, "# Winner: %s", winner);
+	fprintf(outfile, "# Winner: %s\n", winner);
 	fprintf(outfile, "# Player:\n" );
 	fprintf(outfile, "  - Kills %d\n", p->kills);
 	fprintf(outfile, "  - Deaths %d\n", p->deadShips);
@@ -679,13 +735,12 @@ void outputResults(Player *p, Player *c) {
 	fprintf(outfile, "  - Misses %d\n", c->misses);
 	fprintf(outfile, "  - Accuracy %.2lf\n", calculateAccuracy(c->hits, c->misses));
 
-	fclose(outfile);
+	
 }
 
-void outputResultsMD(Player *p, Player *c) {
+void outputResultsMD(Player *p, Player *c, FILE *markdown) {
 
 	char *winner;
-	FILE *markdown = NULL;
 
 	if (p->deadShips) {
 		winner = "The Player";
@@ -694,9 +749,8 @@ void outputResultsMD(Player *p, Player *c) {
 		winner = "The Computer";
 	}
 
+	fprintf(markdown, "=============== Results ===============\n");
 
-	// Optional Markdown file (open in a markdown editor or see on github)
-	markdown = fopen("battleship.md", "w");
 
 	fprintf(markdown, "# Winner: %s\n", winner);
 
@@ -716,6 +770,14 @@ void outputResultsMD(Player *p, Player *c) {
 	fprintf(markdown, "  - Misses %d\n", c->misses);
 	fprintf(markdown, "  - Accuracy %.2lf\n", calculateAccuracy(c->hits, c->misses));
 
-	fclose(markdown);
+	
 
+}
+
+void updateLog(FILE *outfile, char *message) {
+	fprintf(outfile, message);
+}
+
+void updateMD(FILE *markdown, char *message) {
+	fprintf(markdown, message);
 }

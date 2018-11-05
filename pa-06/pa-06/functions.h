@@ -47,7 +47,7 @@ void resetGameBoard(Player *p);
 
 void resetGameBoardAlt(char board[NUMROWS][NUMCOLS]);
 
-void printBoard(char board[NUMROWS][NUMCOLS]);
+void printBoard(Player *p);
 
 void randomlyPlaceShips(int *lengths, char *symbols, Player *p);
 
@@ -63,7 +63,7 @@ void printPreGameSetup(void);
 
 void printMessage(char *message);
 
-void placeShip(int startRow, int startCol, int length, int direction, char symbol, char board[NUMROWS][NUMCOLS]);
+void placeShip(int startRow, int startCol, int length, int direction, char symbol, Player *p);
 
 int newError(Error *err);
 
@@ -71,7 +71,7 @@ void initializePlayer(Player *p);
 
 double calculateKDR(int k, int d);
 
-void playGame(Player *player, Player *computer);
+void playGame(Player *player, Player *computer, FILE *md, FILE *out);
 
 void playerTurn(Player *player, Player *computer, Error *err);
 
@@ -81,6 +81,10 @@ char shotResult(char c, Player *attack, Player *defense, Error *err, int *hitOrM
 
 void updateShipHealth(Player *attack, Player *defence, char shipSymbol);
 
-void outputResults(Player *p, Player *c);
+void outputResults(Player *p, Player *c, FILE *outfile);
 
-void outputResultsMD(Player *p, Player *c);
+void outputResultsMD(Player *p, Player *c, FILE *markdown);
+
+void updateLog(FILE *outfile, char *message);
+
+void updateMD(FILE *markdown, char *message);
