@@ -26,14 +26,20 @@ int gameLoop(void) {
 		randomlyPlaceShips(shipLengths, shipSymbols, computer.board);
 		break;
 	}
-
-
+	
+	//initializePlayer(&player);
+	//randomlyPlaceShips(shipLengths, shipSymbols, player.board);
 	//printBoard(&player);
-	//printBoard(computer.board);
+	//
+	//initializePlayer(&player);
+	//randomlyPlaceShips(shipLengths, shipSymbols, player.board);
+	//printBoard(&player);
+
+	//initializePlayer(&player);
+	//randomlyPlaceShips(shipLengths, shipSymbols, player.board);
+	//printBoard(&player);
 
 	playGame(&player, &computer);
-
-	ptrTest(&player);
 
 	return 0;
 }
@@ -41,7 +47,7 @@ int gameLoop(void) {
 void resetGameBoard(char board[NUMROWS][NUMCOLS]) {
 	for (int r = 0; r < NUMROWS; ++r) {
 		for (int c = 0; c < NUMCOLS; ++c) {
-			board[r][c] = '~';
+			board[r][c] = WATERSYMBOL;
 		}
 	}
 }
@@ -49,21 +55,27 @@ void resetGameBoard(char board[NUMROWS][NUMCOLS]) {
 void resetGameBoardAlt(char board[NUMROWS][NUMCOLS]) {
 	for (int r = 0; r < NUMROWS; ++r) {
 		for (int c = 0; c < NUMCOLS; ++c) {
-			board[r][c] = ' ';
+			board[r][c] = WATERSYMBOL;
 		}
 	}
 }
 
-void printBoard(char board[NUMROWS][NUMCOLS]) {
+void printBoard(Player *p) {
 
 	char rowLetters[] = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'};
 
-	printf("    1  2  3  4  5  6  7  8  9  10  \n");
+	printf("     1  2  3  4  5  6  7  8  9  10  \n");
 	for (int r = 0; r < NUMROWS; ++r) {
-		printf(" %d ", r + 1);
+		if (r == 9) {
+			printf(" %d ", r + 1);
+		}
+		else {
+			printf("  %d ", r + 1);
+
+		}
 
 		for (int c = 0; c < NUMCOLS; ++c) {
-			printf(" %c ", board[r][c]);
+			printf(" %c ", p->board[r][c]);
 		}
 
 		printf("\n");
@@ -246,7 +258,7 @@ void printBoardWithShip(int startRow, int startCol, int shipLength, int directio
 	}
 }
 
-void randomlyPlaceShips(int *lengths, char *symbols, char board[NUMROWS][NUMCOLS]) {
+void randomlyPlaceShips(int *lengths, char *symbols, Player *p) {
 	int row = 0, col = 0, direction = 0, done = 0;
 
 	for (int ship = 0; ship < NUMSHIPS; ++ship) {
@@ -254,13 +266,18 @@ void randomlyPlaceShips(int *lengths, char *symbols, char board[NUMROWS][NUMCOLS
 
 		if (direction == 1) {
 			do {
-				row = rand() % NUMROWS;
+				row = rand() % NUMROWS - 1;
 				col = rand() % (NUMCOLS - lengths[ship] + 1);
-				if (isOccupied(row, col, lengths[ship], direction, board) == 0) {
+				if (isOccupied(row, col, lengths[ship], direction, p->board) == 0) {
 					for (int i = 0; i < lengths[ship]; ++i) {
-						board[row][col + i] = symbols[ship];
+						p->board[row][col + i] = symbols[ship];
+						//printBoard(p);
+						//system("cls");
 					}
 					done = 1;
+				}
+				else {
+					--ship;
 				}
 
 			} while (!done);
@@ -268,12 +285,17 @@ void randomlyPlaceShips(int *lengths, char *symbols, char board[NUMROWS][NUMCOLS
 		else {
 			do {
 				row = rand() % (NUMROWS - lengths[ship] + 1);
-				col = rand() % NUMCOLS;
-				if (isOccupied(row, col, lengths[ship], direction, board) == 0) {
+				col = rand() % NUMCOLS - 1;
+				if (isOccupied(row, col, lengths[ship], direction, p->board) == 0) {
 					for (int i = 0; i < lengths[ship]; ++i) {
-						board[row + i][col] = symbols[ship];
+						p->board[row + i][col] = symbols[ship];
+						/*printBoard(p);
+						system("cls");*/
 					}
 					done = 1;
+				}
+				else {
+					--ship;
 				}
 
 			} while (!done);
@@ -288,7 +310,7 @@ int isOccupied(int startRow, int startCol, int length, int direction, char board
 
 	if (direction == 1) {
 		for (int i = 0; i < length; ++i) {
-			if ((board[startRow][startCol + i] != ' ') && (board[startRow + i][startCol] != '~')) {
+			if ((board[startRow][startCol + i] != WATERSYMBOL)) {
 				occupied = 1;
 				break;
 			}
@@ -296,7 +318,7 @@ int isOccupied(int startRow, int startCol, int length, int direction, char board
 	}
 	else if (direction == 0) {
 		for (int i = 0; i < length; ++i) {
-			if ((board[startRow][startCol + i] != ' ') && (board[startRow + i][startCol] != '~')) {
+			if ((board[startRow + i][startCol] != WATERSYMBOL)) {
 				occupied = 1;
 				break;
 			}
@@ -361,6 +383,16 @@ void printMessage(char *message) {
 	printBorder(2, length);
 }
 
+void youSankMyShip(char *whoSankIt, char *shipName) {
+
+	int length = strlen(shipName) + strlen(whoSankIt) + 6;
+
+	printBorder(2, length);
+	printf("|| %s %s ||\n", whoSankIt, shipName);
+	printBorder(2, length);
+
+}
+
 int newError(Error *err) {
 
 	err->log = printMessage;
@@ -368,8 +400,8 @@ int newError(Error *err) {
 
 void initializePlayer(Player *p) {
 
-	resetGameBoardAlt(p->board);
-	resetGameBoardAlt(p->map);
+	resetGameBoard(p->board);
+	resetGameBoard(p->map);
 
 	p->name;
 	p->kills = 0;
@@ -378,6 +410,11 @@ void initializePlayer(Player *p) {
 	p->kdr = 1;
 	p->hits = 0;
 	p->misses = 0;
+	p->CHealth = 5;
+	p->BHealth = 4;
+	p->SHealth = 3;
+	p->RHealth = 3;
+	p->DHealth = 2;
 
 	p->calculateKDR = calculateKDR;
 }
@@ -396,36 +433,39 @@ int calculateKDR(int k, int d) {
 
 void playGame(Player *player, Player *computer) {
 
+	player->whoSankIt = "You sunk their";
+	computer->whoSankIt = "They sunk your";
+
+
 	Error err;
 	err.log = printMessage;
 
-	while ((player->deadShips != NUMSHIPS ) || (computer->deadShips != NUMSHIPS)) {
+	while ((player->deadShips != NUMSHIPS) && (computer->deadShips != NUMSHIPS)) {
 		playerTurn(player, computer, &err);
+		computerTurn(player, computer, &err);
 	}
+	
 }
 
 void playerTurn(Player *player, Player *computer, Error *err) {
 
-	(player->board);
-
-	printBoard(player->board);
-
 	int row = 0, col = 0, hitOrMiss = 0;
+
+	char target = ' ', result = ' ';
 
 	do {
 		hitOrMiss = 0;
 
 		system("cls");
+		
+		printMessage("Your Turn");
 
+		printf("Score Points : %d | Ships Alive : %d\n", player->scorePoints, NUMSHIPS - player->deadShips);
+		
 		printf("Map:\n");
-		// printBoard(player->map);
-		// ================================= Change this!==============================
-		printBoard(computer->board);
-		// ================================= Change this!==============================
-
-
-
-		printBorder(2, 30);
+		printBoard(player->map);
+		
+		printBorder(2, 34);
 
 		printf("Your Ships:\n");
 		printBoard(player->board);
@@ -438,49 +478,152 @@ void playerTurn(Player *player, Player *computer, Error *err) {
 		row -= 1;
 		col -= 1;
 
-		char target = computer->board[row][col];
+		target = computer->board[row][col];
+		result = shotResult(target, player, computer, err, &hitOrMiss);
 
-		printf("Target: '%c'\n", target);
+		//printf("Target: '%c'\n", target);
 
+		computer->board[row][col] = result;
+		player->map[row][col] = result;
 
-		if (target == 'x' || target == 'o') {
-			err->log("You already shot there.");
-			continue;
-		}
-		else if (target != ' ' && target != '~') {
-			hitOrMiss = 1;
-			computer->board[row][col] = 'x';
-			player->map[row][col] = 'x';
+		Sleep(1000);
 
-			system("cls");
+		system("cls");
 
-			printMessage("HIT!");
-			printBoard(player->map);
-			printBoard(player->board);
-
-			system("pause");
-
-		}
-		else if (target != ' ' || target != '~') {
-			hitOrMiss = 0;
-			computer->board[row][col] = 'o';
-			player->map[row][col] = 'o';
-
-			system("cls");
-
-			printMessage("MISS!\n");
-			printBoard(player->map);
-			printBoard(player->board);
-
-			system("pause");
-
-		}
-
-	} while (hitOrMiss == 0);
-}
-
-void ptrTest(Player *p) {
-
-	printf("Choice: '%c'\n", p->board[0][0]);
+	} while (hitOrMiss != 0 && hitOrMiss != 1);
 
 }
+
+void computerTurn(Player *player, Player *computer, Error *err) {
+
+	
+	int row = 0, col = 0, hitOrMiss = 0;;
+	char target = ' ', result = ' ';
+
+	row = rand() % NUMROWS - 1;
+	col = rand() % NUMCOLS - 1;
+
+
+	printMessage("Computer's turn");
+	target = player->board[row][col];
+	result = shotResult(target, computer, player, err, &hitOrMiss);
+
+	player->board[row][col] = result;
+	computer->map[row][col] = result;
+
+	printf("Score Points : %d | Ships Alive : %d\n", player->scorePoints, NUMSHIPS - player->deadShips);
+
+	printf("Map:\n");
+	printBoard(player->map);
+
+	printBorder(2, 34);
+
+	printf("Your Ships:\n");
+	printBoard(player->board);
+	Sleep(1000);
+
+	system("cls");
+
+}
+
+char shotResult(char c, Player *attack, Player *defense, Error *err, int *hitOrMiss) {
+
+	char result = ' ';
+
+	if (c == 'x' || c == 'o') {
+		result = c;
+		err->log("You already shot there.");
+	}
+	else if (c != WATERSYMBOL) {
+
+		*hitOrMiss = 1;
+		result = 'x';
+		updateShipHealth(attack, defense, c);
+	}
+	else if (c == WATERSYMBOL) {
+		*hitOrMiss = 0;
+
+		printMessage("MISS!");
+		result = 'o';
+	}
+
+	return result;
+}
+
+void updateShipHealth(Player *attack, Player *defence, char shipSymbol) {
+
+	switch (shipSymbol) {
+	case 'C':
+		attack->hits++;
+		defence->CHealth--;
+		//system("cls");
+		printMessage("HIT!");
+
+		if (defence->CHealth == 0) {
+			youSankMyShip(attack->whoSankIt, "Carrier!");
+			attack->kills++;
+			attack->scorePoints++;
+			defence->deadShips++;	
+		}
+
+		Sleep(1000);
+		break;
+
+	case 'B':
+		attack->hits++;
+		defence->BHealth--;
+		printMessage("HIT!");
+
+		if (defence->BHealth == 0) {
+			youSankMyShip(attack->whoSankIt, "Battleship!");
+			attack->kills++;
+			attack->scorePoints++;
+			defence->deadShips++;
+		}
+		Sleep(1000);
+		break;
+
+	case 'S':
+		attack->hits++;
+		defence->SHealth--;
+		printMessage("HIT!");
+
+		if (defence->SHealth == 0) {
+			youSankMyShip(attack->whoSankIt, "Submarine!");
+			attack->kills++;
+			attack->scorePoints++;
+			defence->deadShips++;
+		}
+		Sleep(1000);
+		break;
+
+	case 'R':
+		attack->hits++;
+		defence->RHealth--;
+		printMessage("HIT!");
+
+		if (defence->RHealth == 0) {
+			youSankMyShip(attack->whoSankIt, "Cruiser!");
+			attack->kills++;
+			attack->scorePoints++;
+			defence->deadShips++;
+		}
+		Sleep(1000);
+		break;
+
+	case 'D':
+		attack->hits++;
+		defence->DHealth--;
+		printMessage("HIT!");
+
+		if (defence->DHealth == 0) {
+			youSankMyShip(attack->whoSankIt, "Destroyer!");
+			attack->kills++;
+			attack->scorePoints++;
+			defence->deadShips++;
+		}
+		Sleep(1000);
+		break;
+	}
+}
+
