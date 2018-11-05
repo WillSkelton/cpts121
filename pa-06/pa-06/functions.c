@@ -445,26 +445,26 @@ void initializePlayer(Player *p) {
 }
 
 double calculateKDR(int k, int d) {
-	int kills = k;
-	int deaths = d;
+	double kills = (double)k;
+	double deaths = (double)d;
 
 	if (d <= 0) {
-		deaths = 1;
+		deaths = 1.0;
 	}
 
-	return (double)(kills / deaths);
+	return (kills) / (deaths);
 
 }
 
 double calculateAccuracy(int h, int m) {
-	int hits = h;
-	int misses = m;
+	double hits = (double)h;
+	double misses = (double)m;
 
 	if (m <= 0) {
 		misses = 1;
 	}
 
-	return (double)(hits / misses);
+	return (hits / misses);
 }
 
 void playGame(Player *player, Player *computer, FILE *md, FILE *out) {
@@ -500,26 +500,7 @@ void playerTurn(Player *player, Player *computer, Error *err, FILE *md, FILE *ou
 		
 		printMessage("Your Turn");
 
-		printf("     1  2  3  4  5  6  7  8  9  10  \n");
-		for (int r = 0; r < NUMROWS; ++r) {
-			if (r == 9) {
-				printf(" %d ", r + 1);
-			}
-			else {
-				printf("  %d ", r + 1);
-
-			}
-
-			for (int c = 0; c < NUMCOLS; ++c) {
-				printf(" %c ", computer->board[r][c]);
-			}
-
-			printf("\n");
-		}
-
-		printBoard(player);
-
-		
+		printBoard(player);		
 		
 		printf("Enter a row number for your shot: ");
 		scanf("%d", &row);
@@ -615,7 +596,7 @@ char shotResult(char c, Player *attack, Player *defense, Error *err, int *hitOrM
 	}
 	else if (c == WATERSYMBOL) {
 		*hitOrMiss = 0;
-
+		attack->misses++;
 		printMessage("MISS!");
 		result = 'o';
 	}
@@ -713,7 +694,7 @@ void outputResults(Player *p, Player *c, FILE *outfile) {
 		winner = "The Computer";
 	}
 
-	fprintf(outfile, "=============== Results ===============\n");
+	fprintf(outfile, "\n=============== Results ===============\n");
 
 
 	printf("The winner was: %s\n", winner);
@@ -722,7 +703,7 @@ void outputResults(Player *p, Player *c, FILE *outfile) {
 	fprintf(outfile, "# Player:\n" );
 	fprintf(outfile, "  - Kills %d\n", p->kills);
 	fprintf(outfile, "  - Deaths %d\n", p->deadShips);
-	fprintf(outfile, "  - Kill/Death Ratio: %.2lf\n", p->calculateKDR(p->kills, p->deadShips));
+	fprintf(outfile, "  - Kill/Death Ratio: %.2lf\n", calculateKDR(p->kills, p->deadShips));
 	fprintf(outfile, "  - Hits %d\n", p->hits);
 	fprintf(outfile, "  - Misses %d\n", p->misses);
 	fprintf(outfile, "  - Accuracy %.2lf\n", calculateAccuracy(p->hits, p->misses));
@@ -730,7 +711,7 @@ void outputResults(Player *p, Player *c, FILE *outfile) {
 	fprintf(outfile, "# Computer:\n");
 	fprintf(outfile, "  - Kills %d\n", c->kills);
 	fprintf(outfile, "  - Deaths %d\n", c->deadShips);
-	fprintf(outfile, "  - Kill/Death Ratio: %.2lf\n", c->calculateKDR(c->kills, c->deadShips));
+	fprintf(outfile, "  - Kill/Death Ratio: %.2lf\n", calculateKDR(c->kills, c->deadShips));
 	fprintf(outfile, "  - Hits %d\n", c->hits);
 	fprintf(outfile, "  - Misses %d\n", c->misses);
 	fprintf(outfile, "  - Accuracy %.2lf\n", calculateAccuracy(c->hits, c->misses));
@@ -742,14 +723,14 @@ void outputResultsMD(Player *p, Player *c, FILE *markdown) {
 
 	char *winner;
 
-	if (p->deadShips) {
+	if (p->deadShips != 5) {
 		winner = "The Player";
 	}
 	else {
 		winner = "The Computer";
 	}
 
-	fprintf(markdown, "=============== Results ===============\n");
+	fprintf(markdown, "\n=============== Results ===============\n");
 
 
 	fprintf(markdown, "# Winner: %s\n", winner);

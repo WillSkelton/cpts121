@@ -45,8 +45,6 @@ int gameLoop(void);
 
 void resetGameBoard(Player *p);
 
-void resetGameBoardAlt(char board[NUMROWS][NUMCOLS]);
-
 void printBoard(Player *p);
 
 void randomlyPlaceShips(int *lengths, char *symbols, Player *p);
@@ -73,9 +71,9 @@ double calculateKDR(int k, int d);
 
 void playGame(Player *player, Player *computer, FILE *md, FILE *out);
 
-void playerTurn(Player *player, Player *computer, Error *err);
+void playerTurn(Player *player, Player *computer, Error *err, FILE *md, FILE *out);
 
-void computerTurn(Player *player, Player *computer, Error *err);
+void computerTurn(Player *player, Player *computer, Error *err, FILE *md, FILE *out);
 
 char shotResult(char c, Player *attack, Player *defense, Error *err, int *hitOrMiss);
 

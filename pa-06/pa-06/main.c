@@ -4,7 +4,7 @@ int main(void) {
 
 	srand((unsigned int)time(NULL));
 
-	//printTitle();
+	printTitle();
 	
 	gameLoop();
 
