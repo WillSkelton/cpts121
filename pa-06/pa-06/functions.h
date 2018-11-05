@@ -15,10 +15,11 @@ typedef struct player {
 	char board[NUMROWS][NUMCOLS];
 	char map[NUMCOLS][NUMCOLS];
 	char name;
+	char *whoSankIt;
 	int CHealth;
 	int BHealth;
 	int SHealth;
-	int Realth;
+	int RHealth;
 	int DHealth;
 	int kills;
 	int deadShips;
