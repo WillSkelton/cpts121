@@ -43,19 +43,19 @@ typedef struct error {
 
 int gameLoop(void);
 
-void resetGameBoard(char board[NUMROWS][NUMCOLS]);
+void resetGameBoard(Player *p);
 
 void resetGameBoardAlt(char board[NUMROWS][NUMCOLS]);
 
-void printBoard(Player *p);
+void printBoard(char board[NUMROWS][NUMCOLS]);
 
 void randomlyPlaceShips(int *lengths, char *symbols, Player *p);
 
-void manuallyMoveShips(int *lengths, char *symbols, char board[NUMROWS][NUMCOLS]);
+void manuallyMoveShips(int *lengths, char *symbols, Player *p);
 
-void printBoardWithShip(int startRow, int startCol, int shipLength, int direction, char shipSymbol, char board[NUMROWS][NUMCOLS]);
+void printBoardWithShip(int startRow, int startCol, int shipLength, int direction, char shipSymbol, Player *p);
 
-int isOccupied(int startRow, int startCol, int length, int direction, char board[NUMROWS][NUMCOLS]);
+int isOccupied(int startRow, int startCol, int length, int direction, Player *p);
 
 int inputCheck(int lowerBound, int upperBound, void(*printMenu)());
 
