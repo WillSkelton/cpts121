@@ -47,9 +47,9 @@ void resetGameBoard(char board[NUMROWS][NUMCOLS]);
 
 void resetGameBoardAlt(char board[NUMROWS][NUMCOLS]);
 
-void printBoard(char board[NUMROWS][NUMCOLS]);
+void printBoard(Player *p);
 
-void randomlyPlaceShips(int *lengths, char *symbols, char board[NUMROWS][NUMCOLS]);
+void randomlyPlaceShips(int *lengths, char *symbols, Player *p);
 
 void manuallyMoveShips(int *lengths, char *symbols, char board[NUMROWS][NUMCOLS]);
 
@@ -69,7 +69,7 @@ int newError(Error *err);
 
 void initializePlayer(Player *p);
 
-int calculateKDR(int k, int d);
+double calculateKDR(int k, int d);
 
 void playGame(Player *player, Player *computer);
 
@@ -80,3 +80,7 @@ void computerTurn(Player *player, Player *computer, Error *err);
 char shotResult(char c, Player *attack, Player *defense, Error *err, int *hitOrMiss);
 
 void updateShipHealth(Player *attack, Player *defence, char shipSymbol);
+
+void outputResults(Player *p, Player *c);
+
+void outputResultsMD(Player *p, Player *c);

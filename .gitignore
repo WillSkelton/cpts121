@@ -337,3 +337,5 @@ ASALocalRun/
 **/*.dat
 **/output.md
 sandbox
+**/battleship.md
+**/battleship.log
