@@ -27,19 +27,13 @@ int gameLoop(void) {
 		break;
 	}
 	
-	//initializePlayer(&player);
-	//randomlyPlaceShips(shipLengths, shipSymbols, player.board);
-	//printBoard(&player);
-	//
-	//initializePlayer(&player);
-	//randomlyPlaceShips(shipLengths, shipSymbols, player.board);
-	//printBoard(&player);
-
-	//initializePlayer(&player);
-	//randomlyPlaceShips(shipLengths, shipSymbols, player.board);
-	//printBoard(&player);
 
 	playGame(&player, &computer);
+
+	outputResults(&player, &computer);
+
+	outputResultsMD(&player, &computer);
+	
 
 	return 0;
 }
@@ -419,7 +413,7 @@ void initializePlayer(Player *p) {
 	p->calculateKDR = calculateKDR;
 }
 
-int calculateKDR(int k, int d) {
+double calculateKDR(int k, int d) {
 	int kills = k;
 	int deaths = d;
 
@@ -427,8 +421,19 @@ int calculateKDR(int k, int d) {
 		deaths = 1;
 	}
 
-	return kills / deaths;
+	return (double)(kills / deaths);
 
+}
+
+double calculateAccuracy(int h, int m) {
+	int hits = h;
+	int misses = m;
+
+	if (m <= 0) {
+		misses = 1;
+	}
+
+	return (double)(hits / misses);
 }
 
 void playGame(Player *player, Player *computer) {
@@ -627,3 +632,78 @@ void updateShipHealth(Player *attack, Player *defence, char shipSymbol) {
 	}
 }
 
+void outputResults(Player *p, Player *c) {
+
+	char *winner;
+	FILE *outfile = NULL, *markdown = NULL;
+
+	if (p->deadShips) {
+		winner = "The Player";
+	}
+	else {
+		winner = "The Computer";
+	}
+
+	
+	printf("The winner was: %s\n", winner);
+
+	outfile = fopen("battleship.log", "w");
+
+
+	fprintf(outfile, "# Winner: %s", winner);
+	fprintf(outfile, "# Player:\n" );
+	fprintf(outfile, "  - Kills %d\n", p->kills);
+	fprintf(outfile, "  - Deaths %d\n", p->deadShips);
+	fprintf(outfile, "  - Kill/Death Ratio: %.2lf\n", p->calculateKDR(p->kills, p->deadShips));
+	fprintf(outfile, "  - Hits %d\n", p->hits);
+	fprintf(outfile, "  - Misses %d\n", p->misses);
+	fprintf(outfile, "  - Accuracy %.2lf\n", calculateAccuracy(p->hits, p->misses));
+
+	fprintf(outfile, "# Computer:\n");
+	fprintf(outfile, "  - Kills %d\n", c->kills);
+	fprintf(outfile, "  - Deaths %d\n", c->deadShips);
+	fprintf(outfile, "  - Kill/Death Ratio: %.2lf\n", c->calculateKDR(c->kills, c->deadShips));
+	fprintf(outfile, "  - Hits %d\n", c->hits);
+	fprintf(outfile, "  - Misses %d\n", c->misses);
+	fprintf(outfile, "  - Accuracy %.2lf\n", calculateAccuracy(c->hits, c->misses));
+
+	fclose(outfile);
+}
+
+void outputResultsMD(Player *p, Player *c) {
+
+	char *winner;
+	FILE *markdown = NULL;
+
+	if (p->deadShips) {
+		winner = "The Player";
+	}
+	else {
+		winner = "The Computer";
+	}
+
+
+	// Optional Markdown file (open in a markdown editor or see on github)
+	markdown = fopen("battleship.md", "w");
+
+	fprintf(markdown, "# Winner: %s\n", winner);
+
+	fprintf(markdown, "# Player:\n");
+	fprintf(markdown, "  - Kills %d\n", p->kills);
+	fprintf(markdown, "  - Deaths %d\n", p->deadShips);
+	fprintf(markdown, "  - Kill/Death Ratio: %.2lf\n", p->calculateKDR(p->kills, p->deadShips));
+	fprintf(markdown, "  - Hits %d\n", p->hits);
+	fprintf(markdown, "  - Misses %d\n", p->misses);
+	fprintf(markdown, "  - Accuracy %.2lf\n", calculateAccuracy(p->hits, p->misses));
+
+	fprintf(markdown, "# Computer:\n");
+	fprintf(markdown, "  - Kills %d\n", c->kills);
+	fprintf(markdown, "  - Deaths %d\n", c->deadShips);
+	fprintf(markdown, "  - Kill/Death Ratio: %.2lf\n", c->calculateKDR(c->kills, c->deadShips));
+	fprintf(markdown, "  - Hits %d\n", c->hits);
+	fprintf(markdown, "  - Misses %d\n", c->misses);
+	fprintf(markdown, "  - Accuracy %.2lf\n", calculateAccuracy(c->hits, c->misses));
+
+	fclose(markdown);
+
+}
