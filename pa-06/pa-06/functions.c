@@ -37,7 +37,7 @@ int gameLoop(void) {
 void resetGameBoard(char board[NUMROWS][NUMCOLS]) {
 	for (int r = 0; r < NUMROWS; ++r) {
 		for (int c = 0; c < NUMCOLS; ++c) {
-			board[r][c] = '~';
+			board[r][c] = WATERSYMBOL;
 		}
 	}
 }
@@ -45,7 +45,7 @@ void resetGameBoard(char board[NUMROWS][NUMCOLS]) {
 void resetGameBoardAlt(char board[NUMROWS][NUMCOLS]) {
 	for (int r = 0; r < NUMROWS; ++r) {
 		for (int c = 0; c < NUMCOLS; ++c) {
-			board[r][c] = ' ';
+			board[r][c] = WATERSYMBOL;
 		}
 	}
 }
@@ -284,7 +284,7 @@ int isOccupied(int startRow, int startCol, int length, int direction, char board
 
 	if (direction == 1) {
 		for (int i = 0; i < length; ++i) {
-			if ((board[startRow][startCol + i] != ' ') && (board[startRow + i][startCol] != '~')) {
+			if ((board[startRow][startCol + i] != WATERSYMBOL)) {
 				occupied = 1;
 				break;
 			}
@@ -292,7 +292,7 @@ int isOccupied(int startRow, int startCol, int length, int direction, char board
 	}
 	else if (direction == 0) {
 		for (int i = 0; i < length; ++i) {
-			if ((board[startRow][startCol + i] != ' ') && (board[startRow + i][startCol] != '~')) {
+			if ((board[startRow][startCol + i] != WATERSYMBOL)) {
 				occupied = 1;
 				break;
 			}
@@ -364,8 +364,8 @@ int newError(Error *err) {
 
 void initializePlayer(Player *p) {
 
-	resetGameBoardAlt(p->board);
-	resetGameBoardAlt(p->map);
+	resetGameBoard(p->board);
+	resetGameBoard(p->map);
 
 	p->name;
 	p->kills = 0;
@@ -374,6 +374,11 @@ void initializePlayer(Player *p) {
 	p->kdr = 1;
 	p->hits = 0;
 	p->misses = 0;
+	p->CHealth = 5;
+	p->BHealth = 4;
+	p->SHealth = 3;
+	p->Realth = 3;
+	p->DHealth = 2;
 
 	p->calculateKDR = calculateKDR;
 }
@@ -438,7 +443,7 @@ void playerTurn(Player *player, Player *computer, Error *err) {
 		col -= 1;
 
 		target = computer->board[row][col];
-		result = shotResult(target, err, &hitOrMiss);
+		result = shotResult(target, player, computer, err, &hitOrMiss);
 
 		printf("Target: '%c'\n", target);
 
@@ -450,9 +455,8 @@ void playerTurn(Player *player, Player *computer, Error *err) {
 		printBoard(player->map);
 		printBoard(player->board);
 
-		
-
 	} while (hitOrMiss != 0 && hitOrMiss != 1);
+
 }
 
 void computerTurn(Player *player, Player *computer, Error *err) {
@@ -463,7 +467,7 @@ void computerTurn(Player *player, Player *computer, Error *err) {
 	col = rand() % NUMCOLS - 1;
 
 	target = player->board[row][col];
-	result = shotResult(target, err, &hitOrMiss);
+	result = shotResult(target, computer, player, err, &hitOrMiss);
 
 	player->board[row][col] = result;
 	computer->map[row][col] = result;
@@ -475,7 +479,7 @@ void computerTurn(Player *player, Player *computer, Error *err) {
 
 }
 
-char shotResult(char c, Error *err, int *hitOrMiss) {
+char shotResult(char c, Player *attack, Player *defense, Error *err, int *hitOrMiss) {
 
 	char result = ' ';
 
@@ -483,16 +487,70 @@ char shotResult(char c, Error *err, int *hitOrMiss) {
 		result = c;
 		err->log("You already shot there.");
 	}
-	else if (c != ' ' && c != '~') {
+	else if (c != WATERSYMBOL) {
+
 		*hitOrMiss = 1;
 		result = 'x';
 		printMessage("HIT!");
+		updateShipHealth(attack, defense, c);
 	}
-	else if (c != ' ' || c != '~') {
+	else if (c == WATERSYMBOL) {
 		*hitOrMiss = 0;
 		result = 'o';
 		printMessage("MISS!");
 	}
 
 	return result;
+}
+
+void updateShipHealth(Player *attack, Player *defence, char shipSymbol) {
+
+	switch (shipSymbol) {
+	case 'C':
+
+		attack->hits++;
+		defence->CHealth--;
+	
+		if (defence->CHealth == 0) {
+			printMessage("You Sank their Carrier!");
+			attack->kills++;
+			attack->scorePoints++;
+			defence->deadShips++;
+			
+		}
+
+		break;
+
+	case 'B':
+		attack->hits++;
+		defence->BHealth--;
+
+		if (defence->BHealth == 0) {
+			printMessage("You Sank their Battleship!");
+			attack->kills++;
+			attack->scorePoints++;
+			defence->deadShips++;
+		}
+
+		break;
+	case 'S':
+		break;
+	case 'R':
+		break;
+	case 'D':
+		attack->hits++;
+		defence->DHealth--;
+
+		if (defence->DHealth == 0) {
+			printMessage("You Sank their Destroyer!");
+			attack->kills++;
+			attack->scorePoints++;
+			defence->deadShips++;
+
+		}
+
+		break;
+		break;
+	}
+
 }

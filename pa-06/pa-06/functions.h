@@ -7,6 +7,7 @@
 #define NUMROWS 10
 #define NUMCOLS 10
 #define NUMSHIPS 5
+#define WATERSYMBOL ' '
 
 typedef int(*CalculateKDR)(int k, int d);
 
@@ -14,6 +15,11 @@ typedef struct player {
 	char board[NUMROWS][NUMCOLS];
 	char map[NUMCOLS][NUMCOLS];
 	char name;
+	int CHealth;
+	int BHealth;
+	int SHealth;
+	int Realth;
+	int DHealth;
 	int kills;
 	int deadShips;
 	int scorePoints;
@@ -70,4 +76,6 @@ void playerTurn(Player *player, Player *computer, Error *err);
 
 void computerTurn(Player *player, Player *computer, Error *err);
 
-char shotResult(char c, Error *err);
+char shotResult(char c, Player *attack, Player *defense, Error *err, int *hitOrMiss);
+
+void updateShipHealth(Player *attack, Player *defence, char shipSymbol);
