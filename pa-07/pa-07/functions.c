@@ -132,8 +132,15 @@ void determineOptions(Player *p) {
 int checkForPair(Player *p) {
 	int pair = 0;
 
-	int occurrences = arrayContains(p->numFaces, NUMFACES, 2);
+	int occurrences = 0;
+
+	// Checks if just one pair. Eg, 2x Js and 3 other cards
+	occurrences = arrayContains(p->numFaces, NUMFACES, 2);
+	
+	// Checks for 3 of a kind
 	occurrences = occurrences || arrayContains(p->numFaces, NUMFACES, 3);
+	
+	// Checks for 4 of a kind
 	occurrences = occurrences || arrayContains(p->numFaces, NUMFACES, 4);
 
 	pair = (occurrences ? 1 : 0);
@@ -145,10 +152,13 @@ int checkForTwoPairs(Player *p){
 	
 	int twoPairs = 0;
 
+	// Checks if three of one kind and 2 of another. Eg, 3x Js and 2x 9s
 	twoPairs = arrayContains(p->numFaces, NUMFACES, 3) == 1 && arrayContains(p->numFaces, NUMFACES, 2) == 1;
 
+	// Checks if 2 of one, 2 of an other, and 1 of another. Eg, 2x Js, 2x 9s, and an ace
 	twoPairs = twoPairs || arrayContains(p->numFaces, NUMFACES, 2) == 2;
 	
+	// Checks if 4 of a kind and one of an other one. Eg, 4x Js and a 9
 	twoPairs = twoPairs || arrayContains(p->numFaces, NUMFACES, 4);
 
 	twoPairs = (twoPairs) ? 1 : 0;
@@ -156,9 +166,32 @@ int checkForTwoPairs(Player *p){
 	return twoPairs;
 }
 
-int checkFor3OAK(Player *p) {}
+int checkFor3OAK(Player *p) {
+	
+	int threeOAK = 0;
 
-int checkFor4OAK(Player *p) {}
+	// Checks for 3 of a kind
+	threeOAK = arrayContains(p->numFaces, NUMFACES, 3);
+
+	// Checks for 4 of a kind
+	threeOAK = threeOAK || arrayContains(p->numFaces, NUMFACES, 4);
+
+	threeOAK = (threeOAK) ? 1 : 0;
+
+	return threeOAK;
+}
+
+int checkFor4OAK(Player *p) {
+
+	int fourOAK = 0;
+
+	fourOAK = arrayContains(p->numFaces, NUMFACES, 4);
+
+	fourOAK = (fourOAK) ? 1 : 0;
+
+	return fourOAK;
+
+}
 
 int checkForFlush(Player *p) {}
 
