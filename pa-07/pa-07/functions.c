@@ -193,16 +193,50 @@ int checkFor4OAK(Player *p) {
 
 }
 
-int checkForFlush(Player *p) {}
+int checkForFlush(Player *p) {
 
-int checkForStrait(Player *p) {}
+	int flush = 0;
+
+	flush = arrayContains(p->numSuits, NUMSUITS, 5);
+
+	flush = flush ? 1 : 0;
+
+	return flush;
+
+}
+
+int checkForStrait(Player *p) {
+
+	int strait = 0;
+
+	for (int i = 0; i < NUMFACES - 4; ++i) {
+		if (p->numFaces[i] == 1) {
+			for (int j = 1; j < 5; ++j) {
+				if (p->numFaces[i + j] == 1) {
+					strait = 1;
+					continue;
+				}
+				else {
+					strait = 0;
+					break;
+				}
+			}
+		}
+		if (strait == 1) break;
+	}
+
+	strait = strait ? 1 : 0;
+
+	return strait;
+
+}
 
 void newTestingBoi(Player *p) {
 
 	newPlayer(p);
 
-	int testFaces[] = { 9, 9, 9, 9, 3 };
-	int testSuits[] = { 0, 1, 2, 3, 3 };
+	int testFaces[] = { 6, 7, 8, 9, 10 };
+	int testSuits[] = { 1, 1, 1, 1, 1 };
 
 	for (int i = 0; i < 5; ++i) {
 		p->hand[i].face = testFaces[i];
@@ -231,4 +265,16 @@ void printCards(const int wDeck[][13], const char *wFace[], const char *wSuit[],
 			}
 		}
 	}
+}
+
+void printOptions(Player *p, const char *handOptions[]) {
+	
+	system("cls");
+
+	printf("\nHere are your options:\n");
+	for (int i = 0; i < 6; ++i) {
+		printf("Press %d for%s", i, ": ");
+		printf("%s\n", (p->options[i] ? handOptions[i] : "XXXXXX"));
+	}
+
 }

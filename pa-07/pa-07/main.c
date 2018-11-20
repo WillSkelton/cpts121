@@ -43,6 +43,8 @@ int main(void)
 
 	parseCards(&TestingBoi);
 
+	printOptions(&TestingBoi, handOptions);
+
 	// ====================== END TEST ======================
 
 

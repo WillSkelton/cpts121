@@ -54,3 +54,5 @@ int checkForStrait(Player *p);
 void newTestingBoi(Player *p);
 
 void printCards(const int wDeck[][13], const char *wFace[], const char *wSuit[], Player *p);
+
+void printOptions(Player *p);
