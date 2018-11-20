@@ -74,7 +74,7 @@ void deal(const int wDeck[][13], const char *wFace[], const char *wSuit[], Playe
 
 	printf("\n");
 	// Deal Computer's hand
-	for(card = 0; card < 5; card++)
+	for(card = 5; card < 10; card++)
 	{
 		/* loop through rows of wDeck */
 		for (row = 0; row <= 3; row++)
@@ -87,7 +87,7 @@ void deal(const int wDeck[][13], const char *wFace[], const char *wSuit[], Playe
 				{
 					c->hand[card].face = column;
 					c->hand[card].suit = row;
-					//printf("%5s of %-8s%c", wFace[c->hand[card].face], wSuit[c->hand[card].suit], (card + 1) % 2 == 0 ? '\n' : '\t');
+					printf("%5s of %-8s%c", wFace[c->hand[card].face], wSuit[c->hand[card].suit], (card + 1) % 2 == 0 ? '\n' : '\t');
 				}
 			}
 		}

@@ -32,28 +32,22 @@ int main(void)
 	srand((unsigned)time(NULL)); /* seed random-number generator */
 
 	shuffle(deck);
-	// deal(deck, face, suit, &player, &computer);
+	deal(deck, face, suit, &player, &computer);
 
 	// ====================== TEST ======================
-	
-	Player TestingBoi;
-	newTestingBoi(&TestingBoi);
-	
-	printCards(deck, face, suit, &TestingBoi);
-
-	parseCards(&TestingBoi);
-
-	printOptions(&TestingBoi, handOptions);
-
+	//Player TestingBoi;
+	//newTestingBoi(&TestingBoi);
+	//printCards(deck, face, suit, &TestingBoi);
+	//parseCards(&TestingBoi);
+	//printOptions(&TestingBoi, handOptions);
 	// ====================== END TEST ======================
-
 
 	parseCards(&player);
 	parseCards(&computer);
 
-
-
-
+	printOptions(&player, handOptions);
+	printOptions(&computer, handOptions);
+	
 
 	return 0;
 }
