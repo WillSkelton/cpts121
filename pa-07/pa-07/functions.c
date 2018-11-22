@@ -66,13 +66,14 @@ void deal(const int wDeck[][13], const char *wFace[], const char *wSuit[], Playe
 				{
 					p->hand[card].face = column;
 					p->hand[card].suit = row;
-					printf("%5s of %-8s%c", wFace[p->hand[card].face], wSuit[p->hand[card].suit], (card + 1) % 2 == 0 ? '\n' : '\t');
+					//printf("%s of %-8s%c", wFace[p->hand[card].face], wSuit[p->hand[card].suit], (card + 1) % 2 == 0 ? '\n' : '\t');
 				}
 			}
 		}
 	}
 
-	printf("\n");
+	//printf("\n");
+
 	// Deal Computer's hand
 	for(card = 5; card < 10; card++)
 	{
@@ -88,12 +89,11 @@ void deal(const int wDeck[][13], const char *wFace[], const char *wSuit[], Playe
 					/* Card - 5 is so we can assign cards 5-10 to indexes 0-4 in the computer's hand array*/
 					c->hand[card - 5].face = column;
 					c->hand[card - 5].suit = row;
-					printf("%5s of %-8s%c", wFace[c->hand[card - 5].face], wSuit[c->hand[card - 5].suit], (card) % 2 == 0 ? '\n' : '\t');
+					// printf("%s of %-8s%c", wFace[c->hand[card - 5].face], wSuit[c->hand[card - 5].suit], (card) % 2 == 0 ? '\n' : '\t');
 				}
 			}
 		}
 	}
-	printf("done!");
 }
 
 int parseCards(Player *p) {
@@ -121,12 +121,13 @@ int arrayContains(int *array, int length, int num) {
 
 void determineOptions(Player *p) {
 
-	p->options[0] = checkForPair(p);
-	p->options[1] = checkForTwoPairs(p);
-	p->options[2] = checkFor3OAK(p);
-	p->options[3] = checkFor4OAK(p);
-	p->options[4] = checkForFlush(p);
-	p->options[5] = checkForStrait(p);
+	p->options[0] = 1;
+	p->options[1] = checkForPair(p);
+	p->options[2] = checkForTwoPairs(p);
+	p->options[3] = checkFor3OAK(p);
+	p->options[4] = checkFor4OAK(p);
+	p->options[5] = checkForFlush(p);
+	p->options[6] = checkForStrait(p);
 
 }
 
@@ -236,8 +237,8 @@ void newTestingBoi(Player *p) {
 
 	newPlayer(p);
 
-	int testFaces[] = { 6, 7, 8, 9, 10 };
-	int testSuits[] = { 1, 1, 1, 1, 1 };
+	int testFaces[] = { 3,5,6,7,12 };
+	int testSuits[] = { 2,0,3,3,1 };
 
 	for (int i = 0; i < 5; ++i) {
 		p->hand[i].face = testFaces[i];
@@ -252,30 +253,92 @@ void printCards(const int wDeck[][13], const char *wFace[], const char *wSuit[],
 	int column = 0; /*column number */
 	int card = 0;   /* card counter */
 
-
-					// Deal Player's Hand
+	printBorder(2, 35);
 	for (card = 0; card < 5; card++) {
-		/* loop through rows of wDeck */
-		for (row = 0; row <= 3; row++) {
-			/* loop through columns of wDeck for current row */
-			for (column = 0; column <= 12; column++) {
-				/* if slot contains current card, display card */
-				if (wDeck[row][column] == card + 1) {
-					printf("%5s of %-8s%c", wFace[p->hand[card].face], wSuit[p->hand[card].suit], (card + 1) % 2 == 0 ? '\n' : '\t');
-				}
-			}
-		}
+		printf("%5s of %-8s%c", wFace[p->hand[card].face], wSuit[p->hand[card].suit], (card + 1) % 2 == 0 ? '\n' : '\t');
+
 	}
+	printf("\n");
+	printBorder(2, 45);
+
+
 }
 
-void printOptions(Player *p, const char *handOptions[]) {
-	
+void printOptions(Player *p, const int wDeck[][13], const char *wFace[], const char *wSuit[], const char *handOptions[]) {
+
 	system("cls");
 
-	printf("\nHere are your options:\n");
-	for (int i = 0; i < 6; ++i) {
-		printf("Press %d for%s", i, ": ");
-		printf("%s\n", (p->options[i] ? handOptions[i] : "XXXXXX"));
+	int choice = 0;
+
+	printCards(wDeck, wFace, wSuit, p);	
+	do {
+				
+		printf("\nHere are your options:\n");
+
+		for (int i = 0; i < NUMHANDS; ++i) {
+			printf("Press %d for%s", i + 1, ": ");
+			printf("%s\n", (p->options[i] ? handOptions[i] : "XXXXXX"));
+		}
+		printf(">>> ");
+		scanf("%d", &choice);
+
+		if (choice > 7 || choice < 1 || p->options[choice - 1] != 1) {
+			system("cls");
+			printMessage("That is not a valid option");
+			printCards(wDeck, wFace, wSuit, p);
+		}
+
+	} while (choice > 7 || choice < 1 || p->options[choice - 1] != 1);
+
+}
+
+void printBorder(int size, int length) {
+
+	switch (size) {
+	case 1:
+		for (int i = 0; i < length; ++i) {
+			printf("-");
+		}
+		printf("\n");
+		break;
+	case 2:
+		for (int i = 0; i < length; ++i) {
+			printf("=");
+		}
+		printf("\n");
+		break;
 	}
 
+}
+
+int inputCheck(int lowerBound, int upperBound, void(*printMenu)()) {
+	int choice = 0;
+	do {
+		choice = 0;
+
+		printMenu();
+		scanf("%d", &choice);
+
+		if (choice < lowerBound || choice > upperBound) {
+			system("cls");
+			printBorder(2, 45);
+			printf("%d? That's not a valid option. Try again.\n", choice);
+			printBorder(2, 45);
+		}
+		else {
+			break;
+		}
+
+	} while (choice != upperBound);
+
+	return choice;
+}
+
+void printMessage(char *message) {
+
+	int length = strlen(message) + 6;
+
+	printBorder(2, length);
+	printf("|| %s ||\n", message);
+	printBorder(2, length);
 }
