@@ -1,25 +1,79 @@
 #include "functions.h"
 
+
+void printBorder(int size, int length) {
+
+	switch (size) {
+	case 1:
+		for (int i = 0; i < length; ++i) {
+			printf("-");
+		}
+		printf("\n");
+		break;
+	case 2:
+		for (int i = 0; i < length; ++i) {
+			printf("=");
+		}
+		printf("\n");
+		break;
+	}
+
+}
+
+int inputCheck(int lowerBound, int upperBound, void(*printMenu)()) {
+	int choice = 0;
+	do {
+		choice = 0;
+
+		printMenu();
+		scanf("%d", &choice);
+
+		if (choice < lowerBound || choice > upperBound) {
+			system("cls");
+			printBorder(2, 45);
+			printf("%d? That's not a valid option. Try again.\n", choice);
+			printBorder(2, 45);
+		}
+		else {
+			break;
+		}
+
+	} while (choice != upperBound);
+
+	return choice;
+}
+
+void printMessage(char *message) {
+
+	int length = strlen(message) + 6;
+
+	printBorder(2, length);
+	printf("|| %s ||\n", message);
+	printBorder(2, length);
+}
+
 // New Player
 void newPlayer(Player *p) {
-	for (int i = 0; i < 5; ++i) {
+	for (int i = 0; i < NUMCARDS; ++i) {
 		p->hand[i].face = 0;
 		p->hand[i].suit = 0;
 	}
 
-	for (int i = 0; i < 6; ++i) {
+	for (int i = 0; i < NUMHANDS; ++i) {
 		p->options[i] = 0;
+		p->precedence[i] = 1;
 	}
 
-	for (int i = 0; i < 13; ++i) {
+	for (int i = 0; i < NUMFACES; ++i) {
 		p->numFaces[i] = 0;
 	}
 
-	for (int i = 0; i < 4; ++i) {
+	for (int i = 0; i < NUMSUITS; ++i) {
 		p->numSuits[i] = 0;
 	}
 
 	p->score = 0;
+	p->chosenHand = 0;
 }
 
 /* shuffle cards in deck */
@@ -240,10 +294,13 @@ void newTestingBoi(Player *p) {
 	int testFaces[] = { 3,5,6,7,12 };
 	int testSuits[] = { 2,0,3,3,1 };
 
-	for (int i = 0; i < 5; ++i) {
+	for (int i = 0; i < NUMCARDS; ++i) {
 		p->hand[i].face = testFaces[i];
 		p->hand[i].suit = testSuits[i];
+	
 	}
+
+	for (int i = 0; i < NUMHANDS; ++i) p->precedence[i] = 1;
 
 }
 
@@ -290,55 +347,28 @@ void printOptions(Player *p, const int wDeck[][13], const char *wFace[], const c
 
 	} while (choice > 7 || choice < 1 || p->options[choice - 1] != 1);
 
-}
-
-void printBorder(int size, int length) {
-
-	switch (size) {
-	case 1:
-		for (int i = 0; i < length; ++i) {
-			printf("-");
-		}
-		printf("\n");
-		break;
-	case 2:
-		for (int i = 0; i < length; ++i) {
-			printf("=");
-		}
-		printf("\n");
-		break;
-	}
+	p->chosenHand = choice - 1;
 
 }
 
-int inputCheck(int lowerBound, int upperBound, void(*printMenu)()) {
-	int choice = 0;
-	do {
-		choice = 0;
-
-		printMenu();
-		scanf("%d", &choice);
-
-		if (choice < lowerBound || choice > upperBound) {
-			system("cls");
-			printBorder(2, 45);
-			printf("%d? That's not a valid option. Try again.\n", choice);
-			printBorder(2, 45);
-		}
-		else {
+void computerTurn(Player *c) {
+	
+	for (int i = 0; i < NUMHANDS; ++i) {
+		if (c->options[NUMHANDS - 1 - i] == 1) {
+			c->chosenHand = NUMHANDS - 1 - i;
 			break;
 		}
+	}
 
-	} while (choice != upperBound);
 
-	return choice;
 }
 
-void printMessage(char *message) {
+int compareHands(Player *p, Player *c) {
+	
+	int playerWon = p->chosenHand > c->chosenHand ? 1 : 0;
 
-	int length = strlen(message) + 6;
+	p->score += playerWon == 1 ? 1 : 0;
+	c->score += playerWon == 1 ? 0 : 1;
 
-	printBorder(2, length);
-	printf("|| %s ||\n", message);
-	printBorder(2, length);
+	return playerWon;
 }

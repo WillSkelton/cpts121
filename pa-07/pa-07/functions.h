@@ -17,9 +17,11 @@ typedef struct Card {
 typedef struct Player {
 	Card hand[5];
 	int options[NUMHANDS];
+	int precedence[NUMHANDS];
 	int numFaces[13];
 	int numSuits[4];
 	int score;
+	int chosenHand;
 
 } Player;
 
@@ -63,3 +65,7 @@ void printBorder(int size, int length);
 int inputCheck(int lowerBound, int upperBound, void(*printMenu)());
 
 void printMessage(char *message);
+
+void computerTurn(Player *c);
+
+int compareHands(Player *p, Player *c);
