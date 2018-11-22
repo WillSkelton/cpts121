@@ -74,7 +74,7 @@ void deal(const int wDeck[][13], const char *wFace[], const char *wSuit[], Playe
 
 	printf("\n");
 	// Deal Computer's hand
-	for(card = 0; card < 5; card++)
+	for(card = 5; card < 10; card++)
 	{
 		/* loop through rows of wDeck */
 		for (row = 0; row <= 3; row++)
@@ -85,9 +85,10 @@ void deal(const int wDeck[][13], const char *wFace[], const char *wSuit[], Playe
 				/* if slot contains current card, display card */
 				if (wDeck[row][column] == card + 1)
 				{
-					c->hand[card].face = column;
-					c->hand[card].suit = row;
-					//printf("%5s of %-8s%c", wFace[c->hand[card].face], wSuit[c->hand[card].suit], (card + 1) % 2 == 0 ? '\n' : '\t');
+					/* Card - 5 is so we can assign cards 5-10 to indexes 0-4 in the computer's hand array*/
+					c->hand[card - 5].face = column;
+					c->hand[card - 5].suit = row;
+					printf("%5s of %-8s%c", wFace[c->hand[card - 5].face], wSuit[c->hand[card - 5].suit], (card) % 2 == 0 ? '\n' : '\t');
 				}
 			}
 		}
