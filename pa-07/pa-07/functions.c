@@ -20,7 +20,7 @@ void printBorder(int size, int length) {
 
 }
 
-int inputCheck(int lowerBound, int upperBound, void(*printMenu)()) {
+int inputCheckCallback(int lowerBound, int upperBound, void(*printMenu)()) {
 	int choice = 0;
 	do {
 		choice = 0;
@@ -30,9 +30,27 @@ int inputCheck(int lowerBound, int upperBound, void(*printMenu)()) {
 
 		if (choice < lowerBound || choice > upperBound) {
 			system("cls");
-			printBorder(2, 45);
-			printf("%d? That's not a valid option. Try again.\n", choice);
-			printBorder(2, 45);
+			printMessage("That's not a valid option. Try again.");
+		}
+		else {
+			break;
+		}
+
+	} while (choice != upperBound);
+
+	return choice;
+}
+
+int inputCheck(int lowerBound, int upperBound) {
+	int choice = 0;
+	do {
+		choice = 0;
+		printf(">>> ");
+		scanf("%d", &choice);
+
+		if (choice < lowerBound || choice > upperBound) {
+			system("cls");
+			printMessage("That's not a valid option. Try again.");
 		}
 		else {
 			break;
@@ -64,13 +82,11 @@ void newPlayer(Player *p) {
 		p->precedence[i] = 1;
 	}
 
-	for (int i = 0; i < NUMFACES; ++i) {
-		p->numFaces[i] = 0;
-	}
+	for (int i = 0; i < NUMFACES; ++i) p->numFaces[i] = 0;
 
-	for (int i = 0; i < NUMSUITS; ++i) {
-		p->numSuits[i] = 0;
-	}
+	for (int i = 0; i < NUMSUITS; ++i) p->numSuits[i] = 0;
+
+	for (int i = 0; i < 3; ++i) p->switcherooni[i] = 0;
 
 	p->score = 0;
 	p->chosenHand = 0;
@@ -291,8 +307,8 @@ void newTestingBoi(Player *p) {
 
 	newPlayer(p);
 
-	int testFaces[] = { 3,5,6,7,12 };
-	int testSuits[] = { 2,0,3,3,1 };
+	int testFaces[] = { 3, 5, 6, 7, 12 };
+	int testSuits[] = { 2, 0, 3, 3, 1 };
 
 	for (int i = 0; i < NUMCARDS; ++i) {
 		p->hand[i].face = testFaces[i];
@@ -310,15 +326,77 @@ void printCards(const int wDeck[][13], const char *wFace[], const char *wSuit[],
 	int column = 0; /*column number */
 	int card = 0;   /* card counter */
 
-	printBorder(2, 35);
+	printf("=============== Your Cards ===============\n");
 	for (card = 0; card < 5; card++) {
 		printf("%5s of %-8s%c", wFace[p->hand[card].face], wSuit[p->hand[card].suit], (card + 1) % 2 == 0 ? '\n' : '\t');
 
 	}
 	printf("\n");
-	printBorder(2, 45);
+	printBorder(2, 42);
 
 
+}
+
+void askToSwitch(const int wDeck[][13], const char *wFace[], const char *wSuit[], Player *p) {
+	
+	printCards(wDeck, wFace, wSuit, p);
+
+	int  indexSwitch = 0;
+
+	do {
+
+		printf("Do you want to switch any of your cards?\n");
+		printf("Press 0 to skip: \nPress 1 to replace certain cards:\n");
+
+		if (inputCheck(0, 1) == 0) break;
+
+		printf("Alright, now you get to switch up to 3 of your cards out for random cards.\n");
+
+		for (int i = 0, k = 0; i < 5; ++i) {
+			
+			printf("Card #%d: Press 0 to keep or 1 to replace.\n", i + 1);
+			
+			indexSwitch = inputCheck(0, 1);
+
+			if (indexSwitch == 1) {
+				p->switcherooni[k] = i;
+				++k;
+			}
+			
+		}
+		reDraw(wDeck, wFace, wSuit, p);
+
+
+
+	} while (0 == 1);
+
+}
+
+void reDraw(const int wDeck[][13], const char *wFace[], const char *wSuit[], Player *p) {
+	for (int card = 10, k = 0; card < 13; card++)
+	{
+		/* loop through rows of wDeck */
+		for (int row = 0; row <= 3; row++)
+		{
+			/* loop through columns of wDeck for current row */
+			for (int column = 0; column <= 12; column++)
+			{
+				/* if slot contains current card, display card */
+				if (wDeck[row][column] == card + 1)
+				{
+					if (p->switcherooni[k] != 0) {
+
+						p->hand[(p->switcherooni[k])].face = column;
+						p->hand[(p->switcherooni[k])].suit = row;
+
+					}
+	
+					++k;
+					//printf("%s of %-8s%c", wFace[p->hand[card].face], wSuit[p->hand[card].suit], (card + 1) % 2 == 0 ? '\n' : '\t');
+				}
+			}
+		}
+	}
 }
 
 void printOptions(Player *p, const int wDeck[][13], const char *wFace[], const char *wSuit[], const char *handOptions[]) {

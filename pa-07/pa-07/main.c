@@ -36,17 +36,18 @@ int main(void)
 	deal(deck, face, suit, &player, &computer);
 
 	// ====================== TEST ======================
-	//Player TestingBoi;
-	//newTestingBoi(&TestingBoi);
-	//printCards(deck, face, suit, &TestingBoi);
-	//parseCards(&TestingBoi);
-	//printOptions(&TestingBoi, deck, face, suit, handOptions);
-	// ====================== END TEST ======================
+	Player TestingBoi;
+	newTestingBoi(&TestingBoi);
+	printCards(deck, face, suit, &TestingBoi);
+	parseCards(&TestingBoi);
+	askToSwitch(deck, face, suit, &TestingBoi);
+	printOptions(&TestingBoi, deck, face, suit, handOptions);
+	//// ====================== END TEST ======================
 
 	parseCards(&player);
 	parseCards(&computer);
 
-	printCards(deck, face, suit, &player);
+	askToSwitch(deck, face, suit, &player);
 	printOptions(&player, deck, face, suit, handOptions);
 	
 	computerTurn(&computer);

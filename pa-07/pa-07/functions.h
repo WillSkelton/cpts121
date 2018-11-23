@@ -15,13 +15,15 @@ typedef struct Card {
 } Card;
 
 typedef struct Player {
-	Card hand[5];
+	Card hand[NUMCARDS];
 	int options[NUMHANDS];
 	int precedence[NUMHANDS];
-	int numFaces[13];
-	int numSuits[4];
+	int numFaces[NUMFACES];
+	int numSuits[NUMSUITS];
+	int switcherooni[3];
 	int score;
 	int chosenHand;
+
 
 } Player;
 
@@ -62,10 +64,16 @@ void printOptions(Player *p, const int wDeck[][13], const char *wFace[], const c
 
 void printBorder(int size, int length);
 
-int inputCheck(int lowerBound, int upperBound, void(*printMenu)());
+int inputCheckCallback(int lowerBound, int upperBound, void(*printMenu)());
+
+int inputCheck(int lowerBound, int upperBound);
 
 void printMessage(char *message);
 
 void computerTurn(Player *c);
+
+void askToSwitch(const int wDeck[][13], const char *wFace[], const char *wSuit[], Player *p);
+
+void reDraw(const int wDeck[][13], const char *wFace[], const char *wSuit[], Player *p);
 
 int compareHands(Player *p, Player *c);
