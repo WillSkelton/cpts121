@@ -9,10 +9,10 @@ int main(void)
 {
 
 	Player player;
-	newPlayer(&player);
+	newPlayer(&player, "Player");
 
 	Player computer;
-	newPlayer(&computer);
+	newPlayer(&computer, "Computer");
 
 
 	/* initialize suit array */
@@ -38,6 +38,9 @@ int main(void)
 		gameLoop(deck, face, suit, handOptions, &player, &computer);
 
 		resetDeck(deck);
+
+		resetPlayer(&player);
+		resetPlayer(&computer);
 	}
 
 	printf("================= Score ==================\n");

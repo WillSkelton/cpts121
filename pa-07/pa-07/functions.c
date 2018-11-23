@@ -71,25 +71,33 @@ void printMessage(char *message) {
 }
 
 // New Player
-void newPlayer(Player *p) {
+void newPlayer(Player *p, char *name) {
+
+	// Initialize Hand
 	for (int i = 0; i < NUMCARDS; ++i) {
 		p->hand[i].face = 0;
 		p->hand[i].suit = 0;
 	}
 
+	// initialize possible card options
 	for (int i = 0; i < NUMHANDS; ++i) {
 		p->options[i] = 0;
-		p->precedence[i] = 1;
 	}
 
+	// initialize the number of each face value array
 	for (int i = 0; i < NUMFACES; ++i) p->numFaces[i] = 0;
 
+	// initialize the number of each suit array
 	for (int i = 0; i < NUMSUITS; ++i) p->numSuits[i] = 0;
 
+	// initialize the array of which cards to switch
 	for (int i = 0; i < 3; ++i) p->switcherooni[i] = -1;
 
+	// Initialize score
 	p->score = 0;
 	p->chosenHand = 0;
+
+	p->name = name;
 }
 
 /* shuffle cards in deck */
@@ -305,7 +313,7 @@ int checkForStrait(Player *p) {
 
 void newTestingBoi(Player *p) {
 
-	newPlayer(p);
+	newPlayer(p, "Test Boi");
 
 	int testFaces[] = { 3, 5, 6, 7, 12 };
 	int testSuits[] = { 2, 0, 3, 3, 1 };
@@ -316,7 +324,7 @@ void newTestingBoi(Player *p) {
 	
 	}
 
-	for (int i = 0; i < NUMHANDS; ++i) p->precedence[i] = 1;
+	// for (int i = 0; i < NUMHANDS; ++i) p->precedence[i] = 1;
 
 }
 
@@ -326,13 +334,15 @@ void printCards(const int wDeck[][13], const char *wFace[], const char *wSuit[],
 	int column = 0; /*column number */
 	int card = 0;   /* card counter */
 
-	printf("=============== Your Cards ===============\n");
+	int length = strlen(p->name);
+
+	printf("=============== %s's Cards ===============\n", p->name);
 	for (card = 0; card < 5; card++) {
 		printf("%5s of %-8s%c", wFace[p->hand[card].face], wSuit[p->hand[card].suit], (card + 1) % 2 == 0 ? '\n' : '\t');
 
 	}
 	printf("\n");
-	printBorder(2, 42);
+	printBorder(2, 40 + length);
 
 
 }
@@ -468,18 +478,25 @@ void gameLoop(const int wDeck[][13], const char *wFace[], const char *wSuit[], c
 
 	printOptions(p, wDeck, wFace, wSuit, handOptions);
 
+	
+
 	computerTurn(c);
 
-	winnerName = compareHands(p, c) == 1 ? "Player" : "Computer";
+	winnerName = compareHands(p, c) == 1 ? p->name : c->name;
+
+	system("cls");
+	printCards(wDeck, wFace, wSuit, p);
+	printCards(wDeck, wFace, wSuit, c);
 
 	printf("The winner is: %s.\n", winnerName);
 
 
-
 	printf("================= Score ==================\n");
 
-	printf("Player: %d\n", p->score);
-	printf("Computer: %d\n", c->score);
+	printf("%s: %d\n", p->name, p->score);
+	printf("%s: %d\n", c->name, c->score);
+
+	system("pause");
 }
 
 void resetDeck(int wDeck[][13]) {
@@ -489,4 +506,25 @@ void resetDeck(int wDeck[][13]) {
 		}
 	}
 
+}
+
+void resetPlayer(Player *p) {
+
+	// Resets game specific properties on the given object
+	for (int i = 0; i < NUMCARDS; ++i) {
+		p->hand[i].face = 0;
+		p->hand[i].suit = 0;
+	}
+
+	for (int i = 0; i < NUMHANDS; ++i) {
+		p->options[i] = 0;
+	}
+
+	for (int i = 0; i < NUMFACES; ++i) p->numFaces[i] = 0;
+
+	for (int i = 0; i < NUMSUITS; ++i) p->numSuits[i] = 0;
+
+	for (int i = 0; i < 3; ++i) p->switcherooni[i] = -1;
+
+	p->chosenHand = 0;
 }

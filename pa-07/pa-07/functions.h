@@ -17,8 +17,8 @@ typedef struct Card {
 
 typedef struct Player {
 	Card hand[NUMCARDS];
+	char *name;
 	int options[NUMHANDS];
-	int precedence[NUMHANDS];
 	int numFaces[NUMFACES];
 	int numSuits[NUMSUITS];
 	int switcherooni[3];
@@ -35,7 +35,7 @@ void shuffle(int wDeck[][13]);
 void deal(const int wDeck[][13], const char *wFace[], const char *wSuit[], Player *p, Player *c);
 
 //Initializes player
-void newPlayer(Player *p);
+void newPlayer(Player *p, char* name);
 
 // counts the number of each face and suit in a player's hand
 int parseCards(Player *p);
@@ -82,3 +82,5 @@ int compareHands(Player *p, Player *c);
 void gameLoop(const int wDeck[][13], const char *wFace[], const char *wSuit[], const char *handOptions[], Player *p, Player *c);
 
 void resetDeck(int wDeck[][13]);
+
+void resetPlayer(Player *p);
