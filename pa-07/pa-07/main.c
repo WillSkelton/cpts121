@@ -23,38 +23,59 @@ int main(void)
 		"Nine", "Ten", "Jack", "Queen", "King" };
 
 	/* initialize face array */
-	const char *handOptions[NUMHANDS] = {"Fold", "Pair", "2 Pairs", "3 of a Kind", "4 of a Kind", "Flush", "Strait" };
+	const char *handOptions[NUMHANDS] = { "Fold", "Pair", "2 Pairs", "3 of a Kind", "4 of a Kind", "Flush", "Strait" };
 
-	char *winner;
+
 
 	/* initalize deck array */
 	int deck[4][13] = { 0 };
 
 	srand((unsigned)time(NULL)); /* seed random-number generator */
 
-	shuffle(deck);
-	deal(deck, face, suit, &player, &computer);
+
+	for (int i = 0; i < NUMGAMES; ++i) {
+		
+		gameLoop(deck, face, suit, handOptions, &player, &computer);
+
+		resetDeck(deck);
+	}
+
+	printf("================= Score ==================\n");
+
+	printf("Player: %d\n", player.score);
+	printf("Computer: %d\n", computer.score);
+
+	printBorder(2, 42);
 
 	// ====================== TEST ======================
-	Player TestingBoi;
-	newTestingBoi(&TestingBoi);
-	printCards(deck, face, suit, &TestingBoi);
-	parseCards(&TestingBoi);
-	askToSwitch(deck, face, suit, &TestingBoi);
-	printOptions(&TestingBoi, deck, face, suit, handOptions);
+	//Player TestingBoi;
+	//newTestingBoi(&TestingBoi);
+
+	//askToSwitch(deck, face, suit, &TestingBoi);
+
+	//parseCards(&TestingBoi);
+
+	//printOptions(&TestingBoi, deck, face, suit, handOptions);
 	//// ====================== END TEST ======================
 
-	parseCards(&player);
-	parseCards(&computer);
 
-	askToSwitch(deck, face, suit, &player);
-	printOptions(&player, deck, face, suit, handOptions);
-	
-	computerTurn(&computer);
+	/*shuffle(deck);
+	deal(deck, face, suit, &player, &computer);*/
 
-	winner = compareHands(&player, &computer) == 1 ? "Player" : "Computer";
 
-	
+
+	//askToSwitch(deck, face, suit, &player);
+
+	//parseCards(&player);
+	//parseCards(&computer);
+
+	//printOptions(&player, deck, face, suit, handOptions);
+	//
+	//computerTurn(&computer);
+
+	//winner = compareHands(&player, &computer) == 1 ? "Player" : "Computer";
+
+	//printf("The winner is: %s.\n", winner);
 
 	return 0;
 }

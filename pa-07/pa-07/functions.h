@@ -8,6 +8,7 @@
 #define NUMFACES 13
 #define NUMSUITS 4
 #define NUMHANDS 7
+#define NUMGAMES 10
 
 typedef struct Card {
 	int face;
@@ -77,3 +78,7 @@ void askToSwitch(const int wDeck[][13], const char *wFace[], const char *wSuit[]
 void reDraw(const int wDeck[][13], const char *wFace[], const char *wSuit[], Player *p);
 
 int compareHands(Player *p, Player *c);
+
+void gameLoop(const int wDeck[][13], const char *wFace[], const char *wSuit[], const char *handOptions[], Player *p, Player *c);
+
+void resetDeck(int wDeck[][13]);

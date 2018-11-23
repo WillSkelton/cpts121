@@ -86,7 +86,7 @@ void newPlayer(Player *p) {
 
 	for (int i = 0; i < NUMSUITS; ++i) p->numSuits[i] = 0;
 
-	for (int i = 0; i < 3; ++i) p->switcherooni[i] = 0;
+	for (int i = 0; i < 3; ++i) p->switcherooni[i] = -1;
 
 	p->score = 0;
 	p->chosenHand = 0;
@@ -384,7 +384,7 @@ void reDraw(const int wDeck[][13], const char *wFace[], const char *wSuit[], Pla
 				/* if slot contains current card, display card */
 				if (wDeck[row][column] == card + 1)
 				{
-					if (p->switcherooni[k] != 0) {
+					if (p->switcherooni[k] != -1) {
 
 						p->hand[(p->switcherooni[k])].face = column;
 						p->hand[(p->switcherooni[k])].suit = row;
@@ -449,4 +449,44 @@ int compareHands(Player *p, Player *c) {
 	c->score += playerWon == 1 ? 0 : 1;
 
 	return playerWon;
+}
+
+void gameLoop(const int wDeck[][13], const char *wFace[], const char *wSuit[], const char *handOptions[], Player *p, Player *c) {
+	char *winnerName;
+
+	int winner;
+	
+	system("cls");
+
+	shuffle(wDeck);
+	deal(wDeck, wFace, wSuit, p, c);
+
+	askToSwitch(wDeck, wFace, wSuit, p);
+
+	parseCards(p);
+	parseCards(c);
+
+	printOptions(p, wDeck, wFace, wSuit, handOptions);
+
+	computerTurn(c);
+
+	winnerName = compareHands(p, c) == 1 ? "Player" : "Computer";
+
+	printf("The winner is: %s.\n", winnerName);
+
+
+
+	printf("================= Score ==================\n");
+
+	printf("Player: %d\n", p->score);
+	printf("Computer: %d\n", c->score);
+}
+
+void resetDeck(int wDeck[][13]) {
+	for (int r = 0; r <= 3; ++r) {
+		for (int c = 0; c <= 12; ++c) {
+			wDeck[r][c] = 0;
+		}
+	}
+
 }
