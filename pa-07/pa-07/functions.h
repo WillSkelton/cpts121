@@ -114,3 +114,10 @@ void resetDeck(int wDeck[][13]);
 
 // Resets a given player's round specific properties but not things like score and name
 void resetPlayer(Player *p);
+
+// These are pretty simple
+void printTitle(void);
+
+void printRules(void);
+
+void printMainMenu(void);

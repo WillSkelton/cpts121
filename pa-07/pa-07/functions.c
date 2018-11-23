@@ -526,3 +526,43 @@ void resetPlayer(Player *p) {
 
 	p->chosenHand = 0;
 }
+
+void printTitle(void) {
+
+	printf("Will Skelton presents:\n");
+	Sleep(750);
+	
+	system("cls");
+	printf("5-Card Draw");
+
+	Sleep(1500);
+	printf("? I hardly know her.\n");
+
+	Sleep(350);
+	system("cls");
+}
+
+void printRules(void) {
+	printf("==================== Rules: ====================\n");
+	printf("1.) You and the dealer are bothe dealt 5 cards\n");
+	printf("2.) Once you get your cards, you may choose to \n");
+	printf("    to replace up to 3 of them.\n");
+	printf("3.) Your goal is to get one of the following:\n");
+	printf("        i.) pair (2 of the same face value)\n");
+	printf("       ii.) 2 pairs\n");
+	printf("      iii.) 3 of a kind (of face values)\n");
+	printf("       iv.) 4 of a kind (of face values)\n");
+	printf("        v.) Flush (5 cards of the same suit)\n");
+	printf("       vi.) Strait (5 consecutive cards)\n");
+	printf("4.) The computer will determine it's hand.\n");
+	printf("5.) The player with the higher hand will get a point.\n");
+	printf("6.) The person with the most points after 10 games will be the winner.\n");
+	printf("\n");
+	printBorder(2, 48);
+}
+
+void printMainMenu(void) {
+	printf("Main Menu:\n");
+	printf("1.) Show Rules\n");
+	printf("2.) Play Game\n");
+}

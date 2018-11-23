@@ -14,6 +14,8 @@ int main(void)
 	Player computer;
 	newPlayer(&computer, "Computer");
 
+	int menuChoice = 0;
+
 	/* initialize suit array */
 	const char *suit[4] = { "Hearts", "Diamonds", "Clubs", "Spades" };
 
@@ -30,23 +32,35 @@ int main(void)
 	srand((unsigned)time(NULL)); /* seed random-number generator */
 
 
+	printTitle();
 
+	menuChoice = inputCheckCallback(1, 2, printMainMenu);
 
-	for (int i = 0; i < NUMGAMES; ++i) {
-		
-		oneRound(deck, face, suit, handOptions, &user, &computer);
+	switch (menuChoice) {
+	case 1: 
+		printRules();
+		system("pause");
 
-		resetDeck(deck);
+	case 2:
+		for (int i = 0; i < NUMGAMES; ++i) {
 
-		resetPlayer(&user);
-		resetPlayer(&computer);
+			oneRound(deck, face, suit, handOptions, &user, &computer);
+
+			resetDeck(deck);
+
+			resetPlayer(&user);
+			resetPlayer(&computer);
+		}
+
+		printf("================= Score ==================\n");
+		printf("Player: %d\n", user.score);
+		printf("Computer: %d\n", computer.score);
+
+		printBorder(2, 42);
+		break;
 	}
 
-	printf("================= Score ==================\n");
-	printf("Player: %d\n", user.score);
-	printf("Computer: %d\n", computer.score);
-
-	printBorder(2, 42);
+	printf("Have a nice day\n");
 
 	// ====================== TEST ======================
 	//Player TestingBoi;
