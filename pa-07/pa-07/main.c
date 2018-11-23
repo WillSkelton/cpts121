@@ -23,8 +23,9 @@ int main(void)
 		"Nine", "Ten", "Jack", "Queen", "King" };
 
 	/* initialize face array */
-	const char *handOptions[6] = { "Pair", "2 Pairs", "3 of a Kind", "4 of a Kind", "Flush", "Strait" };
+	const char *handOptions[NUMHANDS] = {"Fold", "Pair", "2 Pairs", "3 of a Kind", "4 of a Kind", "Flush", "Strait" };
 
+	char *winner;
 
 	/* initalize deck array */
 	int deck[4][13] = { 0 };
@@ -35,18 +36,24 @@ int main(void)
 	deal(deck, face, suit, &player, &computer);
 
 	// ====================== TEST ======================
-	//Player TestingBoi;
-	//newTestingBoi(&TestingBoi);
-	//printCards(deck, face, suit, &TestingBoi);
-	//parseCards(&TestingBoi);
-	//printOptions(&TestingBoi, handOptions);
-	// ====================== END TEST ======================
+	Player TestingBoi;
+	newTestingBoi(&TestingBoi);
+	printCards(deck, face, suit, &TestingBoi);
+	parseCards(&TestingBoi);
+	askToSwitch(deck, face, suit, &TestingBoi);
+	printOptions(&TestingBoi, deck, face, suit, handOptions);
+	//// ====================== END TEST ======================
 
 	parseCards(&player);
 	parseCards(&computer);
 
-	printOptions(&player, handOptions);
-	printOptions(&computer, handOptions);
+	askToSwitch(deck, face, suit, &player);
+	printOptions(&player, deck, face, suit, handOptions);
+	
+	computerTurn(&computer);
+
+	winner = compareHands(&player, &computer) == 1 ? "Player" : "Computer";
+
 	
 
 	return 0;

@@ -7,6 +7,7 @@
 #define NUMCARDS 5
 #define NUMFACES 13
 #define NUMSUITS 4
+#define NUMHANDS 7
 
 typedef struct Card {
 	int face;
@@ -14,11 +15,15 @@ typedef struct Card {
 } Card;
 
 typedef struct Player {
-	Card hand[5];
-	int options[6];
-	int numFaces[13];
-	int numSuits[4];
+	Card hand[NUMCARDS];
+	int options[NUMHANDS];
+	int precedence[NUMHANDS];
+	int numFaces[NUMFACES];
+	int numSuits[NUMSUITS];
+	int switcherooni[3];
 	int score;
+	int chosenHand;
+
 
 } Player;
 
@@ -55,4 +60,20 @@ void newTestingBoi(Player *p);
 
 void printCards(const int wDeck[][13], const char *wFace[], const char *wSuit[], Player *p);
 
-void printOptions(Player *p);
+void printOptions(Player *p, const int wDeck[][13], const char *wFace[], const char *wSuit[], const char *handOptions[]);
+
+void printBorder(int size, int length);
+
+int inputCheckCallback(int lowerBound, int upperBound, void(*printMenu)());
+
+int inputCheck(int lowerBound, int upperBound);
+
+void printMessage(char *message);
+
+void computerTurn(Player *c);
+
+void askToSwitch(const int wDeck[][13], const char *wFace[], const char *wSuit[], Player *p);
+
+void reDraw(const int wDeck[][13], const char *wFace[], const char *wSuit[], Player *p);
+
+int compareHands(Player *p, Player *c);
