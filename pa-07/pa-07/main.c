@@ -8,12 +8,11 @@
 int main(void)
 {
 
-	Player player;
-	newPlayer(&player, "Player");
+	Player user;
+	newPlayer(&user, "User");
 
 	Player computer;
 	newPlayer(&computer, "Computer");
-
 
 	/* initialize suit array */
 	const char *suit[4] = { "Hearts", "Diamonds", "Clubs", "Spades" };
@@ -25,27 +24,26 @@ int main(void)
 	/* initialize face array */
 	const char *handOptions[NUMHANDS] = { "Fold", "Pair", "2 Pairs", "3 of a Kind", "4 of a Kind", "Flush", "Strait" };
 
-
-
 	/* initalize deck array */
 	int deck[4][13] = { 0 };
 
 	srand((unsigned)time(NULL)); /* seed random-number generator */
 
 
+
+
 	for (int i = 0; i < NUMGAMES; ++i) {
 		
-		gameLoop(deck, face, suit, handOptions, &player, &computer);
+		oneRound(deck, face, suit, handOptions, &user, &computer);
 
 		resetDeck(deck);
 
-		resetPlayer(&player);
+		resetPlayer(&user);
 		resetPlayer(&computer);
 	}
 
 	printf("================= Score ==================\n");
-
-	printf("Player: %d\n", player.score);
+	printf("Player: %d\n", user.score);
 	printf("Computer: %d\n", computer.score);
 
 	printBorder(2, 42);
@@ -53,32 +51,10 @@ int main(void)
 	// ====================== TEST ======================
 	//Player TestingBoi;
 	//newTestingBoi(&TestingBoi);
-
 	//askToSwitch(deck, face, suit, &TestingBoi);
-
 	//parseCards(&TestingBoi);
-
 	//printOptions(&TestingBoi, deck, face, suit, handOptions);
 	//// ====================== END TEST ======================
-
-
-	/*shuffle(deck);
-	deal(deck, face, suit, &player, &computer);*/
-
-
-
-	//askToSwitch(deck, face, suit, &player);
-
-	//parseCards(&player);
-	//parseCards(&computer);
-
-	//printOptions(&player, deck, face, suit, handOptions);
-	//
-	//computerTurn(&computer);
-
-	//winner = compareHands(&player, &computer) == 1 ? "Player" : "Computer";
-
-	//printf("The winner is: %s.\n", winner);
 
 	return 0;
 }
