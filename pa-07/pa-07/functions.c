@@ -544,7 +544,7 @@ void printTitle(void) {
 
 void printRules(void) {
 	printf("==================== Rules: ====================\n");
-	printf("1.) You and the dealer are bothe dealt 5 cards\n");
+	printf("1.) You and the dealer are both dealt 5 cards\n");
 	printf("2.) Once you get your cards, you may choose to \n");
 	printf("    to replace up to 3 of them.\n");
 	printf("3.) Your goal is to get one of the following:\n");
