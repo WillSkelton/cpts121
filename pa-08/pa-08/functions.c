@@ -37,30 +37,22 @@ int binSearch(int *list, int lower, int upper, int searchValue) {
 	return indexOfSV;
 }
 
-int binarySearch(int arr[], int l, int r, int x)
-{
-	while (l <= r)
-	{
-		int m = l + (r - l) / 2;
+void bubbleSort(char *strings[], int length) {
+	int u = length - 1;
+	int c = 0;
+	
 
-		// Check if x is present at mid 
-		if (arr[m] == x) {
-			return m;
+	while (u > 0) {
+		c = 1;
+		while (c <= u) {
+			if (strings[c] < strings[c - 1]) {
+				char *temp = strings[c - 1];
+				strings[c - 1] = strings[c];
+				strings[c] = temp;
+			}
+			++c;
 		}
-
-		// If x greater, ignore left half 
-		if (arr[m] < x) {
-			l = m + 1;
-		}
-
-		// If x is smaller, ignore right half 
-		else {
-			r = m - 1;
-		}
+		--u;
 	}
 
-	// if we reach here, then element was 
-	// not present 
-	return -1;
 }
-
